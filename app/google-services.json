@@ -1,0 +1,85 @@
+{
+  "project_info": {
+    "project_number": "245749567040",
+    "firebase_url": "https://fitness-app-1d26e.firebaseio.com",
+    "project_id": "fitness-app-1d26e",
+    "storage_bucket": "fitness-app-1d26e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:245749567040:android:e3debe6c30deddfdb4d9a5",
+        "android_client_info": {
+          "package_name": "com.example.maddi.fitness"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "245749567040-7uno2unom0q90rh0i9amqtt44m51j1ht.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.maddi.fitness",
+            "certificate_hash": "7c20cf00e94595266ce5bd95fa764eafc4a74696"
+          }
+        },
+        {
+          "client_id": "245749567040-qjd2ivfel3lposql63gmk9i590auguoh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfIA6nPokYzPg-WfUeUEp3os0jq08QXTo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "245749567040-qjd2ivfel3lposql63gmk9i590auguoh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:245749567040:android:1965ea31417984f0b4d9a5",
+        "android_client_info": {
+          "package_name": "com.tu.fitness_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "245749567040-m1acmg188mmr5ednvmba44u42ccc8qkf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tu.fitness_app",
+            "certificate_hash": "7c20cf00e94595266ce5bd95fa764eafc4a74696"
+          }
+        },
+        {
+          "client_id": "245749567040-qjd2ivfel3lposql63gmk9i590auguoh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfIA6nPokYzPg-WfUeUEp3os0jq08QXTo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "245749567040-qjd2ivfel3lposql63gmk9i590auguoh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

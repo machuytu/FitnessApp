@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/item0"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="@string/home" />
+        <item
+            android:id="@+id/item1"
+            android:icon="@drawable/summary"
+            android:title="@string/exercises" />
+        <item
+            android:id="@+id/item2"
+            android:icon="@drawable/ic_transfer_within_a_station_black_24dp"
+            android:title="@string/daily_exercises" />
+        <item
+            android:id="@+id/item3"
+            android:icon="@drawable/ic_perm_contact_calendar_black_24dp"
+            android:title="@string/calendar" />
+        <item
+            android:id="@+id/item5"
+            android:icon="@drawable/ic_directions_run_black_24dp"
+            android:title="@string/step_daily" />
+    </group>
+
+    <item android:title="@string/settings">
+        <menu>
+            <item
+                android:id="@+id/item4"
+                android:icon="@drawable/settings"
+                android:title="@string/setting" />
+
+            <item
+                android:id="@+id/item6"
+                android:checked="false"
+                android:icon="@drawable/logout"
+                android:title="@string/log_out"/>
+        </menu>
+    </item>
+
+</menu>

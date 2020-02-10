@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:id="@+id/drawer_layout"
+    tools:openDrawer="start"
+    tools:context=".activities.ListExercises">
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="3">
+
+        <include
+            layout="@layout/app_bar_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_marginTop="60dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="NAME OF EXERCISE"
+                android:textColor="@android:color/black"
+                android:textSize="24dp" />
+
+            <ImageView
+                android:id="@+id/detail_image"
+                android:src="@drawable/artistic_gymnastics"
+                android:layout_centerInParent="true"
+                android:layout_width="300dp"
+                android:layout_height="200dp" />
+
+            <LinearLayout
+                android:id="@+id/layout_get_ready"
+                android:visibility="invisible"
+                android:layout_centerInParent="true"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/txtGetReady"
+                    android:text="GET READY"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/txtCountdown"
+                    android:text="5"
+                    android:textSize="50dp"
+                    android:textStyle="bold"
+                    android:textAlignment="center"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <info.hoang8f.widget.FButton
+                android:id="@+id/btnBack"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/detail_image"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginBottom="8dp"
+                android:layout_weight="1"
+                android:text="Back"
+                android:textColor="@android:color/white"
+                app:cornerRadius="2dp"
+                app:fButtonColor="@color/colorPrimary"
+                app:shadowColor="@color/colorPrimaryDark"
+                app:shadowEnabled="true"
+                app:shadowHeight="2dp" />
+
+            <info.hoang8f.widget.FButton
+                android:id="@+id/btnStart"
+                android:layout_alignParentBottom="true"
+                android:layout_width="393dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginBottom="8dp"
+                android:layout_weight="1"
+                android:text="Start"
+                android:textColor="@android:color/white"
+                app:fButtonColor="@color/colorPrimary"
+                app:cornerRadius="2dp"
+                app:shadowColor="@color/colorPrimaryDark"
+                app:shadowEnabled="true"
+                app:shadowHeight="2dp" />
+
+            <TextView
+                android:id="@+id/timer"
+                android:layout_above="@+id/btnStart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:textStyle="bold"
+                android:text=""
+                android:textColor="@color/colorPrimary"
+                android:textSize="50dp" />
+
+            <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+                android:id="@+id/progressBar"
+                android:layout_below="@+id/title"
+                android:indeterminate="false"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:mpb_progressStyle="horizontal"
+                app:mpb_progressBackgroundTint="@color/pink"
+                app:mpb_progressTint="@color/indigo"
+                style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal" />
+        </RelativeLayout>
+    </FrameLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/nav_header_main"
+        app:menu="@menu/activity_main_drawer" />
+
+</androidx.drawerlayout.widget.DrawerLayout>

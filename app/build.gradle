@@ -1,0 +1,122 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
+    defaultConfig {
+        applicationId "com.tu.fitness_app"
+        minSdkVersion 26
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE-FIREBASE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/dependencies.txt'
+        exclude 'META-INF/LGPL2.1'
+    }
+    repositories {
+        mavenCentral()
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation "androidx.coordinatorlayout:coordinatorlayout:1.1.0"
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation 'com.google.android.material:material:1.0.0'
+
+    //add library
+    implementation "androidx.recyclerview:recyclerview:1.1.0"
+    // For control over item selection of both touch and mouse driven selection
+    implementation "androidx.recyclerview:recyclerview-selection:1.1.0-beta01"
+    implementation "androidx.cardview:cardview:1.0.0"
+    implementation 'com.github.jd-alexander:android-flat-button:v1.1'
+    implementation 'com.github.prolificinteractive:material-calendarview:v1.4.3'
+    implementation 'me.zhanghai.android.materialprogressbar:library:1.4.2'
+
+    //database to save data
+    implementation 'com.readystatesoftware.sqliteasset:sqliteassethelper:2.0.1'
+
+    //calendar
+    def appcompat_version = "1.1.0"
+    implementation "androidx.appcompat:appcompat:$appcompat_version"
+    // For loading and tinting drawables on older versions of the platform
+    implementation "androidx.appcompat:appcompat-resources:$appcompat_version"
+
+    //NavigationView
+    implementation "androidx.percentlayout:percentlayout:1.0.0"
+    implementation 'androidx.navigation:navigation-fragment:2.2.0'
+    implementation 'androidx.navigation:navigation-ui:2.2.0'
+    implementation 'com.google.android.material:material:1.0.0'
+
+    implementation "androidx.vectordrawable:vectordrawable:1.1.0" // VectorDrawableCompat
+    implementation "androidx.vectordrawable:vectordrawable-animated:1.1.0"
+    // AnimatedVectorDrawableCompat
+
+    //DecoView
+    implementation 'com.github.bmarrdev:android-DecoView-charting:v1.2'
+
+    // FireBase
+    implementation 'com.google.android.gms:play-services-analytics:17.0.0'
+    implementation 'com.google.firebase:firebase-core:17.2.2'
+    implementation 'com.google.firebase:firebase-auth:19.2.0'
+    implementation 'com.google.firebase:firebase-database:19.2.1'
+    implementation 'com.firebaseui:firebase-ui-auth:4.1.0'
+    implementation 'com.facebook.android:facebook-android-sdk:5.13.0'
+    implementation 'com.google.firebase:firebase-messaging:20.1.0'
+
+    // AndroidX Capable version
+    implementation 'com.github.AppIntro:AppIntro:5.1.0'
+
+    implementation 'com.android.support:multidex:1.0.3'
+    // App intro screen
+    implementation 'com.github.AppIntro:AppIntro:5.1.0'
+
+    // Bar Chart
+    implementation 'com.github.PhilJay:MPAndroidChart:v2.2.3'
+
+    // Profile Picture
+    implementation 'de.hdodenhof:circleimageview:3.0.1'
+
+    // Animation
+    implementation 'jp.wasabeef:recyclerview-animators:2.2.0'
+
+
+    // Statistics around pedometer
+    implementation 'com.github.bmarrdev:android-DecoView-charting:v0.9.3'
+
+    // Youtube content page transform
+    implementation 'com.ToxicBakery.viewpager.transforms:view-pager-transforms:1.2.32@aar'
+    implementation 'com.google.ar.sceneform.ux:sceneform-ux:1.15.0'
+    implementation project(path: ':progressviewslib')
+
+
+//    // Statistics - Food Summary Circle Animation
+//    implementation project(':progressviewslib')
+}
