@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
         btnTraining = findViewById(R.id.btnTraining);
         btnCalendar = findViewById(R.id.btnCalendar);
         btnStepCount = findViewById(R.id.btnStepCount);
-        btnStepCount = findViewById(R.id.btnOverview);
+        btnOverview = findViewById(R.id.btnOverview);
 
         btnTraining.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -180,13 +180,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        btnOverview.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(MainActivity.this, OverviewActivity.class);
-//                startActivity(intent);
-//            }
-//        });
+        btnOverview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, OverviewActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

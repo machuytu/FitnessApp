@@ -58,8 +58,8 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
     private View textView;
     private SensorManager sensorManager;
 
-    private static float evsteps;
-    private static  int cont = 0;
+    public static float evsteps;
+    public static  int cont = 0;
 
     Toolbar toolbar;
     DrawerLayout drawerLayout;

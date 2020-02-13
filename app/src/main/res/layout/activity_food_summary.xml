@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="3"
+    tools:context=".activities.FoodSummaryActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <com.natasa.progressviews.CircleProgressBar
+            android:id="@+id/fats_progress"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="10dp"
+            app:progress_color="@color/fats"/>
+
+        <com.natasa.progressviews.CircleProgressBar
+            android:id="@+id/carbs_progress"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="40dp"
+            android:layout_marginTop="10dp"
+            app:progress_color="@color/carbs"
+            />
+
+        <com.natasa.progressviews.CircleProgressBar
+            android:id="@+id/protein_progress"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp"
+            android:layout_marginEnd="30dp"
+            app:progress_color="@color/protein" />
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="200dp"
+            android:layout_marginStart="85dp"
+            android:text="@string/fats"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="70dp"
+            android:layout_marginTop="200dp"
+            android:text="@string/carbs"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="350dp"
+            android:text="@string/protein"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/low_on_protein"
+            android:textStyle="bold"
+            android:textSize="30sp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="40dp"/>
+    </RelativeLayout>
+</FrameLayout>
