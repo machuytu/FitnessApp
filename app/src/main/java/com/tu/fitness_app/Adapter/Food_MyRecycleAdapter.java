@@ -44,8 +44,9 @@ public class Food_MyRecycleAdapter extends RecyclerView.Adapter<Food_MyRecycleAd
     private List<Map<String,?>> mDataset;
     private Context mContext;
     private int count;
+    String UserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-    
+
     // Constructor
     public Food_MyRecycleAdapter(Context myContext, List<Map<String, ?>> myDataset) {
         mContext = myContext;
@@ -163,7 +164,7 @@ public class Food_MyRecycleAdapter extends RecyclerView.Adapter<Food_MyRecycleAd
                     //set data
                     String id = ref_history.push().getKey();
                     History history = new History(id, date, "EAT : " + eat, cal);
-                    ref_history.child(date).child(id).setValue(history);
+                    ref_history.child(UserId).child(date).child(id).setValue(history);
                 }
             });
             JSONArray j = null;

@@ -15,13 +15,18 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.applandeo.materialcalendarview.CalendarView;
+import com.applandeo.materialcalendarview.EventDay;
 import com.applandeo.materialcalendarview.exceptions.OutOfDateRangeException;
+import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.tu.fitness_app.Model.History;
+import com.tu.fitness_app.Model.User;
 import com.tu.fitness_app.R;
 
 import java.util.ArrayList;
@@ -44,6 +49,7 @@ public class HistoryActivity extends AppCompatActivity {
     static int sumOfCalories;
     static int sumOfMoveCal;
     static int sumOfEatCal;
+    String UserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,15 +96,15 @@ public class HistoryActivity extends AppCompatActivity {
         ref_basicInfo.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                GetStartModel getStartModel = dataSnapshot.getValue(GetStartModel.class);
-                if (getStartModel != null) {
-                    int currentWeight = getStartModel.getCurrentWeight();
-                    int targetWeight = getStartModel.getTargetWeight();
-
-                    if(currentWeight>targetWeight && sumOfCalories >=0){
-                        //setting current date
-                        calendar.set(2018, 6, 26);
-                    }
+                 User user = dataSnapshot.getValue(User.class);
+                if (user != null) {
+//                    int currentWeight = getStartModel.getCurrentWeight();
+//                    int targetWeight = getStartModel.getTargetWeight();
+//
+//                    if(currentWeight>targetWeight && sumOfCalories >=0){
+//                        //setting current date
+//                        calendar.set(2018, 6, 26);
+//                    }
                 }
 
             }
@@ -129,7 +135,7 @@ public class HistoryActivity extends AppCompatActivity {
                 alertDialog.dismiss();
 
                 // Read from the database
-                readFromTheDatabase(selectedDate);
+                readFromDatabase(selectedDate);
             }
         });
 
@@ -142,8 +148,9 @@ public class HistoryActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 historyArrayList.clear();
-                for (DataSnapshot historySnapShot: dataSnapshot.child(date).getChildren()) {
+                for (DataSnapshot historySnapShot: dataSnapshot.child(UserId).child(date).getChildren()) {
                     History history = historySnapShot.getValue(History.class);
+                    historyArrayList.add(history);
                 }
                 adapter = new ArrayAdapter<>(HistoryActivity.this, android.R.layout.simple_list_item_1,historyArrayList);
                 historyListView.setAdapter(adapter);
@@ -170,7 +177,7 @@ public class HistoryActivity extends AppCompatActivity {
                         delete_btn.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                ref_history.child(date).child(id).removeValue();
+                                ref_history.child(UserId).child(date).child(id).removeValue();
                                 alertDialog.dismiss();
                             }
                         });
@@ -185,18 +192,18 @@ public class HistoryActivity extends AppCompatActivity {
                 });
 
                 // Find the amount of calories and set text and send to overview
-                sumOfCalories = 0;
-                sumOfMoveCal = 0;
-                sumOfEatCal = 0;
-
-                for (int i = 0; i < historyArrayList.size(); i++) {
-                    sumOfCalories += Integer.valueOf(historyArrayList.get(i).getTotalCalories());
-                    if(Integer.valueOf(historyArrayList.get(i).getTotalCalories())>0){
-                        sumOfEatCal += Integer.valueOf(historyArrayList.get(i).getTotalCalories());
-                    }else{
-                        sumOfMoveCal += Integer.valueOf(historyArrayList.get(i).getTotalCalories());
-                    }
-                }
+//                sumOfCalories = 0;
+//                sumOfMoveCal = 0;
+//                sumOfEatCal = 0;
+//
+//                for (int i = 0; i < historyArrayList.size(); i++) {
+//                    sumOfCalories += Integer.valueOf(historyArrayList.get(i).getTotalCalories());
+//                    if(Integer.valueOf(historyArrayList.get(i).getTotalCalories())>0){
+//                        sumOfEatCal += Integer.valueOf(historyArrayList.get(i).getTotalCalories());
+//                    }else{
+//                        sumOfMoveCal += Integer.valueOf(historyArrayList.get(i).getTotalCalories());
+//                    }
+//                }
             }
 
             @Override
@@ -209,7 +216,4 @@ public class HistoryActivity extends AppCompatActivity {
         });
     }
 
-
-    public void chooseDate(View view) {
-    }
 }
