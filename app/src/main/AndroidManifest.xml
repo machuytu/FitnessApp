@@ -28,7 +28,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activities.Food_RecyclerFrag_Main"></activity>
+        <activity android:name=".activities.HistoryActivity"></activity>
+        <activity android:name=".activities.FoodSummaryActivity" />
+        <activity
+            android:name=".activities.Food_RecyclerFrag_Main"
+            android:configChanges="orientation|screenSize"
+            android:label="Add Food"
+            android:parentActivityName=".activities.OverviewActivity" />
         <activity android:name=".activities.OverviewActivity" />
 
         <meta-data

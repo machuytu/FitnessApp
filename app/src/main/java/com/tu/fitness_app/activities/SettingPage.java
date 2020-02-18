@@ -27,6 +27,9 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.tu.fitness_app.Database.Fitness;
 import com.tu.fitness_app.R;
@@ -124,6 +127,24 @@ public class SettingPage extends AppCompatActivity {
                         break;
                     case R.id.item4:
                         intent = new Intent(SettingPage.this, SettingPage.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.item5:
+                        intent = new Intent(SettingPage.this, StepCountDaily.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.item6:
+                        AuthUI.getInstance().signOut(SettingPage.this).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Toast.makeText(SettingPage.this, "Signed out successfully", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        Intent myIntent = new Intent(SettingPage.this, LoginActivity.class);
+                        myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);// clear back stack
+                        startActivity(myIntent);
+                        finish();
+                    case R.id.item7:
+                        intent = new Intent(SettingPage.this, OverviewActivity.class);
                         startActivity(intent);
                         break;
                     default:

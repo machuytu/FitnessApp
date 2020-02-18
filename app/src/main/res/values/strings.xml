@@ -136,4 +136,11 @@
     <string name="calories">Calories</string>
     <string name="add">ADD</string>
     <string name="toolbar">Toolbar</string>
+    <string name="fats">Fats</string>
+    <string name="carbs">Carbs</string>
+    <string name="protein">Protein</string>
+    <string name="low_on_protein">Low on Protein</string>
+    <string name="overview">Overview</string>
+    <string name="history">History</string>
+    <string name="choose_date">Choose date</string>
 </resources>

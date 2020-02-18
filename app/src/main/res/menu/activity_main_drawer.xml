@@ -22,6 +22,10 @@
             android:id="@+id/item5"
             android:icon="@drawable/ic_directions_run_black_24dp"
             android:title="@string/step_daily" />
+        <item
+            android:id="@+id/item7"
+            android:icon="@drawable/ic_pie_chart_black_24dp"
+            android:title="@string/overview" />
     </group>
 
     <item android:title="@string/settings">

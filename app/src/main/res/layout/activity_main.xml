@@ -143,6 +143,22 @@
                 app:shadowColor="@color/colorPrimaryDark"
                 app:shadowEnabled="true"
                 app:shadowHeight="2dp" />
+
+            <info.hoang8f.widget.FButton
+                android:id="@+id/btnHistory"
+                android:layout_width="393dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginBottom="8dp"
+                android:layout_weight="1"
+                android:text="History"
+                android:textColor="@android:color/white"
+                app:fButtonColor="@color/colorPrimary"
+                app:cornerRadius="2dp"
+                app:shadowColor="@color/colorPrimaryDark"
+                app:shadowEnabled="true"
+                app:shadowHeight="2dp" />
         </LinearLayout>
     </RelativeLayout>
 </androidx.drawerlayout.widget.DrawerLayout>

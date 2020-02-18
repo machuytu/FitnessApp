@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
 
-    Button btnExercises, btnSetting, btnCalendar, btnStepCount, btnOverview;
+    Button btnExercises, btnSetting, btnCalendar, btnStepCount, btnOverview, btnHistory;
     ImageView btnTraining;
 
     public static float mSeriesMax = 0f;
@@ -127,6 +127,10 @@ public class MainActivity extends AppCompatActivity {
                         finish();
                     default:
                         break;
+                    case R.id.item7:
+                        intent = new Intent(MainActivity.this, OverviewActivity.class);
+                        startActivity(intent);
+                        break;
                 }
                 drawerLayout.closeDrawers();
                 return false;
@@ -138,7 +142,8 @@ public class MainActivity extends AppCompatActivity {
         btnTraining = findViewById(R.id.btnTraining);
         btnCalendar = findViewById(R.id.btnCalendar);
         btnStepCount = findViewById(R.id.btnStepCount);
-        btnStepCount = findViewById(R.id.btnOverview);
+        btnOverview = findViewById(R.id.btnOverview);
+        btnHistory = findViewById(R.id.btnHistory);
 
         btnTraining.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -180,13 +185,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        btnOverview.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(MainActivity.this, OverviewActivity.class);
-//                startActivity(intent);
-//            }
-//        });
+        btnOverview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, OverviewActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btnHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, HistoryActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

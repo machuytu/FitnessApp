@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -16,6 +17,9 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
@@ -110,6 +114,24 @@ public class Calendar extends AppCompatActivity {
                         break;
                     case R.id.item4:
                         intent = new Intent(Calendar.this, SettingPage.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.item5:
+                        intent = new Intent(Calendar.this, StepCountDaily.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.item6:
+                        AuthUI.getInstance().signOut(Calendar.this).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Toast.makeText(Calendar.this, "Signed out successfully", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        Intent myIntent = new Intent(Calendar.this, LoginActivity.class);
+                        myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);// clear back stack
+                        startActivity(myIntent);
+                        finish();
+                    case R.id.item7:
+                        intent = new Intent(Calendar.this, OverviewActivity.class);
                         startActivity(intent);
                         break;
                     default:

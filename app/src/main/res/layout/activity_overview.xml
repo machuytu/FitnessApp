@@ -22,10 +22,10 @@
         android:layout_height="match_parent"
         tools:context=".activities.OverviewActivity">
 
-<!--        <include-->
-<!--            layout="@layout/app_bar_main"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent" />-->
+        <include
+            layout="@layout/app_bar_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -55,6 +55,29 @@
                 android:layout_marginTop="30dp"
                 app:progress_color="@color/protein"
                 app:text_color="@color/protein"
+                />
+
+            <ImageView
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:src="@drawable/foodedit"
+                android:layout_below="@+id/food_progress"
+                android:layout_alignEnd="@+id/food_progress"
+                android:layout_marginTop="50dp"
+                android:id="@+id/addcalories"
+                android:paddingTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_alignParentEnd="true" />
+
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="65dp"
+                android:layout_below="@+id/addcalories"
+                android:layout_alignEnd="@+id/addcalories"
+                android:textStyle="bold"
+                android:layout_centerInParent="true"
+                android:textAlignment="center"
+                android:text="Add food"
                 />
 
             <ImageView

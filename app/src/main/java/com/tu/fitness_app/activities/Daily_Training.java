@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -21,6 +22,9 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.tu.fitness_app.Database.Fitness;
 import com.tu.fitness_app.R;
@@ -126,6 +130,24 @@ public class Daily_Training extends AppCompatActivity {
                         break;
                     case R.id.item4:
                         intent = new Intent(Daily_Training.this, SettingPage.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.item5:
+                        intent = new Intent(Daily_Training.this, StepCountDaily.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.item6:
+                        AuthUI.getInstance().signOut(Daily_Training.this).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Toast.makeText(Daily_Training.this, "Signed out successfully", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        Intent myIntent = new Intent(Daily_Training.this, LoginActivity.class);
+                        myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);// clear back stack
+                        startActivity(myIntent);
+                        finish();
+                    case R.id.item7:
+                        intent = new Intent(Daily_Training.this, OverviewActivity.class);
                         startActivity(intent);
                         break;
                     default:
