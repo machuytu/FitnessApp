@@ -21,6 +21,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.tu.fitness_app.R;
 
+import java.util.Date;
+
 public class Food_RecyclerFrag_Main extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
@@ -33,10 +35,13 @@ public class Food_RecyclerFrag_Main extends AppCompatActivity {
     public static float user_carbs1 = 0f;
     public static float user_protein1 = 0f;
 
+    Date today = new Date();
+
     private DatabaseReference getCaloriesRef(String ref) {
         FirebaseUser user = mAuth.getCurrentUser();
         String userId = user.getUid();
-        return mDatabase.child("Calories").child(userId).child(ref);
+        final String date = today.getYear() + 1900 + "-" + (1 + today.getMonth()) + "-" + today.getDate();
+        return mDatabase.child("Calories").child(userId).child(date).child(ref);
     }
 
     @Override
@@ -119,7 +124,7 @@ public class Food_RecyclerFrag_Main extends AppCompatActivity {
     {
         // code here to show dialog
         super.onBackPressed();  // optional depending on your needs
-        Intent intent = new Intent(Food_RecyclerFrag_Main.this, OverviewActivity.class);
+        Intent intent = new Intent(Food_RecyclerFrag_Main.this, HistoryActivity.class);
         startActivity(intent);
         finish();
     }

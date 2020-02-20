@@ -60,7 +60,7 @@
             android:name=".activities.overview_activity"
             android:label="@string/title_activity_overview_activity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activities.Calendar" />
+        <activity android:name=".activities.CalendarActivity" />
         <activity android:name=".activities.Daily_Training" />
         <activity android:name=".activities.SettingPage" />
         <activity android:name=".activities.ViewEx" />

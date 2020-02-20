@@ -33,7 +33,7 @@ import java.util.List;
 
 import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
 
-public class Calendar extends AppCompatActivity {
+class CalendarActivity extends AppCompatActivity {
 
     MaterialCalendarView materialCalendarView;
     HashSet<CalendarDay> list = new HashSet<>();
@@ -97,44 +97,44 @@ public class Calendar extends AppCompatActivity {
                 switch (menuItem.getItemId())
                 {
                     case R.id.item0:
-                        Intent intent = new Intent(Calendar.this, MainActivity.class);
+                        Intent intent = new Intent(CalendarActivity.this, MainActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.item1:
-                        intent = new Intent(Calendar.this, ListExercises.class);
+                        intent = new Intent(CalendarActivity.this, ListExercises.class);
                         startActivity(intent);
                         break;
                     case R.id.item2:
-                        intent = new Intent(Calendar.this, Daily_Training.class);
+                        intent = new Intent(CalendarActivity.this, Daily_Training.class);
                         startActivity(intent);
                         break;
                     case R.id.item3:
-                        intent = new Intent(Calendar.this, Calendar.class);
+                        intent = new Intent(CalendarActivity.this, CalendarActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.item4:
-                        intent = new Intent(Calendar.this, SettingPage.class);
+                        intent = new Intent(CalendarActivity.this, SettingPage.class);
                         startActivity(intent);
                         break;
                     case R.id.item5:
-                        intent = new Intent(Calendar.this, StepCountDaily.class);
+                        intent = new Intent(CalendarActivity.this, StepCountDaily.class);
                         startActivity(intent);
                         break;
                     case R.id.item6:
-                        AuthUI.getInstance().signOut(Calendar.this).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        AuthUI.getInstance().signOut(CalendarActivity.this).addOnCompleteListener(new OnCompleteListener<Void>() {
                             public void onComplete(@NonNull Task<Void> task) {
-                                Toast.makeText(Calendar.this, "Signed out successfully", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(CalendarActivity.this, "Signed out successfully", Toast.LENGTH_SHORT).show();
                             }
                         });
-                        Intent myIntent = new Intent(Calendar.this, LoginActivity.class);
+                        Intent myIntent = new Intent(CalendarActivity.this, LoginActivity.class);
                         myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);// clear back stack
                         startActivity(myIntent);
                         finish();
-                    case R.id.item7:
-                        intent = new Intent(Calendar.this, OverviewActivity.class);
-                        startActivity(intent);
-                        break;
                     default:
+                        break;
+                    case R.id.item7:
+                        intent = new Intent(CalendarActivity.this, OverviewActivity.class);
+                        startActivity(intent);
                         break;
                 }
                 drawerLayout.closeDrawers();

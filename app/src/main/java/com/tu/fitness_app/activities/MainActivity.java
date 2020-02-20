@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     case R.id.item3:
-                        intent = new Intent(MainActivity.this, Calendar.class);
+                        intent = new Intent(MainActivity.this, CalendarActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.item4:
@@ -172,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
         btnCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Calendar.class);
+                Intent intent = new Intent(MainActivity.this, CalendarActivity.class);
                 startActivity(intent);
             }
         });

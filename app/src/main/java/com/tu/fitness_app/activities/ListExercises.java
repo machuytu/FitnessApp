@@ -104,7 +104,7 @@ public class ListExercises extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     case R.id.item3:
-                        intent = new Intent(ListExercises.this, Calendar.class);
+                        intent = new Intent(ListExercises.this, CalendarActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.item4:

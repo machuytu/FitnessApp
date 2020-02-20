@@ -125,7 +125,7 @@ public class Daily_Training extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     case R.id.item3:
-                        intent = new Intent(Daily_Training.this, com.tu.fitness_app.activities.Calendar.class);
+                        intent = new Intent(Daily_Training.this, com.tu.fitness_app.activities.CalendarActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.item4:

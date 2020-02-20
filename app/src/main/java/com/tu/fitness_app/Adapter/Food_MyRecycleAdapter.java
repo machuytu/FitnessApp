@@ -1,7 +1,6 @@
 package com.tu.fitness_app.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +21,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.tu.fitness_app.Model.History;
 import com.tu.fitness_app.R;
 import com.tu.fitness_app.activities.Food_RecyclerFrag_Main;
-import com.tu.fitness_app.activities.HistoryActivity;
 
 import org.json.JSONArray;
 
@@ -89,11 +87,10 @@ public class Food_MyRecycleAdapter extends RecyclerView.Adapter<Food_MyRecycleAd
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            vTitle = (TextView) itemView.findViewById(R.id.title);
-            vType = (TextView) itemView.findViewById(R.id.type);
-            vCal = (TextView) itemView.findViewById(R.id.calories);
-            vAdd = (Button) itemView.findViewById(R.id.addFood);
-            //mRelativeLayout = (RelativeLayout) v.findViewById(R.id.recyclr_frag_pop);
+            vTitle = itemView.findViewById(R.id.title);
+            vType = itemView.findViewById(R.id.type);
+            vCal = itemView.findViewById(R.id.calories);
+            vAdd = itemView.findViewById(R.id.addFood);
             mAuth = FirebaseAuth.getInstance();
             mDatabase = FirebaseDatabase.getInstance().getReference();
         }
@@ -101,11 +98,12 @@ public class Food_MyRecycleAdapter extends RecyclerView.Adapter<Food_MyRecycleAd
         private DatabaseReference getCaloriesRef(String ref) {
             FirebaseUser user = mAuth.getCurrentUser();
             String userId = user.getUid();
-            return mDatabase.child("Calories").child(userId).child(ref);
+            final String date = today.getYear() + 1900 + "-" + (1 + today.getMonth()) + "-" + today.getDate();
+            return mDatabase.child("Calories").child(userId).child(date).child(ref);
         }
 
 
-        public void bindMovieData(final Map<String,?> fooditem) {
+        private void bindMovieData(final Map<String,?> fooditem) {
             vTitle.setText((String) fooditem.get("iname"));
             vType.setText((String) fooditem.get("bname"));
             vCal.setText((String)fooditem.get("ical"));
@@ -123,49 +121,38 @@ public class Food_MyRecycleAdapter extends RecyclerView.Adapter<Food_MyRecycleAd
             ref_history = database.getReference("history");
 
             //VIEW
-//            historyListView = historyListView.findViewById(R.id.historyListView);
             final String date = today.getYear()+1900 + "-" + (1+today.getMonth()) + "-" + today.getDate();
 
-            vAdd.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    count++;
-                    Log.d("Before adding", String.valueOf(caloriesCount) +
-                            String.valueOf(totalCarbs) + String.valueOf(totalProtein) +
-                            String.valueOf(totalFat));
-                    caloriesCount = caloriesCount + (Float.parseFloat(String.valueOf(fooditem.get("ical"))));
-                    totalCarbs = totalCarbs + (Float.parseFloat(String.valueOf(fooditem.get("icarbs"))));
-                    totalFat = totalFat + (Float.parseFloat(String.valueOf(fooditem.get("ifat"))));
-                    totalProtein = totalProtein + (Float.parseFloat((String.valueOf(fooditem.get("iprotein")))));
-                    String eat = String.valueOf(fooditem.get("iname"));
-                    String cal = String.valueOf(fooditem.get("ical"));
+            vAdd.setOnClickListener(v -> {
+                count++;
+                caloriesCount = caloriesCount + (Float.parseFloat(String.valueOf(fooditem.get("ical"))));
+                totalCarbs = totalCarbs + (Float.parseFloat(String.valueOf(fooditem.get("icarbs"))));
+                totalFat = totalFat + (Float.parseFloat(String.valueOf(fooditem.get("ifat"))));
+                totalProtein = totalProtein + (Float.parseFloat((String.valueOf(fooditem.get("iprotein")))));
 
-                    Log.d("After Adding", "fat" + String.valueOf(caloriesCount) +
-                            String.valueOf(totalCarbs) + String.valueOf(totalFat) +
-                            String.valueOf(totalProtein));
-                    Log.d("Adapter", (String.valueOf(Food_RecyclerFrag_Main.user_fat1)) +
-                            (String.valueOf(Food_RecyclerFrag_Main.user_carbs1)) +
-                            (String.valueOf(Food_RecyclerFrag_Main.user_protein1)) +
-                            (String.valueOf(Food_RecyclerFrag_Main.calRef1)));
+                String eat = String.valueOf(fooditem.get("iname"));
+                String cal = String.valueOf(fooditem.get("ical"));
+                float carbs = (Float.parseFloat(String.valueOf(fooditem.get("icarbs"))));
+                float fat = (Float.parseFloat(String.valueOf(fooditem.get("ifat"))));
+                float protein = (Float.parseFloat((String.valueOf(fooditem.get("iprotein")))));
 
-                    getCaloriesRef("totalcalories").setValue(caloriesCount);
-                    getCaloriesRef("totalfat").setValue(totalFat);
-                    getCaloriesRef("totalcarbs").setValue(totalCarbs);
-                    getCaloriesRef("totalprotein").setValue(totalProtein);
+                getCaloriesRef("totalcalories").setValue(caloriesCount);
+                getCaloriesRef("totalfat").setValue(totalFat);
+                getCaloriesRef("totalcarbs").setValue(totalCarbs);
+                getCaloriesRef("totalprotein").setValue(totalProtein);
 
-                    if(count == 1) {
-                        String toast1 = String.valueOf(count) + "item added";
-                        Toast.makeText(mContext, toast1, Toast.LENGTH_SHORT).show();
-                    } else if (count > 1) {
-                        String toast2 = String.valueOf(count) + "items added";
-                        Toast.makeText(mContext, toast2, Toast.LENGTH_SHORT).show();
-                    }
-
-                    //set data
-                    String id = ref_history.push().getKey();
-                    History history = new History(id, date, "EAT : " + eat, cal);
-                    ref_history.child(UserId).child(date).child(id).setValue(history);
+                if(count == 1) {
+                    String toast1 = count + "item added";
+                    Toast.makeText(mContext, toast1, Toast.LENGTH_SHORT).show();
+                } else if (count > 1) {
+                    String toast2 = count + "items added";
+                    Toast.makeText(mContext, toast2, Toast.LENGTH_SHORT).show();
                 }
+
+                //set data
+                String id = ref_history.push().getKey();
+                History history = new History(id, date, "EAT : " + eat, cal, fat, carbs, protein);
+                ref_history.child(UserId).child(date).child(id).setValue(history);
             });
             JSONArray j = null;
         }

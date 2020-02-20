@@ -25,6 +25,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.tu.fitness_app.Model.Calories;
 import com.tu.fitness_app.Model.History;
 import com.tu.fitness_app.Model.User;
 import com.tu.fitness_app.R;
@@ -47,6 +48,9 @@ public class HistoryActivity extends AppCompatActivity {
     Date today = new Date();
 
     static int sumOfCalories;
+    static int sumOfFat;
+    static int sumOfCarbs;
+    static int sumOfProtein;
     static int sumOfMoveCal;
     static int sumOfEatCal;
     String UserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -62,7 +66,7 @@ public class HistoryActivity extends AppCompatActivity {
         // Database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         ref_history = database.getReference("history");
-        ref_calories = database.getReference("calories");
+        ref_calories = database.getReference("Calories");
         ref_basicInfo = database.getReference("basicInfo");
 
         // View
@@ -117,7 +121,6 @@ public class HistoryActivity extends AppCompatActivity {
 
 
         //setting current date
-        calendar.set(2018, 6, 20);
 
         calendarView.setDate(calendar);
 
@@ -156,54 +159,51 @@ public class HistoryActivity extends AppCompatActivity {
                 historyListView.setAdapter(adapter);
 
                 // onClick
-                historyListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long idd) {
-                        // Dialog -> Delete
-                        History history = historyArrayList.get(position);
-                        final String id = history.getId();
+                historyListView.setOnItemClickListener((parent, view, position, idd) -> {
+                    // Dialog -> Delete
+                    History history = historyArrayList.get(position);
+                    final String id = history.getId();
 
-                        // Build dialog with custom layout
-                        // Inflate custom view -> Set it on builder
-                        AlertDialog.Builder builder = new AlertDialog.Builder(HistoryActivity.this);
-                        LayoutInflater inflater = getLayoutInflater();
-                        View dialogView = inflater.inflate(R.layout.dialog_history_delete, null);
-                        builder.setView(dialogView);
+                    // Build dialog with custom layout
+                    // Inflate custom view -> Set it on builder
+                    AlertDialog.Builder builder = new AlertDialog.Builder(HistoryActivity.this);
+                    LayoutInflater inflater = getLayoutInflater();
+                    View dialogView = inflater.inflate(R.layout.dialog_history_delete, null);
+                    builder.setView(dialogView);
 
-                        final AlertDialog alertDialog = builder.create();
-                        alertDialog.show();
+                    final AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
 
-                        Button delete_btn = dialogView.findViewById(R.id.dialog_delete);
-                        delete_btn.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                ref_history.child(UserId).child(date).child(id).removeValue();
-                                alertDialog.dismiss();
-                            }
-                        });
-                        Button cancel_btn = dialogView.findViewById(R.id.dialog_cancel);
-                        cancel_btn.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                alertDialog.dismiss();
-                            }
-                        });
-                    }
+                    Button delete_btn = dialogView.findViewById(R.id.dialog_delete);
+                    delete_btn.setOnClickListener(v -> {
+                        ref_history.child(UserId).child(date).child(id).removeValue();
+                        alertDialog.dismiss();
+                    });
+                    Button cancel_btn = dialogView.findViewById(R.id.dialog_cancel);
+                    cancel_btn.setOnClickListener(v -> alertDialog.dismiss());
                 });
 
                 // Find the amount of calories and set text and send to overview
-//                sumOfCalories = 0;
-//                sumOfMoveCal = 0;
-//                sumOfEatCal = 0;
+                sumOfCalories = 0;
+                sumOfFat = 0;
+                sumOfProtein = 0;
+                sumOfCarbs = 0;
 //
-//                for (int i = 0; i < historyArrayList.size(); i++) {
-//                    sumOfCalories += Integer.valueOf(historyArrayList.get(i).getTotalCalories());
+                for (int i = 0; i < historyArrayList.size(); i++) {
+                    sumOfCalories += Float.valueOf(historyArrayList.get(i).getTotalCalories());
+                    sumOfFat += historyArrayList.get(i).getTotalFat();
+                    sumOfProtein += historyArrayList.get(i).getTotalProtein();
+                    sumOfCarbs += historyArrayList.get(i).getTotalCarbs();
+                }
 //                    if(Integer.valueOf(historyArrayList.get(i).getTotalCalories())>0){
 //                        sumOfEatCal += Integer.valueOf(historyArrayList.get(i).getTotalCalories());
 //                    }else{
 //                        sumOfMoveCal += Integer.valueOf(historyArrayList.get(i).getTotalCalories());
 //                    }
 //                }
+                Calories calories = new Calories(sumOfCalories, sumOfFat, sumOfCarbs, sumOfProtein);
+                ref_calories.child(UserId).child(date).setValue(calories);
+                textView.setText(date);
             }
 
             @Override

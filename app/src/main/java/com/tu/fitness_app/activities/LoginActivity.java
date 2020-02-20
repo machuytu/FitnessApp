@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -28,6 +29,8 @@ import com.tu.fitness_app.R;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -44,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
     public static float user_fat = 0f;
     public static float user_carbs = 0f;
     public static float user_protein = 0f;
+    Date today = new Date();
     // Authentication providers
     List<AuthUI.IdpConfig> providers = Arrays.asList(
             new AuthUI.IdpConfig.EmailBuilder().build(),
@@ -73,12 +77,7 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NotNull FirebaseAuth firebaseAuth) {
-                updateInfo();
-            }
-        };
+        mAuthListener = firebaseAuth -> updateInfo();
 
 
         startActivityForResult(
@@ -109,7 +108,19 @@ public class LoginActivity extends AppCompatActivity {
         stepsRef.child(userId).setValue(steps);
 
         Calories calories = new Calories(0, 0, 0, 0);
-        caloriesRef.child(userId).setValue(calories);
+        final String date = today.getYear() + 1900 + "-" + (1 + today.getMonth()) + "-" + today.getDate();
+        caloriesRef.child(userId).child(date).setValue(calories);
+    }
+
+    private void RestartCaloriesUserInfo() {
+        FirebaseUser user = mAuth.getCurrentUser();
+        assert user != null;
+        String userId = user.getUid();
+        DatabaseReference caloriesRef = mDatabase.child("Calories");
+
+        Calories calories = new Calories(0, 0, 0, 0);
+        final String date = today.getYear() + 1900 + "-" + (1 + today.getMonth()) + "-" + today.getDate();
+        caloriesRef.child(userId).child(date).setValue(calories);
     }
 
     private DatabaseReference getUsersRef(String ref) {
@@ -123,7 +134,8 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
         assert user != null;
         String userId = user.getUid();
-        return mDatabase.child("Calories").child(userId).child(ref);
+        final String date = today.getYear() + 1900 + "-" + (1 + today.getMonth()) + "-" + today.getDate();
+        return mDatabase.child("Calories").child(userId).child(date).child(ref);
     }
 
     private void getUserInfo() {
@@ -165,48 +177,48 @@ public class LoginActivity extends AppCompatActivity {
 
         getCaloriesRef("totalcalories").addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
                 calRef = Float.parseFloat(String.valueOf(dataSnapshot.getValue()));
             }
 
             @Override
-            public void onCancelled(@NotNull DatabaseError databaseError) {
+            public void onCancelled(DatabaseError databaseError) {
                 Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
             }
         });
 
         getCaloriesRef("totalfat").addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
                 user_fat = Float.parseFloat(String.valueOf(dataSnapshot.getValue()));
             }
 
             @Override
-            public void onCancelled(@NotNull DatabaseError databaseError) {
+            public void onCancelled(DatabaseError databaseError) {
                 Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
             }
         });
 
         getCaloriesRef("totalcarbs").addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
                 user_carbs = Float.parseFloat(String.valueOf(dataSnapshot.getValue()));
             }
 
             @Override
-            public void onCancelled(@NotNull DatabaseError databaseError) {
+            public void onCancelled(DatabaseError databaseError) {
                 Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
             }
         });
 
         getCaloriesRef("totalprotein").addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
                 user_protein = Float.parseFloat(String.valueOf(dataSnapshot.getValue()));
             }
 
             @Override
-            public void onCancelled(@NotNull DatabaseError databaseError) {
+            public void onCancelled(DatabaseError databaseError) {
                 Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
             }
         });
@@ -238,9 +250,22 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(i);
                     initializeUserInfo();
                 } else {
-                    getUserInfo();
-                    Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
-                    LoginActivity.this.startActivity(myIntent);
+//                    getUserInfo();
+
+                    Calendar mDate = Calendar.getInstance();
+                    // check new day
+                    if (DateUtils.isToday(mDate.getTimeInMillis())) {
+                        //format one way
+                        getUserInfo();
+                        Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
+                        LoginActivity.this.startActivity(myIntent);
+                    } else {
+                        //format in other way
+                        getUserInfo();
+                        RestartCaloriesUserInfo();
+                        Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
+                        LoginActivity.this.startActivity(myIntent);
+                    }
                 }
                 updateInfo();
             } else {

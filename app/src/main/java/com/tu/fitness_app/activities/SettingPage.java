@@ -122,7 +122,7 @@ public class SettingPage extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     case R.id.item3:
-                        intent = new Intent(SettingPage.this, com.tu.fitness_app.activities.Calendar.class);
+                        intent = new Intent(SettingPage.this, com.tu.fitness_app.activities.CalendarActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.item4:
