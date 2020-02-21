@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -47,12 +48,12 @@ public class HistoryActivity extends AppCompatActivity {
     ListView historyListView;
     Date today = new Date();
 
-    static int sumOfCalories;
-    static int sumOfFat;
-    static int sumOfCarbs;
-    static int sumOfProtein;
-    static int sumOfMoveCal;
-    static int sumOfEatCal;
+    static float sumOfCalories;
+    static float sumOfFat;
+    static float sumOfCarbs;
+    static float sumOfProtein;
+    static float sumOfMoveCal;
+    static float sumOfEatCal;
     String UserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
     @Override
@@ -184,16 +185,16 @@ public class HistoryActivity extends AppCompatActivity {
                 });
 
                 // Find the amount of calories and set text and send to overview
-                sumOfCalories = 0;
-                sumOfFat = 0;
-                sumOfProtein = 0;
-                sumOfCarbs = 0;
+                sumOfCalories = 0f;
+                sumOfFat = 0f;
+                sumOfProtein = 0f;
+                sumOfCarbs = 0f;
 //
                 for (int i = 0; i < historyArrayList.size(); i++) {
                     sumOfCalories += Float.valueOf(historyArrayList.get(i).getTotalCalories());
-                    sumOfFat += historyArrayList.get(i).getTotalFat();
-                    sumOfProtein += historyArrayList.get(i).getTotalProtein();
-                    sumOfCarbs += historyArrayList.get(i).getTotalCarbs();
+                    sumOfFat += Float.valueOf(historyArrayList.get(i).getTotalFat());
+                    sumOfProtein += Float.valueOf(historyArrayList.get(i).getTotalProtein());
+                    sumOfCarbs += Float.valueOf(historyArrayList.get(i).getTotalCarbs());
                 }
 //                    if(Integer.valueOf(historyArrayList.get(i).getTotalCalories())>0){
 //                        sumOfEatCal += Integer.valueOf(historyArrayList.get(i).getTotalCalories());
@@ -201,6 +202,7 @@ public class HistoryActivity extends AppCompatActivity {
 //                        sumOfMoveCal += Integer.valueOf(historyArrayList.get(i).getTotalCalories());
 //                    }
 //                }
+                Log.d("sum ", String.valueOf(sumOfCalories + sumOfCarbs + sumOfProtein + sumOfFat));
                 Calories calories = new Calories(sumOfCalories, sumOfFat, sumOfCarbs, sumOfProtein);
                 ref_calories.child(UserId).child(date).setValue(calories);
                 textView.setText(date);

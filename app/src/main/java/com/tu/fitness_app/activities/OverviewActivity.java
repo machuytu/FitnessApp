@@ -56,8 +56,8 @@ public class OverviewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_overview);
 
-//        food_calories = Food_MyRecycleAdapter.caloriesCount;
-        food_calories = HistoryActivity.sumOfCalories;
+        food_calories = LoginActivity.calRef;
+//        food_calories = HistoryActivity.sumOfCalories;
 
         // Setting Steps and Calories
         stepMax = SetGoalActivity.mSeries;

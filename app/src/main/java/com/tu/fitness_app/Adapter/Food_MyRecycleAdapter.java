@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.tu.fitness_app.Model.Calories;
 import com.tu.fitness_app.Model.History;
 import com.tu.fitness_app.R;
 import com.tu.fitness_app.activities.Food_RecyclerFrag_Main;
@@ -39,6 +40,7 @@ public class Food_MyRecycleAdapter extends RecyclerView.Adapter<Food_MyRecycleAd
     public PopupWindow mPopupWindow;
 
     private DatabaseReference ref_history;
+    private DatabaseReference ref_calories;
     private List<Map<String,?>> mDataset;
     private Context mContext;
     private int count;
@@ -114,11 +116,10 @@ public class Food_MyRecycleAdapter extends RecyclerView.Adapter<Food_MyRecycleAd
             totalProtein = Food_RecyclerFrag_Main.user_protein1;
             totalFat = Food_RecyclerFrag_Main.user_fat1;
 
-            // History
-            historyArrayList = new ArrayList<>();
             //DB
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             ref_history = database.getReference("history");
+            ref_calories = database.getReference("Calories");
 
             //VIEW
             final String date = today.getYear()+1900 + "-" + (1+today.getMonth()) + "-" + today.getDate();
@@ -129,6 +130,8 @@ public class Food_MyRecycleAdapter extends RecyclerView.Adapter<Food_MyRecycleAd
                 totalCarbs = totalCarbs + (Float.parseFloat(String.valueOf(fooditem.get("icarbs"))));
                 totalFat = totalFat + (Float.parseFloat(String.valueOf(fooditem.get("ifat"))));
                 totalProtein = totalProtein + (Float.parseFloat((String.valueOf(fooditem.get("iprotein")))));
+                Log.d("After Adding", String.valueOf(caloriesCount) + String.valueOf(caloriesCount) + String.valueOf(caloriesCount) + String.valueOf(caloriesCount));
+
 
                 String eat = String.valueOf(fooditem.get("iname"));
                 String cal = String.valueOf(fooditem.get("ical"));

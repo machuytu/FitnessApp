@@ -140,7 +140,7 @@ public class Food_RecyclerFrag_Main extends AppCompatActivity {
     {
         // code here to show dialog
         super.onBackPressed();  // optional depending on your needs
-        Intent intent = new Intent(Food_RecyclerFrag_Main.this, HistoryActivity.class);
+        Intent intent = new Intent(Food_RecyclerFrag_Main.this, OverviewActivity.class);
         startActivity(intent);
         finish();
     }

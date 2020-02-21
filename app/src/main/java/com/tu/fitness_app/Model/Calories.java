@@ -31,4 +31,20 @@ public class Calories {
     public float getTotalprotein() {
         return totalprotein;
     }
+
+    public void setTotalcalories(float totalcalories) {
+        this.totalcalories = totalprotein;
+    }
+
+    public void setTotalfat(float totalfat) {
+        this.totalfat = totalfat;
+    }
+
+    public void setTotalcarbs(float totalcarbs) {
+        this.totalcarbs = totalcarbs;
+    }
+
+    public void setTotalprotein(float totalprotein) {
+        this.totalprotein = totalprotein;
+    }
 }

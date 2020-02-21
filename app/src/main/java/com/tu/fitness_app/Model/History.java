@@ -5,26 +5,28 @@ public class History {
     private String date;
     private String item;
     private String totalCalories;
-    private float totalfat;
-    private float totalcarbs;
-    private float totalprotein;
+    private float totalFat;
+    private float totalCarbs;
+    private float totalProtein;
 
     @Override
     public String toString() {
-        return item + " : " + totalCalories + " calories";
+        return item + " : " + totalCalories + " calories, "
+                + totalFat + " fat, " + totalCarbs
+                + " carbs, " + totalProtein + " ,protein";
     }
 
     public History() {
     }
 
-    public History(String id, String date, String item, String totalCalories, float totalfat, float totalcarbs, float totalprotein) {
+    public History(String id, String date, String item, String totalCalories, float totalFat, float totalCarbs, float totalProtein) {
         this.id = id;
         this.date = date;
         this.item = item;
         this.totalCalories = totalCalories;
-        this.totalfat = totalfat;
-        this.totalcarbs = totalcarbs;
-        this.totalprotein = totalprotein;
+        this.totalFat = totalFat;
+        this.totalCarbs = totalCarbs;
+        this.totalProtein = totalProtein;
     }
 
     public String getId() {
@@ -60,14 +62,14 @@ public class History {
     }
 
     public float getTotalFat() {
-        return totalfat;
+        return totalFat;
     }
 
     public float getTotalCarbs() {
-        return totalcarbs;
+        return totalCarbs;
     }
 
     public float getTotalProtein() {
-        return totalprotein;
+        return totalProtein;
     }
 }
