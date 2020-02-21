@@ -70,6 +70,7 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step_count_daily);
+        textView = findViewById(R.id.textRemaining);
 
         mDecoView = findViewById(R.id.dynamicArcView);
         mSeriesMax = SetGoalActivity.mSeries;
@@ -82,16 +83,16 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
         navigationView = findViewById(R.id.nav_view);
 
         toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_drawer, R.string.close_drawer) {
-                    @Override
-                    public void onDrawerClosed(View drawerView) {
-                        super.onDrawerClosed(drawerView);
-                    }
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+            }
 
-                    @Override
-                    public void onDrawerOpened(View drawerView) {
-                        super.onDrawerOpened(drawerView);
-                    }
-                };
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+            }
+        };
 
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
@@ -174,19 +175,19 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
         if(cont == 1) {
             resetText();
             mDecoView.addEvent(new DecoEvent.Builder(DecoDrawEffect.EffectType.EFFECT_SPIRAL_EXPLODE)
-            .setIndex(mSeries1Index)
-            .setDelay(0)
-            .setDuration(1000)
-            .setDisplayText("")
-            .setListener(new DecoEvent.ExecuteEventListener() {
-                @Override
-                public void onEventStart(DecoEvent event) {
-                }
+                    .setIndex(mSeries1Index)
+                    .setDelay(0)
+                    .setDuration(1000)
+                    .setDisplayText("")
+                    .setListener(new DecoEvent.ExecuteEventListener() {
+                        @Override
+                        public void onEventStart(DecoEvent event) {
+                        }
 
-                @Override
-                public void onEventEnd(DecoEvent event) {
-                }
-            }).build());
+                        @Override
+                        public void onEventEnd(DecoEvent event) {
+                        }
+                    }).build());
         }
 
         mDecoView.addEvent(new DecoEvent.Builder(mSeriesMax)
@@ -200,23 +201,23 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
                 .setDuration(3250)
                 .build());
 
-        mDecoView.addEvent(new DecoEvent.Builder(DecoDrawEffect.EffectType.EFFECT_SPIRAL_EXPLODE)
-                .setIndex(mSeries1Index)
-                .setDelay(20000)
-                .setDuration(3000)
-                .setDisplayText("")
-                .setListener(new DecoEvent.ExecuteEventListener() {
-                    @Override
-                    public void onEventStart(DecoEvent event) {
-
-                    }
-
-                    @Override
-                    public void onEventEnd(DecoEvent event) {
-
-                    }
-                })
-                .build());
+//        mDecoView.addEvent(new DecoEvent.Builder(DecoDrawEffect.EffectType.EFFECT_SPIRAL_EXPLODE)
+//            .setIndex(mSeries1Index)
+//            .setDelay(20000)
+//            .setDuration(3000)
+//            .setDisplayText("")
+//            .setListener(new DecoEvent.ExecuteEventListener() {
+//                @Override
+//                public void onEventStart(DecoEvent event) {
+//
+//                }
+//
+//                @Override
+//                public void onEventEnd(DecoEvent event) {
+//
+//                }
+//            })
+//            .build());
     }
 
     private void createDataSeries1() {
@@ -280,20 +281,31 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
         mBackIndex = mDecoView.addSeries(seriesItem);
     }
 
+    // Step Counter
+
     @Override
     public void onSensorChanged(SensorEvent event) {
         if (activityRunning) {
-            textView = findViewById(R.id.textRemaining);
-            ((TextView) textView).setText(String.valueOf(event.values[0]));
             evsteps = event.values[0];
+            ((TextView) textView).setText(String.valueOf((int) evsteps));
+
+            // Draw
+            mDecoView.addEvent(new DecoEvent.Builder(mSeriesMax)
+                    .setIndex(mBackIndex)
+                    .setDuration(3000)
+                    .setDelay(100)
+                    .build());
+
+            mDecoView.addEvent(new DecoEvent.Builder(evsteps)
+                    .setIndex(mSeries1Index)
+                    .setDuration(3250)
+                    .build());
         }
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
     }
-
-    // Step Counter
 
     @Override
     protected void onResume() {
