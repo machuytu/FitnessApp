@@ -67,7 +67,11 @@ public class Food_RecyclerFrag_Main extends AppCompatActivity {
         getCaloriesRef("totalcalories").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                calRef1 = Float.parseFloat(String.valueOf(dataSnapshot.getValue()));
+                if (dataSnapshot.exists()) {
+                    calRef1 = Float.parseFloat(String.valueOf(dataSnapshot.getValue()));
+                } else {
+                    calRef1 = 0f;
+                }
             }
 
             @Override
@@ -78,7 +82,11 @@ public class Food_RecyclerFrag_Main extends AppCompatActivity {
         getCaloriesRef("totalfat").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                user_fat1 = Float.parseFloat(String.valueOf(dataSnapshot.getValue()));
+                if (dataSnapshot.exists()) {
+                    user_fat1 = Float.parseFloat(String.valueOf(dataSnapshot.getValue()));
+                } else {
+                    user_fat1 = 0f;
+                }
             }
 
             @Override
@@ -89,7 +97,11 @@ public class Food_RecyclerFrag_Main extends AppCompatActivity {
         getCaloriesRef("totalcarbs").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                user_carbs1 = Float.parseFloat(String.valueOf(dataSnapshot.getValue()));
+                if (dataSnapshot.exists()) {
+                    user_carbs1 = Float.parseFloat(String.valueOf(dataSnapshot.getValue()));
+                } else {
+                    user_carbs1 = 0f;
+                }
             }
 
             @Override
@@ -100,7 +112,11 @@ public class Food_RecyclerFrag_Main extends AppCompatActivity {
         getCaloriesRef("totalprotein").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                user_protein1 = Float.parseFloat(String.valueOf(dataSnapshot.getValue()));
+                if (dataSnapshot.exists()) {
+                    user_protein1 = Float.parseFloat(String.valueOf(dataSnapshot.getValue()));
+                } else {
+                    user_protein1 = 0f;
+                }
             }
 
             @Override

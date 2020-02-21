@@ -2,8 +2,10 @@ package com.tu.fitness_app.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.widget.Toast;
@@ -118,9 +120,11 @@ public class LoginActivity extends AppCompatActivity {
         String userId = user.getUid();
         DatabaseReference caloriesRef = mDatabase.child("Calories");
 
-        Calories calories = new Calories(0, 0, 0, 0);
-        final String date = today.getYear() + 1900 + "-" + (1 + today.getMonth()) + "-" + today.getDate();
-        caloriesRef.child(userId).child(date).setValue(calories);
+        if (caloriesRef.child("totalcalories") == null) {
+            Calories calories = new Calories(0, 0, 0, 0);
+            final String date = today.getYear() + 1900 + "-" + (1 + today.getMonth()) + "-" + today.getDate();
+            caloriesRef.child(userId).child(date).setValue(calories);
+        }
     }
 
     private DatabaseReference getUsersRef(String ref) {
@@ -178,7 +182,11 @@ public class LoginActivity extends AppCompatActivity {
         getCaloriesRef("totalcalories").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                calRef = Float.parseFloat(String.valueOf(dataSnapshot.getValue()));
+                if (dataSnapshot.exists()) {
+                    calRef = Float.parseFloat(String.valueOf(dataSnapshot.getValue()));
+                } else {
+                    calRef = 0f;
+                }
             }
 
             @Override
@@ -190,7 +198,11 @@ public class LoginActivity extends AppCompatActivity {
         getCaloriesRef("totalfat").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                user_fat = Float.parseFloat(String.valueOf(dataSnapshot.getValue()));
+                if (dataSnapshot.exists()) {
+                    user_fat = Float.parseFloat(String.valueOf(dataSnapshot.getValue()));
+                } else {
+                    user_fat = 0f;
+                }
             }
 
             @Override
@@ -202,7 +214,11 @@ public class LoginActivity extends AppCompatActivity {
         getCaloriesRef("totalcarbs").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                user_carbs = Float.parseFloat(String.valueOf(dataSnapshot.getValue()));
+                if (dataSnapshot.exists()) {
+                    user_carbs = Float.parseFloat(String.valueOf(dataSnapshot.getValue()));
+                } else {
+                    user_carbs = 0f;
+                }
             }
 
             @Override
@@ -214,7 +230,11 @@ public class LoginActivity extends AppCompatActivity {
         getCaloriesRef("totalprotein").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                user_protein = Float.parseFloat(String.valueOf(dataSnapshot.getValue()));
+                if (dataSnapshot.exists()) {
+                    user_protein = Float.parseFloat(String.valueOf(dataSnapshot.getValue()));
+                } else {
+                    user_protein = 0f;
+                }
             }
 
             @Override
@@ -244,28 +264,16 @@ public class LoginActivity extends AppCompatActivity {
                 IdpResponse idpResponse = data.getParcelableExtra("extra_idp_response");
                 assert idpResponse != null;
                 boolean isNew = idpResponse.isNewUser();
+
                 if (isNew) {
                 //  Launch app intro
                     Intent i = new Intent(LoginActivity.this, AppIntroActivity.class);
                     startActivity(i);
                     initializeUserInfo();
                 } else {
-//                    getUserInfo();
-
-                    Calendar mDate = Calendar.getInstance();
-                    // check new day
-                    if (DateUtils.isToday(mDate.getTimeInMillis())) {
-                        //format one way
-                        getUserInfo();
-                        Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
-                        LoginActivity.this.startActivity(myIntent);
-                    } else {
-                        //format in other way
-                        getUserInfo();
-                        RestartCaloriesUserInfo();
-                        Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
-                        LoginActivity.this.startActivity(myIntent);
-                    }
+                    getUserInfo();
+                    Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
+                    LoginActivity.this.startActivity(myIntent);
                 }
                 updateInfo();
             } else {
