@@ -147,6 +147,10 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
                         intent = new Intent(StepCountDaily.this, OverviewActivity.class);
                         startActivity(intent);
                         break;
+                    case R.id.item8:
+                        intent = new Intent(StepCountDaily.this, HistoryActivity.class);
+                        startActivity(intent);
+                        break;
                 }
                 drawerLayout.closeDrawers();
                 return false;

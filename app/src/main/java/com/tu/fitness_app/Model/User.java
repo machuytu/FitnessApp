@@ -25,4 +25,12 @@ public class User {
         this.stepgoal = stepgoal;
         this.caloriegoal = caloriegoal;
     }
+
+    public int GetStepGoal() {
+        return stepgoal;
+    }
+
+    public int GetCalorieGoal() {
+        return caloriegoal;
+    }
 }

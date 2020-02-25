@@ -1,5 +1,6 @@
 package com.tu.fitness_app.activities;
 
+import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -28,10 +30,18 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.firebase.ui.auth.AuthUI;
+import com.firebase.ui.auth.viewmodel.AuthViewModelBase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.tu.fitness_app.Database.Fitness;
+import com.tu.fitness_app.Model.User;
 import com.tu.fitness_app.R;
 
 import java.util.Calendar;
@@ -48,12 +58,20 @@ public class SettingPage extends AppCompatActivity {
     ToggleButton switchAlarm;
     TimePicker timePicker;
 
+    EditText editText1;
+    EditText editText2;
+
     ProgressBar progressBar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
 
     private AppBarConfiguration mAppBarConfiguration;
+    private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
+    private float seriesCalo;
+    private float seriesStep;
 
+    @SuppressLint({"WrongViewCast", "SetTextI18n"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +88,9 @@ public class SettingPage extends AppCompatActivity {
         switchAlarm = findViewById(R.id.switchAlarm);
 
         timePicker = findViewById(R.id.timePicker);
+
+        editText1 = findViewById(R.id.et4);
+        editText2 = findViewById(R.id.et5);
 
         fitness = new Fitness(this);
         int mode = fitness.getSettingMode();
@@ -143,11 +164,15 @@ public class SettingPage extends AppCompatActivity {
                         myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);// clear back stack
                         startActivity(myIntent);
                         finish();
+                    default:
+                        break;
                     case R.id.item7:
                         intent = new Intent(SettingPage.this, OverviewActivity.class);
                         startActivity(intent);
                         break;
-                    default:
+                    case R.id.item8:
+                        intent = new Intent(SettingPage.this, HistoryActivity.class);
+                        startActivity(intent);
                         break;
                 }
                 drawerLayout.closeDrawers();
@@ -155,18 +180,22 @@ public class SettingPage extends AppCompatActivity {
             }
         });
 
+        // Show data
+        seriesCalo = LoginActivity.mSeries2;
+        editText1.setText(Integer.toString((int) seriesCalo));
+
+        seriesStep = LoginActivity.mSeries1;
+        editText2.setText(Integer.toString((int) seriesStep));
+
         //Event
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.M)
-            @Override
-            public void onClick(View v) {
-                saveAlarm(switchAlarm.isChecked());
-                saveWorkoutState();
-                Toast.makeText(SettingPage.this, "SAVE!!!", Toast.LENGTH_SHORT).show();
-                finish();
-            }
+        btnSave.setOnClickListener(v -> {
+            saveAlarm(switchAlarm.isChecked());
+            saveWorkoutState();
+            Toast.makeText(SettingPage.this, "SAVE!!!", Toast.LENGTH_SHORT).show();
+            finish();
         });
     }
+
 
     private void saveAlarm(boolean checked) {
         if(checked) {

@@ -1,5 +1,6 @@
 package com.tu.fitness_app.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -44,10 +45,7 @@ public class Daily_Training extends AppCompatActivity {
     ProgressBar progressBar;
     LinearLayout layoutGetReady;
 
-    private NavigationView navigationView;
     private DrawerLayout drawerLayout;
-
-    private AppBarConfiguration mAppBarConfiguration;
 
     int ex_id = 0, limit_time=0;
 
@@ -55,6 +53,7 @@ public class Daily_Training extends AppCompatActivity {
 
     List<com.tu.fitness_app.Model.Exercise> list = new ArrayList<>();
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,23 +61,23 @@ public class Daily_Training extends AppCompatActivity {
 
         initData();
 
-        btnStart = (Button)findViewById(R.id.btnStart);
-        btnBack = (Button)findViewById(R.id.btnBack);
+        btnStart = findViewById(R.id.btnStart);
+        btnBack = findViewById(R.id.btnBack);
 
-        ex_image = (ImageView)findViewById((R.id.detail_image));
-        ex_name = (TextView)findViewById(R.id.title);
+        ex_image = findViewById((R.id.detail_image));
+        ex_name = findViewById(R.id.title);
 
-        txtCountdown = (TextView)findViewById(R.id.txtCountdown);
-        txtGetReady = (TextView)findViewById(R.id.txtGetReady);
-        txtTimer = (TextView)findViewById(R.id.timer);
+        txtCountdown = findViewById(R.id.txtCountdown);
+        txtGetReady = findViewById(R.id.txtGetReady);
+        txtTimer = findViewById(R.id.timer);
 
-        layoutGetReady = (LinearLayout)findViewById(R.id.layout_get_ready);
+        layoutGetReady = findViewById(R.id.layout_get_ready);
 
         progressBar = (MaterialProgressBar)findViewById(R.id.progressBar);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
 
         drawerLayout = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle actionBarDrawerToggle =
@@ -94,10 +93,9 @@ public class Daily_Training extends AppCompatActivity {
                     }
                 };
 
-//        drawerLayout.setDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
 
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
+        AppBarConfiguration mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,
                 R.id.nav_tools, R.id.nav_share, R.id.nav_send)
                 .setDrawerLayout(drawerLayout)
@@ -107,55 +105,55 @@ public class Daily_Training extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
 
         navigationView.bringToFront();
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId())
-                {
-                    case R.id.item0:
-                        Intent intent = new Intent(Daily_Training.this, MainActivity.class);
-                        startActivity(intent);
-                        break;
-                    case R.id.item1:
-                        intent = new Intent(Daily_Training.this, ListExercises.class);
-                        startActivity(intent);
-                        break;
-                    case R.id.item2:
-                        intent = new Intent(Daily_Training.this, Daily_Training.class);
-                        startActivity(intent);
-                        break;
-                    case R.id.item3:
-                        intent = new Intent(Daily_Training.this, com.tu.fitness_app.activities.CalendarActivity.class);
-                        startActivity(intent);
-                        break;
-                    case R.id.item4:
-                        intent = new Intent(Daily_Training.this, SettingPage.class);
-                        startActivity(intent);
-                        break;
-                    case R.id.item5:
-                        intent = new Intent(Daily_Training.this, StepCountDaily.class);
-                        startActivity(intent);
-                        break;
-                    case R.id.item6:
-                        AuthUI.getInstance().signOut(Daily_Training.this).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            public void onComplete(@NonNull Task<Void> task) {
-                                Toast.makeText(Daily_Training.this, "Signed out successfully", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        Intent myIntent = new Intent(Daily_Training.this, LoginActivity.class);
-                        myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);// clear back stack
-                        startActivity(myIntent);
-                        finish();
-                    case R.id.item7:
-                        intent = new Intent(Daily_Training.this, OverviewActivity.class);
-                        startActivity(intent);
-                        break;
-                    default:
-                        break;
-                }
-                drawerLayout.closeDrawers();
-                return false;
+        navigationView.setNavigationItemSelectedListener(menuItem -> {
+            switch (menuItem.getItemId())
+            {
+                case R.id.item0:
+                    Intent intent = new Intent(Daily_Training.this, MainActivity.class);
+                    startActivity(intent);
+                    break;
+                case R.id.item1:
+                    intent = new Intent(Daily_Training.this, ListExercises.class);
+                    startActivity(intent);
+                    break;
+                case R.id.item2:
+                    intent = new Intent(Daily_Training.this, Daily_Training.class);
+                    startActivity(intent);
+                    break;
+                case R.id.item3:
+                    intent = new Intent(Daily_Training.this, CalendarActivity.class);
+                    startActivity(intent);
+                    break;
+                case R.id.item4:
+                    intent = new Intent(Daily_Training.this, SettingPage.class);
+                    startActivity(intent);
+                    break;
+                case R.id.item5:
+                    intent = new Intent(Daily_Training.this, StepCountDaily.class);
+                    startActivity(intent);
+                    break;
+                case R.id.item6:
+                    AuthUI.getInstance().signOut(Daily_Training.this)
+                            .addOnCompleteListener(task ->
+                                    Toast.makeText(Daily_Training.this,
+                                            "Signed out successfully", Toast.LENGTH_SHORT).show());
+                    Intent myIntent = new Intent(Daily_Training.this, LoginActivity.class);
+                    myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);// clear back stack
+                    startActivity(myIntent);
+                    finish();
+                default:
+                    break;
+                case R.id.item7:
+                    intent = new Intent(Daily_Training.this, OverviewActivity.class);
+                    startActivity(intent);
+                    break;
+                case R.id.item8:
+                    intent = new Intent(Daily_Training.this, HistoryActivity.class);
+                    startActivity(intent);
+                    break;
             }
+            drawerLayout.closeDrawers();
+            return false;
         });
 
         fitness = new Fitness(this);
@@ -172,64 +170,59 @@ public class Daily_Training extends AppCompatActivity {
 
         setExerciseInformation(ex_id);
 
-        btnStart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(btnStart.getText().toString().toLowerCase().equals("start")) {
-                    showGetReady();
-                    btnStart.setText("done");
-                } else if(btnStart.getText().toString().toLowerCase().equals("done")) {
-                    if(fitness.getSettingMode() == 0) {
-                        exercisesEasyModeCountDown.cancel();
-                    } else if(fitness.getSettingMode() == 1) {
-                        exercisesMediumModeCountDown.cancel();
-                    } else if(fitness.getSettingMode() == 2) {
-                        exercisesHardModeCountDown.cancel();
-                    }
+        btnStart.setOnClickListener(v -> {
+            if(btnStart.getText().toString().toLowerCase().equals("Start")) {
+                showGetReady();
+                btnStart.setText("Done");
+            } else if(btnStart.getText().toString().toLowerCase().equals("Done")) {
+                if(fitness.getSettingMode() == 0) {
+                    exercisesEasyModeCountDown.cancel();
+                } else if(fitness.getSettingMode() == 1) {
+                    exercisesMediumModeCountDown.cancel();
+                } else if(fitness.getSettingMode() == 2) {
+                    exercisesHardModeCountDown.cancel();
+                }
 
-                    restCountDown.cancel();
+                restCountDown.cancel();
 
-                    if(ex_id < list.size() - 1) {
-                        ShowRestTime();
+                if(ex_id < list.size() - 1) {
+                    ShowRestTime();
 
-                        ex_id++;
+                    ex_id++;
 
-                        progressBar.setProgress(ex_id);
+                    progressBar.setProgress(ex_id);
 
-                        txtTimer.setText("");
-                    } else {
-                        showFinished();
-                    }
-
+                    txtTimer.setText("");
                 } else {
-                    if (fitness.getSettingMode() == 0) {
-                        exercisesEasyModeCountDown.cancel();
-                    } else if (fitness.getSettingMode() == 1) {
-                        exercisesMediumModeCountDown.cancel();
-                    } else if (fitness.getSettingMode() == 2) {
-                        exercisesHardModeCountDown.cancel();
-                    }
+                    showFinished();
+                }
 
-                    restCountDown.cancel();
+            } else {
+                if (fitness.getSettingMode() == 0) {
+                    exercisesEasyModeCountDown.cancel();
+                } else if (fitness.getSettingMode() == 1) {
+                    exercisesMediumModeCountDown.cancel();
+                } else if (fitness.getSettingMode() == 2) {
+                    exercisesHardModeCountDown.cancel();
+                }
 
-                    if (ex_id < list.size()) {
-                        setExerciseInformation(ex_id);
-                    } else {
-                        showFinished();
-                    }
+                restCountDown.cancel();
+
+                if (ex_id < list.size()) {
+                    setExerciseInformation(ex_id);
+                } else {
+                    showFinished();
                 }
             }
         });
 
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Daily_Training.this, MainActivity.class);
-                startActivity(intent);
-            }
+        btnBack.setOnClickListener(v -> {
+            Intent intent = new Intent(Daily_Training.this, MainActivity.class);
+            startActivity(intent);
         });
     }
 
+    @SuppressLint("SetTextI18n")
     private void ShowRestTime() {
         ex_image.setVisibility(View.INVISIBLE);
         btnStart.setVisibility(View.VISIBLE);
@@ -243,6 +236,7 @@ public class Daily_Training extends AppCompatActivity {
         txtGetReady.setText("REST TIME");
     }
 
+    @SuppressLint("SetTextI18n")
     private void showFinished() {
         ex_image.setVisibility(View.INVISIBLE);
         btnStart.setVisibility(View.INVISIBLE);
@@ -261,6 +255,7 @@ public class Daily_Training extends AppCompatActivity {
         fitness.saveDay(""+ Calendar.getInstance().getTimeInMillis());
     }
 
+    @SuppressLint("SetTextI18n")
     private void showGetReady() {
         ex_image.setVisibility(View.INVISIBLE);
         btnStart.setVisibility(View.INVISIBLE);
@@ -311,6 +306,7 @@ public class Daily_Training extends AppCompatActivity {
 
     // Rest
     CountDownTimer restCountDown = new CountDownTimer(10000, 1000) {
+        @SuppressLint("SetTextI18n")
         @Override
         public void onTick(long millisUntilFinished) {
             txtCountdown.setText("" + millisUntilFinished/1000);
@@ -338,6 +334,7 @@ public class Daily_Training extends AppCompatActivity {
 
     // Countdown
     CountDownTimer exercisesEasyModeCountDown = new CountDownTimer(Common.TIME_LIMIT_EASY, 1000) {
+        @SuppressLint("SetTextI18n")
         @Override
         public void onTick(long millisUntilFinished) {
             txtTimer.setText("" + millisUntilFinished / 1000);
@@ -354,6 +351,7 @@ public class Daily_Training extends AppCompatActivity {
     };
 
     CountDownTimer exercisesMediumModeCountDown = new CountDownTimer(Common.TIME_LIMIT_MEDIUM, 1000) {
+        @SuppressLint("SetTextI18n")
         @Override
         public void onTick(long millisUntilFinished) {
             txtTimer.setText("" + millisUntilFinished / 1000);
@@ -370,6 +368,7 @@ public class Daily_Training extends AppCompatActivity {
     };
 
     CountDownTimer exercisesHardModeCountDown = new CountDownTimer(Common.TIME_LIMIT_HARD, 1000) {
+        @SuppressLint("SetTextI18n")
         @Override
         public void onTick(long millisUntilFinished) {
             txtTimer.setText("" + millisUntilFinished / 1000);
@@ -409,6 +408,7 @@ public class Daily_Training extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private void setExerciseInformation(int ex_id) {
         ex_image.setImageResource(list.get(ex_id).getImage_id());
         ex_name.setText(list.get(ex_id).getName());

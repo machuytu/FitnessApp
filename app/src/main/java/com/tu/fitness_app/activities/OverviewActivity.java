@@ -140,6 +140,10 @@ public class OverviewActivity extends AppCompatActivity {
                         intent = new Intent(OverviewActivity.this, OverviewActivity.class);
                         startActivity(intent);
                         break;
+                    case R.id.item8:
+                        intent = new Intent(OverviewActivity.this, HistoryActivity.class);
+                        startActivity(intent);
+                        break;
                 }
                 drawerLayout.closeDrawers();
                 return false;

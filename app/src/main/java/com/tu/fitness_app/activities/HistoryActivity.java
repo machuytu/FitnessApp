@@ -1,10 +1,13 @@
 package com.tu.fitness_app.activities;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,7 +41,6 @@ import java.util.List;
 
 public class HistoryActivity extends AppCompatActivity {
     private DatabaseReference ref_history;
-    private DatabaseReference ref_step;
     private DatabaseReference ref_calories;
     private DatabaseReference ref_basicInfo;
 
@@ -52,8 +54,10 @@ public class HistoryActivity extends AppCompatActivity {
     static float sumOfFat;
     static float sumOfCarbs;
     static float sumOfProtein;
-    static float sumOfMoveCal;
-    static float sumOfEatCal;
+
+    private Toolbar mToolbar;
+    private ActionBar mActionBar;
+
     String UserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
     @Override
@@ -68,7 +72,6 @@ public class HistoryActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         ref_history = database.getReference("history");
         ref_calories = database.getReference("Calories");
-        ref_basicInfo = database.getReference("basicInfo");
 
         // View
         historyListView = findViewById(R.id.historyListView);
@@ -76,11 +79,17 @@ public class HistoryActivity extends AppCompatActivity {
 
         // Read from database
         readFromDatabase(date);
+
+        // Toolbar
+        mToolbar = (Toolbar) findViewById(R.id.recycle_toolbar);
+        setSupportActionBar(mToolbar);
+        mActionBar = getSupportActionBar();
+        mActionBar.setDisplayHomeAsUpEnabled(true);
+        mActionBar.setHomeButtonEnabled(true);
     }
 
     //      https://github.com/Applandeo/Material-Calendar-View
     public void chooseDate(View view) throws OutOfDateRangeException {
-
 
         // calender library
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -103,13 +112,7 @@ public class HistoryActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                  User user = dataSnapshot.getValue(User.class);
                 if (user != null) {
-//                    int currentWeight = getStartModel.getCurrentWeight();
-//                    int targetWeight = getStartModel.getTargetWeight();
-//
-//                    if(currentWeight>targetWeight && sumOfCalories >=0){
-//                        //setting current date
-//                        calendar.set(2018, 6, 26);
-//                    }
+                    // read data user (not done)
                 }
 
             }
@@ -128,19 +131,16 @@ public class HistoryActivity extends AppCompatActivity {
         final AlertDialog alertDialog = builder.create();
         alertDialog.show();
 
-        calendarView.setOnDayClickListener(new OnDayClickListener() {
-            @Override
-            public void onDayClick(EventDay eventDay) {
-                java.util.Calendar clickedDayCalendar = eventDay.getCalendar();
-                String selectedDate = String.valueOf(clickedDayCalendar.get(java.util.Calendar.YEAR))
-                        +'-'+   String.valueOf(clickedDayCalendar.get(java.util.Calendar.MONTH)+1)
-                        +'-'+   String.valueOf(clickedDayCalendar.get(Calendar.DATE));
-                textView.setText(selectedDate);
-                alertDialog.dismiss();
+        calendarView.setOnDayClickListener(eventDay -> {
+            Calendar clickedDayCalendar = eventDay.getCalendar();
+            String selectedDate = String.valueOf(clickedDayCalendar.get(Calendar.YEAR))
+                    +'-'+ (clickedDayCalendar.get(Calendar.MONTH) + 1)
+                    +'-'+ clickedDayCalendar.get(Calendar.DATE);
+            textView.setText(selectedDate);
+            alertDialog.dismiss();
 
-                // Read from the database
-                readFromDatabase(selectedDate);
-            }
+            // Read from the database
+            readFromDatabase(selectedDate);
         });
 
 
@@ -192,16 +192,11 @@ public class HistoryActivity extends AppCompatActivity {
 //
                 for (int i = 0; i < historyArrayList.size(); i++) {
                     sumOfCalories += Float.valueOf(historyArrayList.get(i).getTotalCalories());
-                    sumOfFat += Float.valueOf(historyArrayList.get(i).getTotalFat());
-                    sumOfProtein += Float.valueOf(historyArrayList.get(i).getTotalProtein());
-                    sumOfCarbs += Float.valueOf(historyArrayList.get(i).getTotalCarbs());
+                    sumOfFat += historyArrayList.get(i).getTotalFat();
+                    sumOfProtein += historyArrayList.get(i).getTotalProtein();
+                    sumOfCarbs += historyArrayList.get(i).getTotalCarbs();
                 }
-//                    if(Integer.valueOf(historyArrayList.get(i).getTotalCalories())>0){
-//                        sumOfEatCal += Integer.valueOf(historyArrayList.get(i).getTotalCalories());
-//                    }else{
-//                        sumOfMoveCal += Integer.valueOf(historyArrayList.get(i).getTotalCalories());
-//                    }
-//                }
+
                 Log.d("sum ", String.valueOf(sumOfCalories + sumOfCarbs + sumOfProtein + sumOfFat));
                 Calories calories = new Calories(sumOfCalories, sumOfFat, sumOfCarbs, sumOfProtein);
                 ref_calories.child(UserId).child(date).setValue(calories);
@@ -216,6 +211,15 @@ public class HistoryActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public void onBackPressed()
+    {
+        // code here to show dialog
+        super.onBackPressed();  // optional depending on your needs
+        Intent intent = new Intent(HistoryActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 }

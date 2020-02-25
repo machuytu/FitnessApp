@@ -143,4 +143,14 @@
     <string name="overview">Overview</string>
     <string name="history">History</string>
     <string name="choose_date">Choose date</string>
+    <string name="name_of_exercise">NAME OF EXERCISE</string>
+    <string name="get_ready">GET READY</string>
+    <string name="back">Back</string>
+    <string name="start">Start</string>
+    <string name="on">On</string>
+    <string name="off">Off</string>
+    <string name="save">Save</string>
+    <string name="hard">Hard</string>
+    <string name="medium">Medium</string>
+    <string name="easy">Easy</string>
 </resources>

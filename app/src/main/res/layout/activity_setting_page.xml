@@ -2,107 +2,228 @@
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:id="@+id/drawer_layout"
-    tools:openDrawer="start"
     tools:context=".activities.SettingPage">
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <ScrollView
+        android:id="@+id/scrollView1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="3">
-
-        <include
-            layout="@layout/app_bar_main"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="60dp">
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardView"
-            android:layout_below="@+id/timePicker"
-            android:padding="16dp"
-            android:layout_margin="6dp"
-            app:cardElevation="4dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <RadioGroup
-                android:id="@+id/rdiGroup"
-                android:orientation="horizontal"
-                android:weightSum="3"
+            <include
+                layout="@layout/app_bar_main"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent" />
 
-                <RadioButton
-                    android:id="@+id/rdiEasy"
-                    android:text="Easy"
-                    android:layout_weight="1"
-                    android:theme="@style/MyRadioButton"
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="60dp">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView"
+                    android:layout_below="@+id/switchAlarm"
+                    android:padding="16dp"
+                    android:layout_margin="6dp"
+                    app:cardElevation="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RadioGroup
+                        android:id="@+id/rdiGroup"
+                        android:orientation="horizontal"
+                        android:weightSum="3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <RadioButton
+                            android:id="@+id/rdiEasy"
+                            android:text="@string/easy"
+                            android:layout_weight="1"
+                            android:theme="@style/MyRadioButton"
+                            android:layout_height="wrap_content"
+                            android:layout_width="0dp" />
+
+                        <RadioButton
+                            android:id="@+id/rdiMedium"
+                            android:text="@string/medium"
+                            android:layout_weight="1"
+                            android:theme="@style/MyRadioButton"
+                            android:layout_height="wrap_content"
+                            android:layout_width="0dp" />
+
+                        <RadioButton
+                            android:id="@+id/rdiHard"
+                            android:text="@string/hard"
+                            android:layout_weight="1"
+                            android:theme="@style/MyRadioButton"
+                            android:layout_height="wrap_content"
+                            android:layout_width="0dp" />
+                    </RadioGroup>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView1"
+                    android:layout_below="@+id/cardView"
+                    android:padding="16dp"
+                    android:layout_margin="6dp"
+                    app:cardElevation="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RadioGroup
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkedButton="@+id/button1"
+                        android:orientation="vertical"
+                        android:layout_toEndOf="@id/textView4"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="10dp"
+                        android:textSize="15sp"
+                        android:id="@+id/radioGroup1">
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/button1"
+                            android:text="@string/text5"/>
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/button2"
+                            android:text="@string/text6"/>
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/button3"
+                            android:text="@string/text7"/>
+                    </RadioGroup>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView2"
+                    android:layout_below="@+id/cardView1"
+                    android:padding="16dp"
+                    android:layout_margin="6dp"
+                    app:cardElevation="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/textView5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="15dp"
+                            android:text="@string/text8"
+                            android:textColor="@color/black"
+                            android:textSize="15sp" />
+
+                        <EditText
+                            android:id="@+id/et3"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="110dp"
+                            android:layout_toEndOf="@id/textView5"
+                            android:textColor="@color/black"
+                            android:backgroundTint="@color/black"
+                            android:textSize="15sp"
+                            android:inputType="numberDecimal"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="15sp"
+                            android:text="@string/text9"
+                            android:textColor="@color/black"
+                            android:id="@+id/textView6"
+                            android:layout_below="@id/textView5"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="15dp"/>
+
+                        <EditText
+                            android:layout_width="70dp"
+                            android:id="@+id/et4"
+                            android:layout_height="wrap_content"
+                            android:textSize="15sp"
+                            android:layout_marginStart="110dp"
+                            android:backgroundTint="@color/black"
+                            android:layout_toEndOf="@id/textView6"
+                            android:layout_below="@id/textView5"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="15sp"
+                            android:text="@string/text10"
+                            android:textColor="@color/black"
+                            android:id="@+id/textView7"
+                            android:layout_below="@id/textView6"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="15dp"/>
+
+                        <EditText
+                            android:layout_width="70dp"
+                            android:id="@+id/et5"
+                            android:layout_height="wrap_content"
+                            android:textSize="15sp"
+                            android:layout_marginStart="119dp"
+                            android:backgroundTint="@color/black"
+                            android:layout_toEndOf="@id/textView7"
+                            android:layout_below="@id/textView6"/>
+                    </RelativeLayout>
+
+
+
+                </androidx.cardview.widget.CardView>
+
+                <ToggleButton
+                    android:id="@+id/switchAlarm"
+                    android:layout_below="@+id/timePicker"
+                    android:layout_centerHorizontal="true"
+                    android:textOn="@string/on"
+                    android:textOff="@string/off"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TimePicker
+                    android:id="@+id/timePicker"
+                    android:numbersSelectorColor="@color/colorPrimary"
+                    android:headerBackground="@color/cardview_dark_background"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <info.hoang8f.widget.FButton
+                    android:id="@+id/btnSave"
+                    android:layout_below="@id/cardView2"
+                    android:layout_width="393dp"
                     android:layout_height="wrap_content"
-                    android:layout_width="0dp" />
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/save"
+                    android:textColor="@android:color/white"
+                    app:fButtonColor="@color/colorPrimary"
+                    app:cornerRadius="2dp"
+                    app:shadowColor="@color/colorPrimaryDark"
+                    app:shadowEnabled="true"
+                    app:shadowHeight="2dp" />
+            </RelativeLayout>
+        </FrameLayout>
+    </ScrollView>
 
-                <RadioButton
-                    android:id="@+id/rdiMedium"
-                    android:text="Medium"
-                    android:layout_weight="1"
-                    android:theme="@style/MyRadioButton"
-                    android:layout_height="wrap_content"
-                    android:layout_width="0dp" />
 
-                <RadioButton
-                    android:id="@+id/rdiHard"
-                    android:text="Hard"
-                    android:layout_weight="1"
-                    android:theme="@style/MyRadioButton"
-                    android:layout_height="wrap_content"
-                    android:layout_width="0dp" />
-            </RadioGroup>
-        </androidx.cardview.widget.CardView>
-
-        <ToggleButton
-            android:id="@+id/switchAlarm"
-            android:layout_below="@+id/cardView"
-            android:layout_centerHorizontal="true"
-            android:textOn="On"
-            android:textOff="Off"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TimePicker
-            android:id="@+id/timePicker"
-            android:numbersSelectorColor="@color/colorPrimary"
-            android:headerBackground="@color/cardview_dark_background"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <info.hoang8f.widget.FButton
-            android:id="@+id/btnSave"
-            android:layout_alignParentBottom="true"
-            android:layout_width="393dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="4dp"
-            android:layout_marginBottom="8dp"
-            android:layout_weight="1"
-            android:text="Save"
-            android:textColor="@android:color/white"
-            app:fButtonColor="@color/colorPrimary"
-            app:cornerRadius="2dp"
-            app:shadowColor="@color/colorPrimaryDark"
-            app:shadowEnabled="true"
-            app:shadowHeight="2dp" />
-        </RelativeLayout>
-    </FrameLayout>
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"

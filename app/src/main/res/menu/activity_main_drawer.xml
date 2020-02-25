@@ -26,6 +26,10 @@
             android:id="@+id/item7"
             android:icon="@drawable/ic_pie_chart_black_24dp"
             android:title="@string/overview" />
+        <item
+            android:id="@+id/item8"
+            android:icon="@drawable/ic_history_black_24dp"
+            android:title="@string/history" />
     </group>
 
     <item android:title="@string/settings">

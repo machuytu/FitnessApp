@@ -131,6 +131,10 @@ public class MainActivity extends AppCompatActivity {
                         intent = new Intent(MainActivity.this, OverviewActivity.class);
                         startActivity(intent);
                         break;
+                    case R.id.item8:
+                        intent = new Intent(MainActivity.this, HistoryActivity.class);
+                        startActivity(intent);
+                        break;
                 }
                 drawerLayout.closeDrawers();
                 return false;

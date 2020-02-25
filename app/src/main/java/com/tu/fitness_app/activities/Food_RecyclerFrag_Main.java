@@ -58,7 +58,8 @@ public class Food_RecyclerFrag_Main extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        mToolbar = (Toolbar) findViewById(R.id.recycle_toolbar);
+        // Toolbar
+        mToolbar = findViewById(R.id.recycle_toolbar);
         setSupportActionBar(mToolbar);
         mActionBar = getSupportActionBar();
         mActionBar.setDisplayHomeAsUpEnabled(true);

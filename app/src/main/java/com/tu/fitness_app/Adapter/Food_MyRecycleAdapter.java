@@ -18,14 +18,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.tu.fitness_app.Model.Calories;
 import com.tu.fitness_app.Model.History;
 import com.tu.fitness_app.R;
 import com.tu.fitness_app.activities.Food_RecyclerFrag_Main;
 
 import org.json.JSONArray;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;

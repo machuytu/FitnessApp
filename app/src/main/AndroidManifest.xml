@@ -21,14 +21,18 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_round"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activities.HistoryActivity"></activity>
+        <activity
+            android:name=".activities.HistoryActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="Add Food"
+            android:parentActivityName=".activities.MainActivity" />
         <activity android:name=".activities.FoodSummaryActivity" />
         <activity
             android:name=".activities.Food_RecyclerFrag_Main"
@@ -46,7 +50,6 @@
             android:theme="@style/AppTheme.AppThemeNoBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
