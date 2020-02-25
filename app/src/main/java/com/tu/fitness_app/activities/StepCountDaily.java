@@ -289,7 +289,7 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
         if (activityRunning) {
             textView = findViewById(R.id.textRemaining);
             ((TextView) textView).setText(String.valueOf(event.values[0]));
-            evsteps = event.values[0];
+                    evsteps = event.values[0];
         }
     }
 
