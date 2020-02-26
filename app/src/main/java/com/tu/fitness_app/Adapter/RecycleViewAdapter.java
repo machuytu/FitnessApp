@@ -27,8 +27,8 @@ class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClick
 
     public RecyclerViewHolder(@NonNull View itemView) {
         super(itemView);
-        image = (ImageView)itemView.findViewById(R.id.ex_img);
-        text = (TextView)itemView.findViewById(R.id.ex_name);
+        image = itemView.findViewById(R.id.ex_img);
+        text = itemView.findViewById(R.id.ex_name);
 
         itemView.setOnClickListener(this);
     }
@@ -65,16 +65,13 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder>
         holder.image.setImageResource(excerciseList.get(position).getImage_id());
         holder.text.setText(excerciseList.get(position).getName());
 
-        holder.setItemClickListener(new ItemClickListener() {
-            @Override
-            public void onClick(View view, int position) {
+        holder.setItemClickListener((view, position1) -> {
 
-                //get activity
-                Intent intent = new Intent(context, ViewEx.class);
-                intent.putExtra("image_id", excerciseList.get(position).getImage_id());
-                intent.putExtra("name", excerciseList.get(position).getName());
-                context.startActivity(intent);
-            }
+            //get activity
+            Intent intent = new Intent(context, ViewEx.class);
+            intent.putExtra("image_id", excerciseList.get(position1).getImage_id());
+            intent.putExtra("name", excerciseList.get(position1).getName());
+            context.startActivity(intent);
         });
     }
 

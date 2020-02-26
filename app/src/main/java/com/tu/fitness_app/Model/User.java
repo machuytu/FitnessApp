@@ -33,4 +33,12 @@ public class User {
     public int GetCalorieGoal() {
         return caloriegoal;
     }
+
+    public void SetCalorieGoal(int caloriegoal) {
+        this.caloriegoal = caloriegoal;
+    }
+
+    public void SetStepGoal(int stepgoal) {
+        this.stepgoal = stepgoal;
+    }
 }

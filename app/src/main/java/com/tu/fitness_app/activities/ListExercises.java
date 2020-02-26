@@ -49,7 +49,7 @@ public class ListExercises extends AppCompatActivity {
 
         initData();
 
-        recyclerView = (RecyclerView)findViewById(R.id.listEx);
+        recyclerView = findViewById(R.id.listEx);
         adapter = new RecycleViewAdapter(exerciseList,getBaseContext());
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);

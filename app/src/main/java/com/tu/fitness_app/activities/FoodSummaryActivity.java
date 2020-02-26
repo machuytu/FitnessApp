@@ -34,11 +34,18 @@ public class FoodSummaryActivity extends AppCompatActivity {
         food_fat = Food_MyRecycleAdapter.totalFat;
         food_carbs = Food_MyRecycleAdapter.totalCarbs;
         food_protein = Food_MyRecycleAdapter.totalProtein;
-        Log.d("Food Summary", food_fat + String.valueOf(food_carbs) + food_protein);
 
-        max_fat = OverviewActivity.caloriesMax * 25 / 100;
+        max_fat = OverviewActivity.caloriesMax * 35 / 100;
         max_carbs = OverviewActivity.caloriesMax * 35 / 100;
         max_protein = OverviewActivity.caloriesMax * 40 / 100;
+
+        Log.d("max fat", String.valueOf(max_fat));
+        Log.d("max carb", String.valueOf(max_carbs));
+        Log.d("max protein", String.valueOf(max_protein));
+        Log.d("food fat", String.valueOf(food_fat));
+        Log.d("food carb", String.valueOf(food_carbs));
+        Log.d("food protein", String.valueOf(food_protein));
+
         // Animation
         TranslateAnimation translation_fat;
         translation_fat = new TranslateAnimation(0f, 0F, 0f, 180);
@@ -68,11 +75,11 @@ public class FoodSummaryActivity extends AppCompatActivity {
             fats.setProgress((100 * (LoginActivity.user_fat)) / max_fat);
             fats.setWidthProgressBackground(25);
             fats.setWidthProgressBarLine(25);
-            if (food_fat > 0) {
-                fats.setText(String.valueOf(food_fat));
-            } else {
-                fats.setText(String.valueOf(LoginActivity.user_fat));
-            }
+        }
+        if (food_fat > 0) {
+            fats.setText(String.valueOf(food_fat));
+        } else {
+            fats.setText(String.valueOf(LoginActivity.user_fat));
         }
         fats.setTextSize(35);
         fats.setBackgroundColor(Color.LTGRAY);
@@ -82,10 +89,11 @@ public class FoodSummaryActivity extends AppCompatActivity {
         // Carbs Progress Bar
         if (food_carbs > 0) {
             carbs.setProgress((100 * (food_carbs)) / max_carbs);
-        } else
+        } else {
             carbs.setProgress((100 * (LoginActivity.user_carbs)) / max_carbs);
-        carbs.setWidthProgressBackground(25);
-        carbs.setWidthProgressBarLine(25);
+            carbs.setWidthProgressBackground(25);
+            carbs.setWidthProgressBarLine(25);
+        }
         if (food_carbs > 0) {
             carbs.setText(String.valueOf(food_carbs));
         } else {
@@ -99,10 +107,11 @@ public class FoodSummaryActivity extends AppCompatActivity {
         // Protein Progress Bar
         if (food_protein > 0) {
             protein.setProgress((100 * (food_protein)) / max_protein);
-        } else
+        } else {
             protein.setProgress((100 * (LoginActivity.user_protein)) / max_protein);
-        protein.setWidthProgressBackground(25);
-        protein.setWidthProgressBarLine(25);
+            protein.setWidthProgressBackground(25);
+            protein.setWidthProgressBarLine(25);
+        }
         if (food_protein > 0) {
             protein.setText(String.valueOf(food_protein));
         } else {

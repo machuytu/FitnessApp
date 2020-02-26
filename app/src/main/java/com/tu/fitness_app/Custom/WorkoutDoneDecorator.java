@@ -11,8 +11,8 @@ import java.util.HashSet;
 
 public class WorkoutDoneDecorator implements DayViewDecorator {
 
-    HashSet<CalendarDay> list;
-    ColorDrawable colorDrawable;
+    private HashSet<CalendarDay> list;
+    private ColorDrawable colorDrawable;
 
     public WorkoutDoneDecorator(HashSet<CalendarDay> list) {
         this.list = list;

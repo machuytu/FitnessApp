@@ -2,7 +2,6 @@ package com.tu.fitness_app.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -23,7 +22,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
-import com.tu.fitness_app.Custom.WorkoutDoneDecorator;
 import com.tu.fitness_app.Database.Fitness;
 import com.tu.fitness_app.R;
 
@@ -41,10 +39,7 @@ class CalendarActivity extends AppCompatActivity {
     Fitness fitness;
 
     ProgressBar progressBar;
-    private NavigationView navigationView;
     private DrawerLayout drawerLayout;
-
-    private AppBarConfiguration mAppBarConfiguration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,16 +48,15 @@ class CalendarActivity extends AppCompatActivity {
 
         fitness = new Fitness(this);
 
-        materialCalendarView = (MaterialCalendarView)findViewById(R.id.calendar);
+        materialCalendarView = findViewById(R.id.calendar);
 
         List<String> workoutDay = fitness.getWorkoutDays();
-        HashSet<CalendarDay> convertedList = new HashSet<>();
 
         progressBar = (MaterialProgressBar)findViewById(R.id.progressBar);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
 
         drawerLayout = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle actionBarDrawerToggle =
@@ -77,11 +71,9 @@ class CalendarActivity extends AppCompatActivity {
                         super.onDrawerOpened(drawerView);
                     }
                 };
-
-//        drawerLayout.setDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
 
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
+        AppBarConfiguration mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,
                 R.id.nav_tools, R.id.nav_share, R.id.nav_send)
                 .setDrawerLayout(drawerLayout)
@@ -91,65 +83,60 @@ class CalendarActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
 
         navigationView.bringToFront();
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId())
-                {
-                    case R.id.item0:
-                        Intent intent = new Intent(CalendarActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        break;
-                    case R.id.item1:
-                        intent = new Intent(CalendarActivity.this, ListExercises.class);
-                        startActivity(intent);
-                        break;
-                    case R.id.item2:
-                        intent = new Intent(CalendarActivity.this, Daily_Training.class);
-                        startActivity(intent);
-                        break;
-                    case R.id.item3:
-                        intent = new Intent(CalendarActivity.this, CalendarActivity.class);
-                        startActivity(intent);
-                        break;
-                    case R.id.item4:
-                        intent = new Intent(CalendarActivity.this, SettingPage.class);
-                        startActivity(intent);
-                        break;
-                    case R.id.item5:
-                        intent = new Intent(CalendarActivity.this, StepCountDaily.class);
-                        startActivity(intent);
-                        break;
-                    case R.id.item6:
-                        AuthUI.getInstance().signOut(CalendarActivity.this).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            public void onComplete(@NonNull Task<Void> task) {
-                                Toast.makeText(CalendarActivity.this, "Signed out successfully", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        Intent myIntent = new Intent(CalendarActivity.this, LoginActivity.class);
-                        myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);// clear back stack
-                        startActivity(myIntent);
-                        finish();
-                    default:
-                        break;
-                    case R.id.item7:
-                        intent = new Intent(CalendarActivity.this, OverviewActivity.class);
-                        startActivity(intent);
-                        break;
-                    case R.id.item8:
-                        intent = new Intent(CalendarActivity.this, HistoryActivity.class);
-                        startActivity(intent);
-                        break;
-                }
-                drawerLayout.closeDrawers();
-                return false;
+        navigationView.setNavigationItemSelectedListener(menuItem -> {
+            switch (menuItem.getItemId())
+            {
+                case R.id.item0:
+                    Intent intent = new Intent(CalendarActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    break;
+                case R.id.item1:
+                    intent = new Intent(CalendarActivity.this, ListExercises.class);
+                    startActivity(intent);
+                    break;
+                case R.id.item2:
+                    intent = new Intent(CalendarActivity.this, Daily_Training.class);
+                    startActivity(intent);
+                    break;
+                case R.id.item3:
+                    intent = new Intent(CalendarActivity.this, CalendarActivity.class);
+                    startActivity(intent);
+                    break;
+                case R.id.item4:
+                    intent = new Intent(CalendarActivity.this, SettingPage.class);
+                    startActivity(intent);
+                    break;
+                case R.id.item5:
+                    intent = new Intent(CalendarActivity.this, StepCountDaily.class);
+                    startActivity(intent);
+                    break;
+                case R.id.item6:
+                    AuthUI.getInstance().signOut(CalendarActivity.this).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        public void onComplete(@NonNull Task<Void> task) {
+                            Toast.makeText(CalendarActivity.this, "Signed out successfully", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    Intent myIntent = new Intent(CalendarActivity.this, LoginActivity.class);
+                    myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);// clear back stack
+                    startActivity(myIntent);
+                    finish();
+                default:
+                    break;
+                case R.id.item7:
+                    intent = new Intent(CalendarActivity.this, OverviewActivity.class);
+                    startActivity(intent);
+                    break;
+                case R.id.item8:
+                    intent = new Intent(CalendarActivity.this, HistoryActivity.class);
+                    startActivity(intent);
+                    break;
             }
+            drawerLayout.closeDrawers();
+            return false;
         });
 
 
         for (String value:workoutDay) {
-            convertedList.add(CalendarDay.from(new Date(Long.parseLong(value))));
         }
-        materialCalendarView.addDecorator(new WorkoutDoneDecorator(convertedList));
     }
 }

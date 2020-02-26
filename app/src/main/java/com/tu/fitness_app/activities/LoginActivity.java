@@ -24,6 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.tu.fitness_app.Model.Calories;
+import com.tu.fitness_app.Model.Setting;
 import com.tu.fitness_app.Model.Steps;
 import com.tu.fitness_app.Model.User;
 import com.tu.fitness_app.R;
@@ -49,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
     public static float user_fat = 0f;
     public static float user_carbs = 0f;
     public static float user_protein = 0f;
+    public static float mode = 0f;
     Date today = new Date();
     // Authentication providers
     List<AuthUI.IdpConfig> providers = Arrays.asList(
@@ -102,6 +104,7 @@ public class LoginActivity extends AppCompatActivity {
         DatabaseReference usersRef = mDatabase.child("Users");
         DatabaseReference stepsRef = mDatabase.child("Steps");
         DatabaseReference caloriesRef = mDatabase.child("Calories");
+        DatabaseReference settingRef = mDatabase.child("Setting");
 
         User newUser = new User("", "", "", 0, "", 0, 0, 0);
         usersRef.child(userId).setValue(newUser);
@@ -112,19 +115,9 @@ public class LoginActivity extends AppCompatActivity {
         Calories calories = new Calories(0, 0, 0, 0);
         final String date = today.getYear() + 1900 + "-" + (1 + today.getMonth()) + "-" + today.getDate();
         caloriesRef.child(userId).child(date).setValue(calories);
-    }
 
-    private void RestartCaloriesUserInfo() {
-        FirebaseUser user = mAuth.getCurrentUser();
-        assert user != null;
-        String userId = user.getUid();
-        DatabaseReference caloriesRef = mDatabase.child("Calories");
-
-        if (caloriesRef.child("totalcalories") == null) {
-            Calories calories = new Calories(0, 0, 0, 0);
-            final String date = today.getYear() + 1900 + "-" + (1 + today.getMonth()) + "-" + today.getDate();
-            caloriesRef.child(userId).child(date).setValue(calories);
-        }
+        Setting setting = new Setting(0);
+        settingRef.child(userId).setValue(setting);
     }
 
     private DatabaseReference getUsersRef(String ref) {
@@ -140,6 +133,13 @@ public class LoginActivity extends AppCompatActivity {
         String userId = user.getUid();
         final String date = today.getYear() + 1900 + "-" + (1 + today.getMonth()) + "-" + today.getDate();
         return mDatabase.child("Calories").child(userId).child(date).child(ref);
+    }
+
+    private DatabaseReference getSettingRef(String ref) {
+        FirebaseUser user = mAuth.getCurrentUser();
+        assert user != null;
+        String userId = user.getUid();
+        return mDatabase.child("Setting").child(userId).child(ref);
     }
 
     private void getUserInfo() {
@@ -234,6 +234,22 @@ public class LoginActivity extends AppCompatActivity {
                     user_protein = Float.parseFloat(String.valueOf(dataSnapshot.getValue()));
                 } else {
                     user_protein = 0f;
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+            }
+        });
+
+        getSettingRef("mode").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    mode = Integer.parseInt(String.valueOf(dataSnapshot.getValue()));
+                } else {
+                    mode = 0f;
                 }
             }
 

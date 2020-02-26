@@ -5,9 +5,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,7 +17,6 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -30,17 +27,14 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.firebase.ui.auth.AuthUI;
-import com.firebase.ui.auth.viewmodel.AuthViewModelBase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.FirebaseDatabase;
 import com.tu.fitness_app.Database.Fitness;
+import com.tu.fitness_app.Model.Setting;
 import com.tu.fitness_app.Model.User;
 import com.tu.fitness_app.R;
 
@@ -55,6 +49,7 @@ public class SettingPage extends AppCompatActivity {
     RadioButton rdiEasy, rdiMedium, rdiHard;
     RadioGroup rdiGroup;
     Fitness fitness;
+    Setting setting;
     ToggleButton switchAlarm;
     TimePicker timePicker;
 
@@ -62,20 +57,21 @@ public class SettingPage extends AppCompatActivity {
     EditText editText2;
 
     ProgressBar progressBar;
-    private NavigationView navigationView;
     private DrawerLayout drawerLayout;
 
-    private AppBarConfiguration mAppBarConfiguration;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
-    private float seriesCalo;
-    private float seriesStep;
+    private int CaloriesHolder;
+    private int StepHolder;
 
     @SuppressLint({"WrongViewCast", "SetTextI18n"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting_page);
+
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
         btnSave = findViewById(R.id.btnSave);
 
@@ -96,11 +92,15 @@ public class SettingPage extends AppCompatActivity {
         int mode = fitness.getSettingMode();
         setRadioButton(mode);
 
+//        int mode1 = (int) LoginActivity.mode;
+//        Log.d("mode:", String.valueOf(mode1));
+//        setRadioButton(mode1);
+
         progressBar = (MaterialProgressBar)findViewById(R.id.progressBar);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
 
         drawerLayout = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle actionBarDrawerToggle =
@@ -115,11 +115,9 @@ public class SettingPage extends AppCompatActivity {
                         super.onDrawerOpened(drawerView);
                     }
                 };
-
-//        drawerLayout.setDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
 
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
+        AppBarConfiguration mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,
                 R.id.nav_tools, R.id.nav_share, R.id.nav_send)
                 .setDrawerLayout(drawerLayout)
@@ -129,73 +127,80 @@ public class SettingPage extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
 
         navigationView.bringToFront();
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId())
-                {
-                    case R.id.item1:
-                        Intent intent = new Intent(SettingPage.this, ListExercises.class);
-                        startActivity(intent);
-                        break;
-                    case R.id.item2:
-                        intent = new Intent(SettingPage.this, Daily_Training.class);
-                        startActivity(intent);
-                        break;
-                    case R.id.item3:
-                        intent = new Intent(SettingPage.this, com.tu.fitness_app.activities.CalendarActivity.class);
-                        startActivity(intent);
-                        break;
-                    case R.id.item4:
-                        intent = new Intent(SettingPage.this, SettingPage.class);
-                        startActivity(intent);
-                        break;
-                    case R.id.item5:
-                        intent = new Intent(SettingPage.this, StepCountDaily.class);
-                        startActivity(intent);
-                        break;
-                    case R.id.item6:
-                        AuthUI.getInstance().signOut(SettingPage.this).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            public void onComplete(@NonNull Task<Void> task) {
-                                Toast.makeText(SettingPage.this, "Signed out successfully", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        Intent myIntent = new Intent(SettingPage.this, LoginActivity.class);
-                        myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);// clear back stack
-                        startActivity(myIntent);
-                        finish();
-                    default:
-                        break;
-                    case R.id.item7:
-                        intent = new Intent(SettingPage.this, OverviewActivity.class);
-                        startActivity(intent);
-                        break;
-                    case R.id.item8:
-                        intent = new Intent(SettingPage.this, HistoryActivity.class);
-                        startActivity(intent);
-                        break;
-                }
-                drawerLayout.closeDrawers();
-                return false;
+        navigationView.setNavigationItemSelectedListener(menuItem -> {
+            switch (menuItem.getItemId())
+            {
+                case R.id.item1:
+                    Intent intent = new Intent(SettingPage.this, ListExercises.class);
+                    startActivity(intent);
+                    break;
+                case R.id.item2:
+                    intent = new Intent(SettingPage.this, Daily_Training.class);
+                    startActivity(intent);
+                    break;
+                case R.id.item3:
+                    intent = new Intent(SettingPage.this, CalendarActivity.class);
+                    startActivity(intent);
+                    break;
+                case R.id.item4:
+                    intent = new Intent(SettingPage.this, SettingPage.class);
+                    startActivity(intent);
+                    break;
+                case R.id.item5:
+                    intent = new Intent(SettingPage.this, StepCountDaily.class);
+                    startActivity(intent);
+                    break;
+                case R.id.item6:
+                    AuthUI.getInstance().signOut(SettingPage.this).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        public void onComplete(@NonNull Task<Void> task) {
+                            Toast.makeText(SettingPage.this, "Signed out successfully", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    Intent myIntent = new Intent(SettingPage.this, LoginActivity.class);
+                    myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);// clear back stack
+                    startActivity(myIntent);
+                    finish();
+                default:
+                    break;
+                case R.id.item7:
+                    intent = new Intent(SettingPage.this, OverviewActivity.class);
+                    startActivity(intent);
+                    break;
+                case R.id.item8:
+                    intent = new Intent(SettingPage.this, HistoryActivity.class);
+                    startActivity(intent);
+                    break;
             }
+            drawerLayout.closeDrawers();
+            return false;
         });
 
         // Show data
-        seriesCalo = LoginActivity.mSeries2;
+        float seriesCalo = LoginActivity.mSeries2;
         editText1.setText(Integer.toString((int) seriesCalo));
 
-        seriesStep = LoginActivity.mSeries1;
+        float seriesStep = LoginActivity.mSeries1;
         editText2.setText(Integer.toString((int) seriesStep));
 
         //Event
         btnSave.setOnClickListener(v -> {
+            // Get data from text
+            CaloriesHolder = Integer.parseInt(editText1.getText().toString().trim());
+            StepHolder = Integer.parseInt(editText2.getText().toString().trim());
+
+            User user = new User();
+            user.SetCalorieGoal(CaloriesHolder);
+            user.SetStepGoal(StepHolder);
+
+            final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            mDatabase.child("Users").child(userId).setValue(user);
+
             saveAlarm(switchAlarm.isChecked());
             saveWorkoutState();
             Toast.makeText(SettingPage.this, "SAVE!!!", Toast.LENGTH_SHORT).show();
             finish();
         });
     }
-
 
     private void saveAlarm(boolean checked) {
         if(checked) {
@@ -208,9 +213,7 @@ public class SettingPage extends AppCompatActivity {
 
             Calendar calendar = Calendar.getInstance();
             Date toDate = Calendar.getInstance().getTime();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                calendar.set(toDate.getYear(), toDate.getMonth(), toDate.getDay(), timePicker.getHour(), timePicker.getMinute());
-            }
+            calendar.set(toDate.getYear(), toDate.getMonth(), toDate.getDay(), timePicker.getHour(), timePicker.getMinute());
 
             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
 
@@ -233,6 +236,21 @@ public class SettingPage extends AppCompatActivity {
         } else  if(selectID == rdiHard.getId()) {
             fitness.saveSettingMode(2);
         }
+
+//        int selectID = rdiGroup.getCheckedRadioButtonId();
+//        Setting setting = new Setting();
+//        if(selectID == rdiEasy.getId()) {
+////            fitness.saveSettingMode(0);
+//            setting.SetSetting(0);
+//        } else if(selectID == rdiMedium.getId()) {
+////            fitness.saveSettingMode(1);
+//            setting.SetSetting(1);
+//        } else  if(selectID == rdiHard.getId()) {
+////            fitness.saveSettingMode(2);
+//            setting.SetSetting(2);
+//        }
+//        final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+//        mDatabase.child("Setting").child(userId).setValue(setting);
     }
 
     private void setRadioButton(int mode) {

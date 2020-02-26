@@ -3,6 +3,7 @@ package com.tu.fitness_app.Database;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
@@ -10,7 +11,7 @@ import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Fitness extends SQLiteAssetHelper {
+public class Fitness extends SQLiteOpenHelper {
 
 
     private static final String WORKOUT_DAYS_TABLE_NAME = "WorkoutDays";
@@ -36,6 +37,8 @@ public class Fitness extends SQLiteAssetHelper {
         Cursor cursor = qb.query(db, sqlSelect,null, null, null, null, null);
         cursor.moveToFirst();
         return cursor.getInt(cursor.getColumnIndex("Mode"));
+
+
     }
 
     public void saveSettingMode(int value) {
@@ -68,5 +71,15 @@ public class Fitness extends SQLiteAssetHelper {
         SQLiteDatabase db = getReadableDatabase();
         String query = String.format("INSERT INTO WorkoutDays (Day) VALUES(%s)", value);
         db.execSQL(query);
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
     }
 }

@@ -11,9 +11,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.BounceInterpolator;
@@ -25,19 +23,9 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.natasa.progressviews.CircleProgressBar;
 import com.natasa.progressviews.utils.OnProgressViewListener;
-import com.tu.fitness_app.Adapter.Food_MyRecycleAdapter;
-import com.tu.fitness_app.Model.Calories;
 import com.tu.fitness_app.R;
-
-import java.util.Date;
 
 public class OverviewActivity extends AppCompatActivity {
 
@@ -57,7 +45,6 @@ public class OverviewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_overview);
 
         food_calories = LoginActivity.calRef;
-//        food_calories = HistoryActivity.sumOfCalories;
 
         // Setting Steps and Calories
         stepMax = SetGoalActivity.mSeries;
@@ -200,7 +187,6 @@ public class OverviewActivity extends AppCompatActivity {
             public void onFinish() {
                 // Do Something On Progress Finish
                 steps.setText("done!");
-                // circleProgressBar.resetProgressBar();
             }
 
             @Override
@@ -253,20 +239,11 @@ public class OverviewActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        final ImageView share_a_run = findViewById(R.id.share_a_run);
-        share_a_run.setOnClickListener(v -> {
-//                Intent intent = new Intent(OverviewActivity.this, AskLocationActivity.class);
-//                startActivity(intent);
-        });
-
         // Add calories
         ImageView addCal = findViewById(R.id.addcalories);
-        addCal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(OverviewActivity.this, Food_RecyclerFrag_Main.class);
-                startActivity(intent);
-            }
+        addCal.setOnClickListener(v -> {
+            Intent intent = new Intent(OverviewActivity.this, Food_RecyclerFrag_Main.class);
+            startActivity(intent);
         });
     }
 }
