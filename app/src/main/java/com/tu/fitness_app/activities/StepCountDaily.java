@@ -12,6 +12,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -28,11 +29,21 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.hookedonplay.decoviewlib.DecoView;
 import com.hookedonplay.decoviewlib.charts.DecoDrawEffect;
 import com.hookedonplay.decoviewlib.charts.SeriesItem;
 import com.hookedonplay.decoviewlib.events.DecoEvent;
+import com.tu.fitness_app.Model.Steps;
 import com.tu.fitness_app.R;
+
+import java.util.Date;
 
 public class StepCountDaily extends AppCompatActivity implements SensorEventListener {
     /**
@@ -44,7 +55,8 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
      * Maximum value for each data series in the {@link DecoView}. This can be different for each
      * data series, in this example we are applying the same all data series
      */
-    public static float mSeriesMax = 0f;
+
+    public static int mSeriesMax = 0;
     boolean activityRunning;
 
     /**
@@ -58,13 +70,28 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
     private View textView;
     private SensorManager sensorManager;
 
-    public static float evsteps;
-    public static  int cont = 0;
+    public static int evsteps;
+    private static int cont = 0;
+
+    private static int stepsAtReset;
+    private static int stepsInSensor;
 
     Toolbar toolbar;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     ActionBarDrawerToggle toggle;
+
+    // Firebase database init
+    private DatabaseReference mDatabase;
+    private FirebaseAuth mAuth;
+
+    private DatabaseReference getStepsRef() {
+        FirebaseUser user = mAuth.getCurrentUser();
+        String userId = user.getUid();
+        Date today = new Date();
+        final String date = today.getYear() + 1900 + "-" + (1 + today.getMonth()) + "-" + today.getDate();
+        return mDatabase.child("Steps").child(userId).child(date).child("totalsteps");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,9 +99,14 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
         setContentView(R.layout.activity_step_count_daily);
         textView = findViewById(R.id.textRemaining);
 
+        mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
         mDecoView = findViewById(R.id.dynamicArcView);
         mSeriesMax = SetGoalActivity.mSeries;
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+
+        stepsAtReset = stepsInSensor;
 
         // Navigation Bar
         toolbar = findViewById(R.id.toolbar);
@@ -175,56 +207,38 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
         if(cont == 1) {
             resetText();
             mDecoView.addEvent(new DecoEvent.Builder(DecoDrawEffect.EffectType.EFFECT_SPIRAL_EXPLODE)
-                    .setIndex(mSeries1Index)
-                    .setDelay(0)
-                    .setDuration(1000)
-                    .setDisplayText("")
-                    .setListener(new DecoEvent.ExecuteEventListener() {
-                        @Override
-                        public void onEventStart(DecoEvent event) {
-                        }
+                .setIndex(mSeries1Index)
+                .setDelay(0)
+                .setDuration(1000)
+                .setDisplayText("")
+                .setListener(new DecoEvent.ExecuteEventListener() {
+                    @Override
+                    public void onEventStart(DecoEvent event) {
+                    }
 
-                        @Override
-                        public void onEventEnd(DecoEvent event) {
-                        }
-                    }).build());
+                    @Override
+                    public void onEventEnd(DecoEvent event) {
+                    }
+                }).build());
         }
 
         mDecoView.addEvent(new DecoEvent.Builder(mSeriesMax)
-                .setIndex(mBackIndex)
-                .setDuration(3000)
-                .setDelay(100)
-                .build());
+            .setIndex(mBackIndex)
+            .setDuration(3000)
+            .setDelay(100)
+            .build());
 
         mDecoView.addEvent(new DecoEvent.Builder(evsteps)
-                .setIndex(mSeries1Index)
-                .setDuration(3250)
-                .build());
-
-//        mDecoView.addEvent(new DecoEvent.Builder(DecoDrawEffect.EffectType.EFFECT_SPIRAL_EXPLODE)
-//            .setIndex(mSeries1Index)
-//            .setDelay(20000)
-//            .setDuration(3000)
-//            .setDisplayText("")
-//            .setListener(new DecoEvent.ExecuteEventListener() {
-//                @Override
-//                public void onEventStart(DecoEvent event) {
-//
-//                }
-//
-//                @Override
-//                public void onEventEnd(DecoEvent event) {
-//
-//                }
-//            })
-//            .build());
+            .setIndex(mSeries1Index)
+            .setDuration(3250)
+            .build());
     }
 
     private void createDataSeries1() {
         final SeriesItem seriesItem = new SeriesItem.Builder(Color.parseColor("#FFFF8800"))
-                .setRange(0, mSeriesMax, 0)
-                .setInitialVisibility(true)
-                .build();
+            .setRange(0, mSeriesMax, 0)
+            .setInitialVisibility(true)
+            .build();
 
         Log.d("mSeries Data1", (String.valueOf(mSeriesMax)));
 
@@ -234,7 +248,13 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
             public void onSeriesItemAnimationProgress(float percentComplete, float currentPosition) {
                 float percentFilled = ((currentPosition - seriesItem.getMinValue())
                         / (seriesItem.getMaxValue() - seriesItem.getMinValue()));
-                textPercentage.setText(String.format("%.0f%%", percentFilled * 100f));
+                if(percentFilled < 1){
+                    textPercentage.setText(String.format("%.0f%%", percentFilled * 100));
+                }
+                else {
+                    textPercentage.setText("100%");
+                }
+
             }
 
             @Override
@@ -244,10 +264,17 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
         });
 
         final TextView textToGo = findViewById(R.id.textRemaining);
+        textToGo.setText(String.format("%d Steps to goal", (int) (seriesItem.getMaxValue())));
         seriesItem.addArcSeriesItemListener(new SeriesItem.SeriesItemListener() {
             @Override
             public void onSeriesItemAnimationProgress(float percentComplete, float currentPosition) {
-                textToGo.setText(String.format("%d Steps to goal", (int) (seriesItem.getMaxValue() - currentPosition)));
+                if (seriesItem.getMaxValue() > currentPosition){
+                    textToGo.setText(String.format("%d Steps to goal", (int) (seriesItem.getMaxValue() - currentPosition)));
+                }
+                else{
+                    textToGo.setText("Completed");
+                }
+
             }
 
             @Override
@@ -274,10 +301,9 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
 
     private void createBackSeries() {
         SeriesItem seriesItem = new SeriesItem.Builder(Color.parseColor("#FFE2E2E2"))
-                .setRange(0, mSeriesMax, 0)
-                .setInitialVisibility(false)
-                .build();
-
+            .setRange(0, mSeriesMax, 0)
+            .setInitialVisibility(false)
+            .build();
         mBackIndex = mDecoView.addSeries(seriesItem);
     }
 
@@ -286,20 +312,35 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
     @Override
     public void onSensorChanged(SensorEvent event) {
         if (activityRunning) {
-            evsteps = event.values[0];
-            ((TextView) textView).setText(String.valueOf((int) evsteps));
+            stepsInSensor = (int) event.values[0];
+            evsteps = stepsInSensor - stepsAtReset;
+            getStepsRef().setValue(evsteps);
+            getStepsRef().addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    ((TextView) textView).setText(String.valueOf(dataSnapshot.getValue()));
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
 
             // Draw
             mDecoView.addEvent(new DecoEvent.Builder(mSeriesMax)
-                    .setIndex(mBackIndex)
-                    .setDuration(3000)
-                    .setDelay(100)
-                    .build());
+                .setIndex(mBackIndex)
+                .setDuration(3000)
+                .setDelay(100)
+                .build());
 
             mDecoView.addEvent(new DecoEvent.Builder(evsteps)
-                    .setIndex(mSeries1Index)
-                    .setDuration(3250)
-                    .build());
+                .setIndex(mSeries1Index)
+                .setDuration(3250)
+                .build());
+        }
+        else{
+            event.values[0] = 0;
         }
     }
 
@@ -311,7 +352,9 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
     protected void onResume() {
         super.onResume();
         activityRunning = true;
+
         Sensor countSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
+
         if (countSensor != null) {
             sensorManager.registerListener(this, countSensor, SensorManager.SENSOR_DELAY_UI);
         } else {

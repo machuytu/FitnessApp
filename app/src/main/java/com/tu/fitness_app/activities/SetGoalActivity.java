@@ -19,8 +19,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.tu.fitness_app.R;
 
 public class SetGoalActivity extends AppCompatActivity {
-    public static float mSeries = 0f;
-    public static float mSeries1 = 0f;
+    public static int mSeries = 0;
+    public static int mSeries1 = 0;
 
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
@@ -57,7 +57,7 @@ public class SetGoalActivity extends AppCompatActivity {
                 mDatabase.child("Users").child(userId).child("stepgoal").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        mSeries = Float.parseFloat(String.valueOf(dataSnapshot.getValue()));
+                        mSeries = Integer.parseInt(String.valueOf(dataSnapshot.getValue()));
                         Log.d("mSeries", (String.valueOf(mSeries)));
                     }
 
@@ -69,7 +69,7 @@ public class SetGoalActivity extends AppCompatActivity {
                 mDatabase.child("Users").child(userId).child("caloriegoal").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        mSeries1 = Float.parseFloat(String.valueOf(dataSnapshot.getValue()));
+                        mSeries1 = Integer.parseInt(String.valueOf(dataSnapshot.getValue()));
                         Log.d("mSeries1", (String.valueOf(mSeries1)));
                     }
 
