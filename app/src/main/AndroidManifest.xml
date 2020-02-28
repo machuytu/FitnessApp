@@ -28,7 +28,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activities.CalendarActivity" />
+        <activity android:name=".activities.Calendar" />
         <activity
             android:name=".activities.HistoryActivity"
             android:configChanges="orientation|screenSize"

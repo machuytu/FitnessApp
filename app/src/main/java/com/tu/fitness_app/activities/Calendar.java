@@ -2,6 +2,7 @@ package com.tu.fitness_app.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -20,18 +21,25 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.tu.fitness_app.Custom.WorkoutDoneDecorator;
 import com.tu.fitness_app.Database.Fitness;
+import com.tu.fitness_app.Model.Setting;
+import com.tu.fitness_app.Model.WorkoutDays;
 import com.tu.fitness_app.R;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
 import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
 
-class CalendarActivity extends AppCompatActivity {
+public class Calendar extends AppCompatActivity {
 
     MaterialCalendarView materialCalendarView;
     HashSet<CalendarDay> list = new HashSet<>();
@@ -40,6 +48,8 @@ class CalendarActivity extends AppCompatActivity {
 
     ProgressBar progressBar;
     private DrawerLayout drawerLayout;
+    private WorkoutDays workoutDays;
+    private DatabaseReference ref_LisDay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +57,13 @@ class CalendarActivity extends AppCompatActivity {
         setContentView(R.layout.activity_calendar);
 
         fitness = new Fitness(this);
+        workoutDays = new WorkoutDays();
 
         materialCalendarView = findViewById(R.id.calendar);
 
-        List<String> workoutDay = fitness.getWorkoutDays();
+//        List<String> workoutDay = fitness.getWorkoutDays();
+        List<String> workoutDay = LoginActivity.day;
+        Log.d("calendarday", String.valueOf(workoutDay));
 
         progressBar = (MaterialProgressBar)findViewById(R.id.progressBar);
 
@@ -87,47 +100,47 @@ class CalendarActivity extends AppCompatActivity {
             switch (menuItem.getItemId())
             {
                 case R.id.item0:
-                    Intent intent = new Intent(CalendarActivity.this, MainActivity.class);
+                    Intent intent = new Intent(Calendar.this, MainActivity.class);
                     startActivity(intent);
                     break;
                 case R.id.item1:
-                    intent = new Intent(CalendarActivity.this, ListExercises.class);
+                    intent = new Intent(Calendar.this, ListExercises.class);
                     startActivity(intent);
                     break;
                 case R.id.item2:
-                    intent = new Intent(CalendarActivity.this, Daily_Training.class);
+                    intent = new Intent(Calendar.this, Daily_Training.class);
                     startActivity(intent);
                     break;
                 case R.id.item3:
-                    intent = new Intent(CalendarActivity.this, CalendarActivity.class);
+                    intent = new Intent(Calendar.this, Calendar.class);
                     startActivity(intent);
                     break;
                 case R.id.item4:
-                    intent = new Intent(CalendarActivity.this, SettingPage.class);
+                    intent = new Intent(Calendar.this, SettingPage.class);
                     startActivity(intent);
                     break;
                 case R.id.item5:
-                    intent = new Intent(CalendarActivity.this, StepCountDaily.class);
+                    intent = new Intent(Calendar.this, StepCountDaily.class);
                     startActivity(intent);
                     break;
                 case R.id.item6:
-                    AuthUI.getInstance().signOut(CalendarActivity.this).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    AuthUI.getInstance().signOut(Calendar.this).addOnCompleteListener(new OnCompleteListener<Void>() {
                         public void onComplete(@NonNull Task<Void> task) {
-                            Toast.makeText(CalendarActivity.this, "Signed out successfully", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Calendar.this, "Signed out successfully", Toast.LENGTH_SHORT).show();
                         }
                     });
-                    Intent myIntent = new Intent(CalendarActivity.this, LoginActivity.class);
+                    Intent myIntent = new Intent(Calendar.this, LoginActivity.class);
                     myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);// clear back stack
                     startActivity(myIntent);
                     finish();
                 default:
                     break;
                 case R.id.item7:
-                    intent = new Intent(CalendarActivity.this, OverviewActivity.class);
+                    intent = new Intent(Calendar.this, OverviewActivity.class);
                     startActivity(intent);
                     break;
                 case R.id.item8:
-                    intent = new Intent(CalendarActivity.this, HistoryActivity.class);
+                    intent = new Intent(Calendar.this, HistoryActivity.class);
                     startActivity(intent);
                     break;
             }
@@ -135,8 +148,18 @@ class CalendarActivity extends AppCompatActivity {
             return false;
         });
 
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        ref_LisDay = database.getReference("WorkoutDays");
 
+        //save workout done to db
+//        fitness.saveDay(""+ Calendar.getInstance().getTimeInMillis());
+//        final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+//        ref_LisDay.child(userId).setValue(workoutDays);
+
+        HashSet<CalendarDay> convertedList = new HashSet<>();
         for (String value:workoutDay) {
+            convertedList.add(CalendarDay.from(new Date(Long.parseLong(value))));
         }
+        materialCalendarView.addDecorator(new WorkoutDoneDecorator(convertedList));
     }
 }

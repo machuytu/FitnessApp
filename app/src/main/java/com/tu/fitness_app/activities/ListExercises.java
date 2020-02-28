@@ -37,7 +37,6 @@ public class ListExercises extends AppCompatActivity {
     RecyclerView recyclerView;
     com.tu.fitness_app.Adapter.RecycleViewAdapter adapter;
 
-    private NavigationView navigationView;
     private DrawerLayout drawerLayout;
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -57,7 +56,7 @@ public class ListExercises extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 
         drawerLayout = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle actionBarDrawerToggle =
@@ -104,7 +103,7 @@ public class ListExercises extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     case R.id.item3:
-                        intent = new Intent(ListExercises.this, CalendarActivity.class);
+                        intent = new Intent(ListExercises.this, Calendar.class);
                         startActivity(intent);
                         break;
                     case R.id.item4:

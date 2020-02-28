@@ -119,7 +119,7 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
                         startActivity(intent);
                         break;
                     case R.id.item3:
-                        intent = new Intent(StepCountDaily.this, CalendarActivity.class);
+                        intent = new Intent(StepCountDaily.this, Calendar.class);
                         startActivity(intent);
                         break;
                     case R.id.item4:

@@ -11,7 +11,7 @@ import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Fitness extends SQLiteOpenHelper {
+public class Fitness extends SQLiteAssetHelper {
 
 
     private static final String WORKOUT_DAYS_TABLE_NAME = "WorkoutDays";
@@ -73,13 +73,4 @@ public class Fitness extends SQLiteOpenHelper {
         db.execSQL(query);
     }
 
-    @Override
-    public void onCreate(SQLiteDatabase db) {
-
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
-    }
 }

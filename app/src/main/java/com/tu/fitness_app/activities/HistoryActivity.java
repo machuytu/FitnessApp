@@ -147,7 +147,7 @@ public class HistoryActivity extends AppCompatActivity {
 
     }
 
-    public void readFromDatabase(final String date) {
+    public void         readFromDatabase(final String date) {
         ref_history.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

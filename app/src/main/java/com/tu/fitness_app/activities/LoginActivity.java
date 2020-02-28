@@ -27,15 +27,19 @@ import com.tu.fitness_app.Model.Calories;
 import com.tu.fitness_app.Model.Setting;
 import com.tu.fitness_app.Model.Steps;
 import com.tu.fitness_app.Model.User;
+import com.tu.fitness_app.Model.WorkoutDays;
 import com.tu.fitness_app.R;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -51,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
     public static float user_carbs = 0f;
     public static float user_protein = 0f;
     public static float mode = 0f;
+    public static List<String> day = new ArrayList<>();
     Date today = new Date();
     // Authentication providers
     List<AuthUI.IdpConfig> providers = Arrays.asList(
@@ -140,6 +145,13 @@ public class LoginActivity extends AppCompatActivity {
         assert user != null;
         String userId = user.getUid();
         return mDatabase.child("Setting").child(userId).child(ref);
+    }
+
+    private DatabaseReference getWorkoutDaysRef(String ref) {
+        FirebaseUser user = mAuth.getCurrentUser();
+        assert user != null;
+        String userId = user.getUid();
+        return mDatabase.child("WorkoutDays").child(userId).child(ref);
     }
 
     private void getUserInfo() {
@@ -250,6 +262,25 @@ public class LoginActivity extends AppCompatActivity {
                     mode = Integer.parseInt(String.valueOf(dataSnapshot.getValue()));
                 } else {
                     mode = 0f;
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+            }
+        });
+
+        getWorkoutDaysRef("day").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                        String data = snapshot.getValue(String.class);
+                        day.add(data);
+                    }
+                } else {
+                    day = new ArrayList<>();
                 }
             }
 

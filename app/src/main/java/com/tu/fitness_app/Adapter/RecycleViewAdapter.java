@@ -20,12 +20,12 @@ import java.util.List;
 
 class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    public ImageView image;
-    public TextView text;
+    ImageView image;
+    TextView text;
 
     private ItemClickListener itemClickListener;
 
-    public RecyclerViewHolder(@NonNull View itemView) {
+    RecyclerViewHolder(@NonNull View itemView) {
         super(itemView);
         image = itemView.findViewById(R.id.ex_img);
         text = itemView.findViewById(R.id.ex_name);
@@ -33,7 +33,7 @@ class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClick
         itemView.setOnClickListener(this);
     }
 
-    public void setItemClickListener(ItemClickListener itemClickListener) {
+    void setItemClickListener(ItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
     }
 
@@ -42,7 +42,6 @@ class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClick
         itemClickListener.onClick(view, getAdapterPosition());
     }
 }
-
 public class RecycleViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
     private List<com.tu.fitness_app.Model.Exercise> excerciseList;
     private Context context;
@@ -65,13 +64,16 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder>
         holder.image.setImageResource(excerciseList.get(position).getImage_id());
         holder.text.setText(excerciseList.get(position).getName());
 
-        holder.setItemClickListener((view, position1) -> {
+        holder.setItemClickListener(new ItemClickListener() {
+            @Override
+            public void onClick(View view, int position) {
 
-            //get activity
-            Intent intent = new Intent(context, ViewEx.class);
-            intent.putExtra("image_id", excerciseList.get(position1).getImage_id());
-            intent.putExtra("name", excerciseList.get(position1).getName());
-            context.startActivity(intent);
+                //get activity
+                Intent intent = new Intent(context, ViewEx.class);
+                intent.putExtra("image_id", excerciseList.get(position).getImage_id());
+                intent.putExtra("name", excerciseList.get(position).getName());
+                context.startActivity(intent);
+            }
         });
     }
 

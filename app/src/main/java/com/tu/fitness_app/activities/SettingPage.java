@@ -38,7 +38,6 @@ import com.tu.fitness_app.Model.Setting;
 import com.tu.fitness_app.Model.User;
 import com.tu.fitness_app.R;
 
-import java.util.Calendar;
 import java.util.Date;
 
 import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
@@ -88,13 +87,12 @@ public class SettingPage extends AppCompatActivity {
         editText1 = findViewById(R.id.et4);
         editText2 = findViewById(R.id.et5);
 
-        fitness = new Fitness(this);
-        int mode = fitness.getSettingMode();
-        setRadioButton(mode);
+//        fitness = new Fitness(this);
+//        int mode = fitness.getSettingMode();
+//        setRadioButton(mode);
 
-//        int mode1 = (int) LoginActivity.mode;
-//        Log.d("mode:", String.valueOf(mode1));
-//        setRadioButton(mode1);
+        int mode1 = (int) LoginActivity.mode;
+        setRadioButton(mode1);
 
         progressBar = (MaterialProgressBar)findViewById(R.id.progressBar);
 
@@ -139,7 +137,7 @@ public class SettingPage extends AppCompatActivity {
                     startActivity(intent);
                     break;
                 case R.id.item3:
-                    intent = new Intent(SettingPage.this, CalendarActivity.class);
+                    intent = new Intent(SettingPage.this, Calendar.class);
                     startActivity(intent);
                     break;
                 case R.id.item4:
@@ -211,8 +209,8 @@ public class SettingPage extends AppCompatActivity {
             intent = new Intent(SettingPage.this, AlarmNotificationReceiver.class);
             pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
 
-            Calendar calendar = Calendar.getInstance();
-            Date toDate = Calendar.getInstance().getTime();
+            java.util.Calendar calendar = java.util.Calendar.getInstance();
+            Date toDate = java.util.Calendar.getInstance().getTime();
             calendar.set(toDate.getYear(), toDate.getMonth(), toDate.getDay(), timePicker.getHour(), timePicker.getMinute());
 
             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
@@ -228,29 +226,26 @@ public class SettingPage extends AppCompatActivity {
     }
 
     private void saveWorkoutState() {
-        int selectID = rdiGroup.getCheckedRadioButtonId();
-        if(selectID == rdiEasy.getId()) {
-            fitness.saveSettingMode(0);
-        } else if(selectID == rdiMedium.getId()) {
-            fitness.saveSettingMode(1);
-        } else  if(selectID == rdiHard.getId()) {
-            fitness.saveSettingMode(2);
-        }
-
 //        int selectID = rdiGroup.getCheckedRadioButtonId();
-//        Setting setting = new Setting();
 //        if(selectID == rdiEasy.getId()) {
-////            fitness.saveSettingMode(0);
-//            setting.SetSetting(0);
+//            fitness.saveSettingMode(0);
 //        } else if(selectID == rdiMedium.getId()) {
-////            fitness.saveSettingMode(1);
-//            setting.SetSetting(1);
+//            fitness.saveSettingMode(1);
 //        } else  if(selectID == rdiHard.getId()) {
-////            fitness.saveSettingMode(2);
-//            setting.SetSetting(2);
+//            fitness.saveSettingMode(2);
 //        }
-//        final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-//        mDatabase.child("Setting").child(userId).setValue(setting);
+
+        int selectID = rdiGroup.getCheckedRadioButtonId();
+        Setting setting = new Setting();
+        if(selectID == rdiEasy.getId()) {
+            setting.SetSetting(0);
+        } else if(selectID == rdiMedium.getId()) {
+            setting.SetSetting(1);
+        } else  if(selectID == rdiHard.getId()) {
+            setting.SetSetting(2);
+        }
+        final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        mDatabase.child("Setting").child(userId).setValue(setting);
     }
 
     private void setRadioButton(int mode) {

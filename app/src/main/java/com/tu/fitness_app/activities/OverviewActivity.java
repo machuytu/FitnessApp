@@ -100,7 +100,7 @@ public class OverviewActivity extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     case R.id.item3:
-                        intent = new Intent(OverviewActivity.this, CalendarActivity.class);
+                        intent = new Intent(OverviewActivity.this, Calendar.class);
                         startActivity(intent);
                         break;
                     case R.id.item4:
