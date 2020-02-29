@@ -48,8 +48,8 @@ public class LoginActivity extends AppCompatActivity {
     public static String USER_ID = "";
     public static String USER_EMAIL = "";
     public static String USER_NAME = "";
-    public static float mSeries1 = 0f;
-    public static float mSeries2 = 0f;
+    public static int mSeries1 = 0;
+    public static int mSeries2 = 0;
     public static float calRef = 0f;
     public static float user_fat = 0f;
     public static float user_carbs = 0f;
@@ -114,11 +114,10 @@ public class LoginActivity extends AppCompatActivity {
         User newUser = new User("", "", "", 0, "", 0, 0, 0);
         usersRef.child(userId).setValue(newUser);
 
-        Steps steps = new Steps(0);
-        stepsRef.child(userId).setValue(steps);
-
-        Calories calories = new Calories(0, 0, 0, 0);
         final String date = today.getYear() + 1900 + "-" + (1 + today.getMonth()) + "-" + today.getDate();
+        Steps steps = new Steps(0);
+        stepsRef.child(userId).child(date).setValue(steps);
+        Calories calories = new Calories(0, 0, 0, 0);
         caloriesRef.child(userId).child(date).setValue(calories);
 
         Setting setting = new Setting(0);
@@ -158,7 +157,7 @@ public class LoginActivity extends AppCompatActivity {
         getUsersRef("stepgoal").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
-                mSeries1 = Float.parseFloat(String.valueOf(dataSnapshot.getValue()));
+                mSeries1 = Integer.parseInt(String.valueOf(dataSnapshot.getValue()));
             }
 
             @Override
@@ -170,7 +169,7 @@ public class LoginActivity extends AppCompatActivity {
         getUsersRef("caloriegoal").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
-                mSeries2 = Float.parseFloat(String.valueOf(dataSnapshot.getValue()));
+                mSeries2 = Integer.parseInt(String.valueOf(dataSnapshot.getValue()));
             }
 
             @Override
