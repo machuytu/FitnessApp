@@ -94,6 +94,7 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-auth:4.1.0'
     implementation 'com.facebook.android:facebook-android-sdk:5.13.0'
     implementation 'com.google.firebase:firebase-messaging:20.1.0'
+    implementation 'com.github.AnyChart:AnyChart-Android:1.1.2'
 
     // AndroidX Capable version
     implementation 'com.github.AppIntro:AppIntro:5.1.0'
@@ -120,6 +121,9 @@ dependencies {
     implementation 'com.google.ar.sceneform.ux:sceneform-ux:1.15.0'
     implementation project(path: ':progressviewslib')
 
-    //Material-Calendar-View
+    // Material-Calendar-View
     implementation 'com.applandeo:material-calendar-view:1.7.0'
+
+    // Barcode
+    implementation 'me.dm7.barcodescanner:zxing:1.9'
 }

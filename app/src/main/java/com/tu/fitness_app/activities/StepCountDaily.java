@@ -228,7 +228,7 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
         mDecoView.addEvent(new DecoEvent.Builder(mSeriesMax)
             .setIndex(mBackIndex)
             .setDuration(3000)
-            .setDelay(100)
+            .setDelay(30)
             .build());
 
         mDecoView.addEvent(new DecoEvent.Builder(evsteps)
@@ -334,7 +334,7 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
             mDecoView.addEvent(new DecoEvent.Builder(mSeriesMax)
                 .setIndex(mBackIndex)
                 .setDuration(3000)
-                .setDelay(100)
+                .setDelay(30)
                 .build());
 
             mDecoView.addEvent(new DecoEvent.Builder(evsteps)
