@@ -107,21 +107,21 @@ public class HistoryActivity extends AppCompatActivity {
 
 
         //calendar icon
-        ref_basicInfo.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                 User user = dataSnapshot.getValue(User.class);
-                if (user != null) {
-                    // read data user (not done)
-                }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+//        ref_basicInfo.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                 User user = dataSnapshot.getValue(User.class);
+//                if (user != null) {
+//                    // read data user (not done)
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
 
 
         //setting current date
@@ -147,7 +147,7 @@ public class HistoryActivity extends AppCompatActivity {
 
     }
 
-    public void         readFromDatabase(final String date) {
+    public void readFromDatabase(final String date) {
         ref_history.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

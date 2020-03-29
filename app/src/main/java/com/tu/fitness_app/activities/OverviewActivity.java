@@ -1,14 +1,5 @@
 package com.tu.fitness_app.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.NavigationUI;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -18,6 +9,15 @@ import android.view.animation.BounceInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -242,7 +242,7 @@ public class OverviewActivity extends AppCompatActivity {
         // Add calories
         ImageView addCal = findViewById(R.id.addcalories);
         addCal.setOnClickListener(v -> {
-            Intent intent = new Intent(OverviewActivity.this, Food_RecyclerFrag_Main.class);
+            Intent intent = new Intent(OverviewActivity.this, FoodFactFood_RecyclerFrag_Main.class);
             startActivity(intent);
         });
     }

@@ -10,6 +10,8 @@ import android.text.format.DateUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.facebook.FacebookSdk;
@@ -18,6 +20,7 @@ import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -62,8 +65,8 @@ public class LoginActivity extends AppCompatActivity {
             new AuthUI.IdpConfig.FacebookBuilder().build());
 
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private FirebaseAuth mAuth;
-    private DatabaseReference mDatabase;
+    private FirebaseAuth mAuth;// kiem tra user
+    private DatabaseReference mDatabase; // lay database
 
     @Override
     protected void onStart() {
@@ -81,8 +84,8 @@ public class LoginActivity extends AppCompatActivity {
             Log.v(this.getClass().getName(), provider);
         }
 
-        mAuth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mAuth = FirebaseAuth.getInstance(); // Tao kết nối đến user hiện tại
+        mDatabase = FirebaseDatabase.getInstance().getReference(); // lấy data của thằng user hiện tại
         mAuthListener = firebaseAuth -> updateInfo();
 
 
@@ -121,8 +124,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private DatabaseReference getUsersRef(String ref) {
-        FirebaseUser user = mAuth.getCurrentUser();
-        String userId = user != null ? user.getUid() : null;
+        FirebaseUser user = mAuth.getCurrentUser(); // gọi hàm cho user hiện tại
+        String userId = user != null ? user.getUid() : null; // lấy id cho user hiện tại
         assert userId != null;
         return mDatabase.child("Users").child(userId).child(ref);
     }

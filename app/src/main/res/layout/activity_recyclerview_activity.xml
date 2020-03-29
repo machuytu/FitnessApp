@@ -11,13 +11,14 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/cardList"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/cardList"
-                android:scrollbars="vertical"
                 android:layout_marginTop="60dp"
-                android:focusableInTouchMode="true"/>
+                android:focusableInTouchMode="true"
+                android:scrollbars="vertical" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/vsfb"

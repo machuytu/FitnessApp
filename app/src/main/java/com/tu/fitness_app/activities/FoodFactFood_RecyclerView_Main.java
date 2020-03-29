@@ -154,11 +154,8 @@ public class FoodFactFood_RecyclerView_Main extends Fragment {
                     String food;
                     food = query;
                     food = food.replace("","");
-                    String f_url = "https://vn.openfoodfacts.org/cgi/search.pl?search_terms=" +
-                            food +
-                            "&search_simple=1" +
-                            "&action=process" +
-                            "&json=1";
+                    String f_url = "https://us.openfoodfacts.org/api/v0/product/" +
+                            food;
                     FoodFactFood_RecyclerView_Main.MyDownloadJsonAsyncTask downloadJson = new FoodFactFood_RecyclerView_Main.MyDownloadJsonAsyncTask(mRecyclerViewAdapter);
                     Log.d("Tu:", f_url);
                     downloadJson.execute(f_url);

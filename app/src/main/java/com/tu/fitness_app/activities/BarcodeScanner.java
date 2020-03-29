@@ -1,90 +1,106 @@
 package com.tu.fitness_app.activities;
 
+import android.Manifest;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.hardware.Camera;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import android.Manifest;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Bundle;
-import android.widget.Switch;
-import android.widget.Toast;
-
 import com.google.zxing.Result;
-import com.tu.fitness_app.R;
-
-import java.net.ConnectException;
+import com.tu.fitness_app.Adapter.Food_MyRecycleAdapter;
+import com.tu.fitness_app.JSON.FoodFactFoodJson;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
-import static android.Manifest.permission_group.CAMERA;
-
 public class BarcodeScanner extends AppCompatActivity implements ZXingScannerView.ResultHandler {
-    public static final int REQUEST_CAM = 1;
-    private ZXingScannerView zXingScannerView;
+    private static final int REQUEST_CAMERA = 1;
+    private ZXingScannerView scannerView;
+    private static int camId = Camera.CameraInfo.CAMERA_FACING_BACK;
+    FoodFactFoodJson foodData;
+    private Food_MyRecycleAdapter mRecyclerViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        zXingScannerView = new ZXingScannerView(this);
-        setContentView(zXingScannerView);
 
-        if (checkPermission()) {
-            Toast.makeText(BarcodeScanner.this, "Permission already granted", Toast.LENGTH_LONG).show();
-        } else {
-            requestPermissions();
+        scannerView = new ZXingScannerView(this);
+        setContentView(scannerView);
+        int currentApiVersion = Build.VERSION.SDK_INT;
+
+        if(currentApiVersion >=  Build.VERSION_CODES.M)
+        {
+            if(checkPermission())
+            {
+                Toast.makeText(getApplicationContext(), "Permission already granted!", Toast.LENGTH_LONG).show();
+            }
+            else
+            {
+                requestPermission();
+            }
         }
+    }
+
+    private boolean checkPermission()
+    {
+        return (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED);
+    }
+
+    private void requestPermission()
+    {
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (checkPermission()) {
-            if(zXingScannerView == null) {
-                zXingScannerView = new ZXingScannerView(this);
-                setContentView(zXingScannerView);
+
+        int currentapiVersion = Build.VERSION.SDK_INT;
+        if (currentapiVersion >= Build.VERSION_CODES.M) {
+            if (checkPermission()) {
+                if(scannerView == null) {
+                    scannerView = new ZXingScannerView(this);
+                    setContentView(scannerView);
+                }
+                scannerView.setResultHandler(this);
+                scannerView.startCamera();
+            } else {
+                requestPermission();
             }
-            zXingScannerView.setResultHandler(this);
-            zXingScannerView.startCamera();
-        } else {
-            requestPermissions();
         }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        zXingScannerView.stopCamera();
+        scannerView.stopCamera();
     }
 
-    private void requestPermissions() {
-        ActivityCompat.requestPermissions(this, new String[] {CAMERA} , REQUEST_CAM);
-    }
-
-    private boolean checkPermission() {
-        return (ContextCompat.checkSelfPermission(getApplicationContext(), CAMERA) == PackageManager.PERMISSION_GRANTED);
-    }
-
-    public void onRequestPermissionsResult(int requestCode, String[] permission, int[] grantResults) {
-        if (requestCode == REQUEST_CAM) {
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        if (requestCode == REQUEST_CAMERA) {
             if (grantResults.length > 0) {
+
                 boolean cameraAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
                 if (cameraAccepted) {
-                    Toast.makeText(BarcodeScanner.this, "Permission Granted!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Permission Granted, Now you can access camera", Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(BarcodeScanner.this, "Permission Denied!", Toast.LENGTH_LONG).show();
-                    if (shouldShowRequestPermissionRationale(CAMERA)) {
-                        displayAlertMessage("Please both permission with allow access",
+                    Toast.makeText(getApplicationContext(), "Permission Denied, You cannot access and camera", Toast.LENGTH_LONG).show();
+                    if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
+                        showMessageOKCancel("You need to allow access to both the permissions",
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        requestPermissions(new String[]{CAMERA}, REQUEST_CAM);
+                                        requestPermissions(new String[]{Manifest.permission.CAMERA},
+                                                REQUEST_CAMERA);
                                     }
                                 });
                     }
@@ -93,34 +109,32 @@ public class BarcodeScanner extends AppCompatActivity implements ZXingScannerVie
         }
     }
 
-    public void displayAlertMessage(String message, DialogInterface.OnClickListener listener) {
-        new AlertDialog.Builder(BarcodeScanner.this).setMessage(message)
-                .setPositiveButton("OK", listener)
-                .setNegativeButton("Cancel",null)
+    private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
+        new androidx.appcompat.app.AlertDialog.Builder(BarcodeScanner.this)
+                .setMessage(message)
+                .setPositiveButton("OK", okListener)
+                .setNegativeButton("Cancel", null)
                 .create()
                 .show();
     }
 
     @Override
     public void handleResult(Result result) {
-        final String scanResult = result.getText();
+        final String myResult = result.getText();
+        Log.d("QRCodeScanner", result.getText());
+        Log.d("QRCodeScanner", result.getBarcodeFormat().toString());
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("SCAN RESULT:");
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                zXingScannerView.resumeCameraPreview(BarcodeScanner.this);
-            }
+        builder.setTitle("Scan Result");
+        builder.setPositiveButton("OK", (dialog, which) -> scannerView.resumeCameraPreview(BarcodeScanner.this));
+        builder.setNeutralButton("Add", (dialog, which) -> {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(myResult));
+            startActivity(browserIntent);
         });
-        builder.setNeutralButton("View", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(scanResult));
-                startActivity(intent);
-            }
-        });
-        builder.setMessage(scanResult);
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
+        builder.setMessage(result.getText());
+        AlertDialog alert1 = builder.create();
+        alert1.show();
     }
+
+
 }

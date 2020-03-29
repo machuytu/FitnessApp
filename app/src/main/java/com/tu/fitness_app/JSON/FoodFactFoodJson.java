@@ -61,9 +61,9 @@ public class FoodFactFoodJson {
         String json = "Assuming that here is your JSON response";
         try {
             JSONObject parentObject = new JSONObject(foodArray);
-            JSONArray hitsJsonArray = parentObject.getJSONArray("products");
-            Log.d("products", hitsJsonArray.toString());
-            Log.d("products length", String.valueOf(hitsJsonArray.length()));
+            JSONArray hitsJsonArray = parentObject.getJSONArray("product");
+            Log.d("product", hitsJsonArray.toString());
+            Log.d("product length", String.valueOf(hitsJsonArray.length()));
             for (int i = 0; i < hitsJsonArray.length(); ++i) {
                 JSONObject f = hitsJsonArray.getJSONObject(i);
 //                JSONObject fi = f.getJSONObject("fields");
