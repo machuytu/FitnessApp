@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
 
-    Button btnExercises, btnSetting, btnCalendar, btnStepCount, btnOverview, btnHistory;
+    Button btnExercises, btnSetting, btnCalendar, btnStepCount, btnOverview, btnHistory, btnBarcode;
     ImageView btnTraining;
 
     public static float mSeriesMax = 0f;
@@ -148,6 +148,7 @@ public class MainActivity extends AppCompatActivity {
         btnStepCount = findViewById(R.id.btnStepCount);
         btnOverview = findViewById(R.id.btnOverview);
         btnHistory = findViewById(R.id.btnHistory);
+        btnBarcode = findViewById(R.id.btnBarcode);
 
         btnTraining.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -197,13 +198,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnHistory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, HistoryActivity.class);
-                startActivity(intent);
-            }
+        btnHistory.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, HistoryActivity.class);
+            startActivity(intent);
         });
+
+//        btnBarcode.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(MainActivity.this, BarcodeScanner.class);
+//                startActivity(intent);
+//            }
+//        });
     }
 
     @Override

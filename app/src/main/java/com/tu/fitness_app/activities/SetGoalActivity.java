@@ -40,47 +40,44 @@ public class SetGoalActivity extends AppCompatActivity {
         final EditText calorieGoal = findViewById(R.id.et2);
 
         Button setgoal = findViewById(R.id.setgoal);
-        setgoal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (stepGoal.getText().toString().length() == 0) {
-                    stepGoal.setError("Set Steps Goal");
-                    return;
-                } else if (calorieGoal.getText().toString().length() == 0) {
-                    calorieGoal.setError("Set Calorie Goal!");
-                    return;
-                }
-
-                mDatabase.child("Users").child(userId).child("stepgoal").setValue(stepGoal.getText().toString());
-                mDatabase.child("Users").child(userId).child("caloriegoal").setValue(calorieGoal.getText().toString());
-
-                mDatabase.child("Users").child(userId).child("stepgoal").addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        mSeries = Float.parseFloat(String.valueOf(dataSnapshot.getValue()));
-                        Log.d("mSeries", (String.valueOf(mSeries)));
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-                });
-
-                mDatabase.child("Users").child(userId).child("caloriegoal").addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        mSeries1 = Float.parseFloat(String.valueOf(dataSnapshot.getValue()));
-                        Log.d("mSeries1", (String.valueOf(mSeries1)));
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-                });
-
-                Intent myIntent = new Intent(SetGoalActivity.this, MainActivity.class);
-                startActivity(myIntent);
+        setgoal.setOnClickListener(v -> {
+            if (stepGoal.getText().toString().length() == 0) {
+                stepGoal.setError("Set Steps Goal");
+                return;
+            } else if (calorieGoal.getText().toString().length() == 0) {
+                calorieGoal.setError("Set Calorie Goal!");
+                return;
             }
+
+            mDatabase.child("Users").child(userId).child("stepgoal").setValue(stepGoal.getText().toString());
+            mDatabase.child("Users").child(userId).child("caloriegoal").setValue(calorieGoal.getText().toString());
+
+//            mDatabase.child("Users").child(userId).child("stepgoal").addListenerForSingleValueEvent(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(DataSnapshot dataSnapshot) {
+//                    mSeries = Float.parseFloat(String.valueOf(dataSnapshot.getValue()));
+//                    Log.d("mSeries", (String.valueOf(mSeries)));
+//                }
+//
+//                @Override
+//                public void onCancelled(DatabaseError databaseError) {
+//                }
+//            });
+//
+//            mDatabase.child("Users").child(userId).child("caloriegoal").addListenerForSingleValueEvent(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(DataSnapshot dataSnapshot) {
+//                    mSeries1 = Float.parseFloat(String.valueOf(dataSnapshot.getValue()));
+//                    Log.d("mSeries1", (String.valueOf(mSeries1)));
+//                }
+//
+//                @Override
+//                public void onCancelled(DatabaseError databaseError) {
+//                }
+//            });
+
+            Intent myIntent = new Intent(SetGoalActivity.this, MainActivity.class);
+            startActivity(myIntent);
         });
     }
 }
