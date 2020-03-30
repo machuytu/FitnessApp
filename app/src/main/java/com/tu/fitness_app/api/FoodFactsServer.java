@@ -1,6 +1,6 @@
 package com.tu.fitness_app.api;
 
-import com.google.android.gms.analytics.ecommerce.Product;
+import com.tu.fitness_app.Model.Product;
 
 import retrofit2.Call;
 import retrofit2.Callback;
