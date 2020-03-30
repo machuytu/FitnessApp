@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,6 +27,7 @@ public class BarcodeScanner extends AppCompatActivity implements ZXingScannerVie
     private static int camId = Camera.CameraInfo.CAMERA_FACING_BACK;
     FoodFactFoodJson foodData;
     private Food_MyRecycleAdapter mRecyclerViewAdapter;
+    static String myResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,7 +120,7 @@ public class BarcodeScanner extends AppCompatActivity implements ZXingScannerVie
 
     @Override
     public void handleResult(Result result) {
-        final String myResult = result.getText();
+        myResult = result.getText();
         Log.d("QRCodeScanner", result.getText());
         Log.d("QRCodeScanner", result.getBarcodeFormat().toString());
 
@@ -128,7 +128,7 @@ public class BarcodeScanner extends AppCompatActivity implements ZXingScannerVie
         builder.setTitle("Scan Result");
         builder.setPositiveButton("OK", (dialog, which) -> scannerView.resumeCameraPreview(BarcodeScanner.this));
         builder.setNeutralButton("Add", (dialog, which) -> {
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(myResult));
+            Intent browserIntent = new Intent(BarcodeScanner.this, DetailActivity.class);
             startActivity(browserIntent);
         });
         builder.setMessage(result.getText());

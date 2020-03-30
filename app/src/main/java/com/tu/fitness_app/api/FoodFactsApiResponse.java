@@ -1,7 +1,7 @@
 package com.tu.fitness_app.api;
 
 
-import com.google.android.gms.analytics.ecommerce.Product;
+import com.tu.fitness_app.Model.Product;
 
 public class FoodFactsApiResponse {
     private Product product;

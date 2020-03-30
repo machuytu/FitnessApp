@@ -1,5 +1,6 @@
 package com.tu.fitness_app.Model;
 
+
 import androidx.room.ColumnInfo;
 import androidx.room.Embedded;
 import androidx.room.Entity;
@@ -11,10 +12,12 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 @Entity(tableName = "products", indices = {@Index(value = {"barcode"}, unique = true)})
-public class FoodFact extends BasicObject {
+public class Product extends BasicObject {
+
     @SerializedName("_id")
     private String barcode;
-    private Long timestamp;
+
+    private long timestamp;
 
     @Ignore
     private List<Ingredient> ingredients;
