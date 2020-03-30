@@ -59,6 +59,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity android:name=".activities.SetGoalActivity" />
         <activity android:name=".activities.AppIntroActivity" />
@@ -66,7 +67,10 @@
 
         <activity
             android:name=".activities.EnterInfoActivity"
-            android:label="BasicInfo" />
+            android:label="BasicInfo" >
+
+
+        </activity>
         <activity android:name=".activities.StepCountDaily" />
         <activity
             android:name=".activities.overview_activity"

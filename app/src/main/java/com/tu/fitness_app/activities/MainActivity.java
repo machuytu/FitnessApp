@@ -142,6 +142,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
         btnTraining = findViewById(R.id.btnTraining);
+        btnCalendar = findViewById(R.id.btnCalendar);
+        btnStepCount = findViewById(R.id.btnStepCount);
+        btnOverview = findViewById(R.id.btnOverview);
+        btnHistory = findViewById(R.id.btnHistory);
+        btnBarcode = findViewById(R.id.btnBarcode);
 
         btnTraining.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,6 +157,50 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        btnSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SettingPage.class);
+                startActivity(intent);
+            }
+        });
+
+        btnCalendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, Calendar.class);
+                startActivity(intent);
+            }
+        });
+
+        btnStepCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, StepCountDaily.class);
+                startActivity(intent);
+            }
+        });
+
+        btnOverview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, OverviewActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btnHistory.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, HistoryActivity.class);
+            startActivity(intent);
+        });
+
+//        btnBarcode.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(MainActivity.this, BarcodeScanner.class);
+//                startActivity(intent);
+//            }
+//        });
     }
 
     @Override
