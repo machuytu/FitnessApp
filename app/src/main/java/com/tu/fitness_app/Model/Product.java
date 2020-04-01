@@ -35,7 +35,7 @@ public class Product extends BasicObject {
     private String productName;
 
     @Embedded
-    private Nutriment nutriment;
+    public Nutriments nutriments;
 
     public String getBarcode() {
         return barcode;
@@ -85,12 +85,12 @@ public class Product extends BasicObject {
         this.productName = productName;
     }
 
-    public Nutriment getNutriments() {
-        return nutriment;
+    public Nutriments getNutriments() {
+        return nutriments;
     }
 
-    public void setNutriments(Nutriment nutriment) {
-        this.nutriment = nutriment;
+    public void setNutriments(Nutriments nutriment) {
+        this.nutriments = nutriment;
     }
 
     @Override

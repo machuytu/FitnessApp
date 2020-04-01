@@ -2,7 +2,7 @@ package com.tu.fitness_app.Model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Nutriment {
+public class Nutriments {
     @SerializedName("energy_unit")
     private String energyUnit;
 
