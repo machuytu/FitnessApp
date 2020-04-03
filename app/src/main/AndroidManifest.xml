@@ -32,6 +32,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".activities.DetailActivity">
+
         </activity>
         <activity android:name=".activities.BarcodeScanner" />
         <activity android:name=".activities.Test" />
@@ -67,7 +68,7 @@
         <activity android:name=".activities.FoodFactFood_RecyclerFrag_Main" />
         <activity
             android:name=".activities.EnterInfoActivity"
-            android:label="BasicInfo"></activity>
+            android:label="BasicInfo" />
         <activity android:name=".activities.StepCountDaily" />
         <activity
             android:name=".activities.overview_activity"

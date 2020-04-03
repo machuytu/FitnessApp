@@ -30,6 +30,11 @@ public class EnterInfoActivity extends AppCompatActivity {
     private TextView tvAvg;
     private TextView tvLow;
     private TextView tvWelcome;
+    private int Gender;
+    private float totalCarolies = 0f;
+    private float BMR = 0f;
+    private float zLevel;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,30 +65,13 @@ public class EnterInfoActivity extends AppCompatActivity {
             if (position == 0) {
                 Log.d("Gender is ", "Male");
                 getUsersRef("gender").setValue("Male");
+                Gender = 0;
             } else {
                 Log.d("Gender is ", "Female");
                 getUsersRef("gender").setValue("Female");
+                Gender = 1;
             }
         });
-
-//        ImageView userPhoto = (ImageView) getActivity().findViewById(R.id.userPhoto);
-//        userPhoto.setImageResource(R.drawable.background3);
-//            userPhoto.setBackgroundColor(android.R.color.white);
-//        fab1.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (nameET.getText().toString().length() == 0) {
-//                    nameET.setError("Name is required!");
-//                    return;
-//                }
-//                mListener.onFloatingButtonClicked();
-//                getUsersRef("name").setValue(nameET.getText().toString());
-//                getUsersRef("phone").setValue(phoneET.getText().toString());
-//                getUsersRef("age").setValue(ageET.getText().toString());
-//                getUsersRef("height").setValue(heightET.getText().toString());
-//                getUsersRef("weight").setValue(weightET.getText().toString());
-//            }
-//        });
 
         next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,14 +80,34 @@ public class EnterInfoActivity extends AppCompatActivity {
                     nameET.setError("Name is required!");
                     return;
                 }
-                Intent myIntent = new Intent(EnterInfoActivity.this, SetGoalActivity.class);
+                Intent myIntent = new Intent(EnterInfoActivity.this, MainActivity.class);
                 startActivity(myIntent);
                 getUsersRef("name").setValue(nameET.getText().toString());
                 getUsersRef("phone").setValue(phoneET.getText().toString());
                 getUsersRef("age").setValue(ageET.getText().toString());
                 getUsersRef("height").setValue(heightET.getText().toString());
                 getUsersRef("weight").setValue(weightET.getText().toString());
+                
+                if (Gender == 0) {
+                    BMR = (float) (10 * Float.parseFloat(weightET.getText().toString())
+                            + 6.25 * Float.parseFloat(heightET.getText().toString())
+                                - 5 * Float.parseFloat(ageET.getText().toString()) + 5);
+                } else {
+                    BMR = (float) (10 * Float.parseFloat(weightET.getText().toString())
+                            + 6.25 * Float.parseFloat(heightET.getText().toString())
+                            - 5 * Float.parseFloat(ageET.getText().toString()) - 161);
+                }
 
+                totalCarolies = BMR * zLevel;
+                getUsersRef("caloriegoal").setValue(totalCarolies);
+
+                if (zLevel == 1.2) {
+                    getUsersRef("stepgoal").setValue(8000);
+                } else if (zLevel == 1.55) {
+                    getUsersRef("stepgoal").setValue(10000);
+                } else {
+                    getUsersRef("stepgoal").setValue(12000);
+                }
             }
         });
 
@@ -113,7 +121,7 @@ public class EnterInfoActivity extends AppCompatActivity {
                 imgHigh.setAlpha((float) 1);
                 tvHigh.setAlpha((float)1);
 
-
+                zLevel = (float) 1.2;
             }
         });
         imgAvg.setOnClickListener(new View.OnClickListener() {
@@ -125,6 +133,8 @@ public class EnterInfoActivity extends AppCompatActivity {
                 tvLow.setAlpha((float)0.5);
                 imgAvg.setAlpha((float) 1);
                 tvAvg.setAlpha((float) 1);
+
+                zLevel = (float) 1.55;
             }
         });
         imgLow.setOnClickListener(new View.OnClickListener() {
@@ -137,6 +147,7 @@ public class EnterInfoActivity extends AppCompatActivity {
                 imgLow.setAlpha((float) 1);
                 tvLow.setAlpha((float) 1);
 
+                zLevel = (float) 1.9;
             }
         });
     }

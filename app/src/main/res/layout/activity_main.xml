@@ -30,6 +30,24 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
+        <TextView
+            android:text="MM-YYYY"
+            android:textSize="18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="350dp"
+            android:id="@+id/txtMonthYear" />
+
+        <Button
+            android:text="Set Month Year"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:id="@+id/btnMonthYear"
+            android:layout_marginTop="14dp"
+            android:layout_below="@+id/txtMonthYear"
+            android:layout_centerHorizontal="true" />
 
 
         <ImageView
@@ -47,7 +65,7 @@
             android:layout_height="131dp"
             android:layout_alignParentTop="true"
             android:layout_centerInParent="true"
-            android:layout_marginTop="380dp"
+            android:layout_marginTop="450dp"
             android:src="@drawable/play" />
 
     </RelativeLayout>

@@ -1,17 +1,7 @@
 package com.tu.fitness_app.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.NavigationUI;
-
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -23,6 +13,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -39,7 +38,6 @@ import com.hookedonplay.decoviewlib.DecoView;
 import com.hookedonplay.decoviewlib.charts.DecoDrawEffect;
 import com.hookedonplay.decoviewlib.charts.SeriesItem;
 import com.hookedonplay.decoviewlib.events.DecoEvent;
-import com.tu.fitness_app.Model.Steps;
 import com.tu.fitness_app.R;
 
 import java.util.Date;
@@ -91,6 +89,7 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
         final String date = today.getYear() + 1900 + "-" + (1 + today.getMonth()) + "-" + today.getDate();
         return mDatabase.child("Steps").child(userId).child(date).child("totalsteps");
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

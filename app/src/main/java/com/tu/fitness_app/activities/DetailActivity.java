@@ -38,7 +38,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DetailActivity extends AppCompatActivity {
+public class DetailActivity extends AppCompatActivity  {
     public static Product product;
     String barcode = BarcodeScanner.myResult;
     String name, url, engry;
@@ -58,6 +58,7 @@ public class DetailActivity extends AppCompatActivity {
     public static float user_protein1 = 0f;
 
     Date today = new Date();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,7 +87,7 @@ public class DetailActivity extends AppCompatActivity {
 
         // get product with barcode
         GetProduct();
-
+//
         //  add product to database
         button.setOnClickListener(v -> {
             calRef1 = calRef1 + Float.parseFloat(product.nutriments.getCalories());
@@ -104,7 +105,8 @@ public class DetailActivity extends AppCompatActivity {
         });
     }
 
-    private DatabaseReference getCaloriesRef(String ref) {
+
+        private DatabaseReference getCaloriesRef(String ref) {
         FirebaseUser user = mAuth.getCurrentUser();
         String userId = user.getUid();
         final String date = today.getYear() + 1900 + "-" + (1 + today.getMonth()) + "-" + today.getDate();
@@ -178,18 +180,18 @@ public class DetailActivity extends AppCompatActivity {
     }
 
 
-    public void GetProduct()  {
+    public void GetProduct() {
         FoodFactsServer server = new FoodFactsServer();
         FoodFactsApi api = server.getApi();
 
         // https://world.openfoodfacts.org/api/v0/product/3329770057258.json
-        Call<FoodFactsApiResponse> call = api.getProduct(barcode);
+        Call<FoodFactsApiResponse> call = api.getProduct("01223004");
 
         call.enqueue(new Callback<FoodFactsApiResponse>() {
 
             @Override
             public void onResponse(Call<FoodFactsApiResponse> call, Response<FoodFactsApiResponse> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     product = response.body().getProduct();
                     if (product != null) {
                         Log.d("FoodFactsTest", String.valueOf(product));
@@ -201,9 +203,8 @@ public class DetailActivity extends AppCompatActivity {
                         fat.setText("Fats: " + nutriment.getFat() + " g");
                         carbohydrates.setText("Carbs: " + nutriment.getCarbohydrates() + " g");
                         productName.setText(name);
-                        new DownLoadImageTask(picture).execute(url);
-                    }
-                    else {
+//                        new DownLoadImageTask(picture).execute(url);
+                    } else {
                         Toast.makeText(DetailActivity.this, "NOT FOUND FOOD", Toast.LENGTH_SHORT).show();
                     }
                 }
