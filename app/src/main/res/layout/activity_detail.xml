@@ -3,8 +3,17 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
-    android:padding="16dp">
+    android:background="@android:color/white">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/recycle_toolbar"
+        android:layout_height="70dp"
+        android:layout_width="match_parent"
+        android:title="@string/toolbar"
+        android:elevation="5dp"
+        android:minHeight="70dp"
+        android:background="@color/colorPrimary"/>
+
 
     <ImageView
         android:id="@+id/picture"
@@ -25,9 +34,37 @@
         android:textSize="16sp"
         />
 
+    <TextView
+        android:id="@+id/fat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        />
+
+    <TextView
+        android:id="@+id/proteins"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        />
+
+    <TextView
+        android:id="@+id/carbohydrates"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        />
+
     <ListView
         android:id="@+id/ingredients_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="add"/>
 </LinearLayout>

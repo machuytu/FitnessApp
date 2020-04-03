@@ -1,15 +1,28 @@
 package com.tu.fitness_app.activities;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.tu.fitness_app.Model.Nutriments;
 import com.tu.fitness_app.Model.Product;
 import com.tu.fitness_app.R;
@@ -19,6 +32,7 @@ import com.tu.fitness_app.api.FoodFactsServer;
 
 import java.io.InputStream;
 import java.net.URL;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,9 +43,21 @@ public class DetailActivity extends AppCompatActivity {
     String barcode = BarcodeScanner.myResult;
     String name, url, engry;
     private ImageView picture;
-    private TextView productName;
-    private TextView energyValue;
+    private TextView productName, energyValue, fat, proteins, carbohydrates;
+    private Button button;
+    private Toolbar mToolbar;
+    private ActionBar mActionBar;
     private ListView ingredientsList;
+    private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
+    private DatabaseReference ref_history;
+    private DatabaseReference ref_calories;
+    public static float calRef1 = 0f;
+    public static float user_fat1 = 0f;
+    public static float user_carbs1 = 0f;
+    public static float user_protein1 = 0f;
+
+    Date today = new Date();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,13 +65,114 @@ public class DetailActivity extends AppCompatActivity {
         picture = findViewById(R.id.picture);
         productName = findViewById(R.id.product_name);
         energyValue = findViewById(R.id.energy_value);
+        fat = findViewById(R.id.fat);
+        proteins = findViewById(R.id.proteins);
+        carbohydrates = findViewById(R.id.carbohydrates);
         ingredientsList = findViewById(R.id.ingredients_list);
+        button = findViewById(R.id.button);
 
+        // Toolbar
+        mToolbar = findViewById(R.id.recycle_toolbar);
+        setSupportActionBar(mToolbar);
+        mActionBar = getSupportActionBar();
+        mActionBar.setDisplayHomeAsUpEnabled(true);
+        mActionBar.setHomeButtonEnabled(true);
 
+        // get data
+        GetDataFirebase();
 
+        // get product with barcode
         GetProduct();
+
+        //  add product to database
+        button.setOnClickListener(v -> {
+            calRef1 = calRef1 + Float.parseFloat(product.nutriments.getCalories());
+            user_carbs1 = user_carbs1 + Float.parseFloat(product.nutriments.getCarbohydrates());
+            user_fat1 = user_fat1 + Float.parseFloat(product.nutriments.getFat());
+            user_protein1 = user_protein1 + Float.parseFloat(product.nutriments.getProteins());
+
+            getCaloriesRef("totalcalories").setValue(calRef1);
+            getCaloriesRef("totalfat").setValue(user_carbs1);
+            getCaloriesRef("totalcarbs").setValue(user_fat1);
+            getCaloriesRef("totalprotein").setValue(user_protein1);
+
+            Intent intent = new Intent(DetailActivity.this, OverviewActivity.class);
+            startActivity(intent);
+        });
     }
 
+    private DatabaseReference getCaloriesRef(String ref) {
+        FirebaseUser user = mAuth.getCurrentUser();
+        String userId = user.getUid();
+        final String date = today.getYear() + 1900 + "-" + (1 + today.getMonth()) + "-" + today.getDate();
+        return mDatabase.child("Calories").child(userId).child(date).child(ref);
+    }
+
+    private void GetDataFirebase() {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        ref_history = database.getReference("history");
+        ref_calories = database.getReference("Calories");
+
+        getCaloriesRef("totalcalories").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    calRef1 = Float.parseFloat(String.valueOf(dataSnapshot.getValue()));
+                } else {
+                    calRef1 = 0f;
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+        getCaloriesRef("totalfat").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    user_fat1 = Float.parseFloat(String.valueOf(dataSnapshot.getValue()));
+                } else {
+                    user_fat1 = 0f;
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+        getCaloriesRef("totalcarbs").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    user_carbs1 = Float.parseFloat(String.valueOf(dataSnapshot.getValue()));
+                } else {
+                    user_carbs1 = 0f;
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+        getCaloriesRef("totalprotein").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    user_protein1 = Float.parseFloat(String.valueOf(dataSnapshot.getValue()));
+                } else {
+                    user_protein1 = 0f;
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
 
 
     public void GetProduct()  {
@@ -61,18 +188,21 @@ public class DetailActivity extends AppCompatActivity {
             public void onResponse(Call<FoodFactsApiResponse> call, Response<FoodFactsApiResponse> response) {
                 if(response.isSuccessful()){
                     product = response.body().getProduct();
-
-                    Nutriments nutriments = product.getNutriments();
-                    name = product.getProductName();
-                    url = product.getImageFrontUrl();
-                    engry = product.getNutriments().getEnergyUnit();
-                    energyValue.setText(engry);
-//                    energyValue.setText(nutriment.getEnergyValue() + " " + nutriment.getEnergyUnit());
-                    productName.setText(name);
-                    if (nutriments != null) {
-                        energyValue.setText(nutriments.getEnergyValue() + " " + nutriments.getEnergyUnit());
+                    if (product != null) {
+                        Log.d("FoodFactsTest", String.valueOf(product));
+                        Nutriments nutriment = product.getNutriments();
+                        name = product.getProductName();
+                        url = product.getImageFrontUrl();
+                        energyValue.setText("Calories: " + nutriment.getCalories() + " g");
+                        proteins.setText("Proteins: " + nutriment.getProteins() + " g");
+                        fat.setText("Fats: " + nutriment.getFat() + " g");
+                        carbohydrates.setText("Carbs: " + nutriment.getCarbohydrates() + " g");
+                        productName.setText(name);
+                        new DownLoadImageTask(picture).execute(url);
                     }
-                    new DownLoadImageTask(picture).execute(url);
+                    else {
+                        Toast.makeText(DetailActivity.this, "NOT FOUND FOOD", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 
@@ -90,31 +220,17 @@ public class DetailActivity extends AppCompatActivity {
         public DownLoadImageTask(ImageView imageView){
             this.imageView = imageView;
         }
-
-        /*
-            doInBackground(Params... params)
-                Override this method to perform a computation on a background thread.
-         */
         protected Bitmap doInBackground(String...urls){
             String urlOfImage = urls[0];
             Bitmap logo = null;
             try{
                 InputStream is = new URL(urlOfImage).openStream();
-                /*
-                    decodeStream(InputStream is)
-                        Decode an input stream into a bitmap.
-                 */
                 logo = BitmapFactory.decodeStream(is);
             }catch(Exception e){ // Catch the download exception
                 e.printStackTrace();
             }
             return logo;
         }
-
-        /*
-            onPostExecute(Result result)
-                Runs on the UI thread after doInBackground(Params...).
-         */
         protected void onPostExecute(Bitmap result){
             imageView.setImageBitmap(result);
         }
