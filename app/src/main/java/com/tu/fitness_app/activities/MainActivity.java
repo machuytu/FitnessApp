@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     case R.id.item9:
-                        intent = new Intent(MainActivity.this, DetailActivity.class);
+                        intent = new Intent(MainActivity.this, BarcodeScanner.class);
                         startActivity(intent);
                         break;
                 }
