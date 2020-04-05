@@ -17,6 +17,8 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.tu.fitness_app.R;
 
+import java.util.Iterator;
+
 public class Test extends AppCompatActivity {
     Button button;
     private FirebaseAuth mAuth;
@@ -27,7 +29,6 @@ public class Test extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
-
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();

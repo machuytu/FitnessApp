@@ -66,7 +66,6 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
     private int mBackIndex;
     private int mSeries1Index;
 
-    private View textView;
     private SensorManager sensorManager;
 
     public static int evsteps;
@@ -79,6 +78,11 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     ActionBarDrawerToggle toggle;
+
+    TextView tvState;
+    TextView tvPercentage;
+    TextView tvRemaining;
+    TextView tvRun;
 
     // Firebase database init
     private DatabaseReference mDatabase;
@@ -96,7 +100,11 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step_count_daily);
-        textView = findViewById(R.id.textRemaining);
+
+        tvRemaining = findViewById(R.id.textRemaining);
+        tvPercentage = findViewById(R.id.textPercentage);
+        tvRun = findViewById(R.id.textRun);
+        tvState = findViewById(R.id.textState);
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -127,12 +135,6 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
 
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
-
-        mSeriesMax = SetGoalActivity.mSeries;
-        if (mSeriesMax == 0) {
-            mSeriesMax = LoginActivity.mSeries1;
-        }
-        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(navigationView, navController);
@@ -173,8 +175,6 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
                         myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);// clear back stack
                         startActivity(myIntent);
                         finish();
-                    default:
-                        break;
                     case R.id.item7:
                         intent = new Intent(StepCountDaily.this, OverviewActivity.class);
                         startActivity(intent);
@@ -183,16 +183,18 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
                         intent = new Intent(StepCountDaily.this, HistoryActivity.class);
                         startActivity(intent);
                         break;
+                    default:
+                        break;
                 }
                 drawerLayout.closeDrawers();
                 return false;
             }
         });
 
+        mSeriesMax = SetGoalActivity.mSeries;
         if (mSeriesMax == 0) {
             mSeriesMax = LoginActivity.mSeries1;
         }
-
         if(mSeriesMax > 0) {
             // Create required data series on the DecoView
             createBackSeries();
@@ -245,17 +247,16 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
 
         Log.d("mSeries Data1", (String.valueOf(mSeriesMax)));
 
-        final TextView textPercentage = findViewById(R.id.textPercentage);
         seriesItem.addArcSeriesItemListener(new SeriesItem.SeriesItemListener() {
             @Override
             public void onSeriesItemAnimationProgress(float percentComplete, float currentPosition) {
                 float percentFilled = ((currentPosition - seriesItem.getMinValue())
                         / (seriesItem.getMaxValue() - seriesItem.getMinValue()));
                 if(percentFilled < 1){
-                    textPercentage.setText(String.format("%.0f%%", percentFilled * 100));
+                    tvPercentage.setText(String.format("%.0f%%", percentFilled * 100));
                 }
                 else {
-                    textPercentage.setText("100%");
+                    tvPercentage.setText("100%");
                 }
 
             }
@@ -266,16 +267,15 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
             }
         });
 
-        final TextView textToGo = findViewById(R.id.textRemaining);
-        textToGo.setText(String.format("%d Steps to goal", (int) (seriesItem.getMaxValue())));
+        tvRemaining.setText(String.format("%d Steps to goal", (int) (seriesItem.getMaxValue())));
         seriesItem.addArcSeriesItemListener(new SeriesItem.SeriesItemListener() {
             @Override
             public void onSeriesItemAnimationProgress(float percentComplete, float currentPosition) {
                 if (seriesItem.getMaxValue() > currentPosition){
-                    textToGo.setText(String.format("%d Steps to goal", (int) (seriesItem.getMaxValue() - currentPosition)));
+                    tvRemaining.setText(String.format("%d Steps to goal", (int) (seriesItem.getMaxValue() - currentPosition)));
                 }
                 else{
-                    textToGo.setText("Completed");
+                    tvRemaining.setText("Completed");
                 }
 
             }
@@ -286,11 +286,10 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
             }
         });
 
-        final TextView textActivity1 = (TextView) findViewById(R.id.textActivity1);
         seriesItem.addArcSeriesItemListener(new SeriesItem.SeriesItemListener() {
             @Override
             public void onSeriesItemAnimationProgress(float percentComplete, float currentPosition) {
-                textActivity1.setText(String.format("%.0f Steps", currentPosition));
+                tvRun.setText(String.format("%.0f Steps", currentPosition));
             }
 
             @Override
@@ -315,35 +314,52 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
     @Override
     public void onSensorChanged(SensorEvent event) {
         if (activityRunning) {
-            stepsInSensor = (int) event.values[0];
-            evsteps = stepsInSensor - stepsAtReset;
-            getStepsRef().setValue(evsteps);
-            getStepsRef().addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    ((TextView) textView).setText(String.valueOf(dataSnapshot.getValue()));
+            if(event.sensor.getType() == Sensor.TYPE_STEP_COUNTER) {
+                stepsInSensor = (int) event.values[0];
+                evsteps = stepsInSensor - stepsAtReset;
+                getStepsRef().setValue(evsteps);
+                getStepsRef().addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        tvRemaining.setText(String.valueOf(dataSnapshot.getValue()));
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+                // Draw
+                mDecoView.addEvent(new DecoEvent.Builder(mSeriesMax)
+                        .setIndex(mBackIndex)
+                        .setDuration(3000)
+                        .setDelay(100)
+                        .build());
+
+                mDecoView.addEvent(new DecoEvent.Builder(evsteps)
+                        .setIndex(mSeries1Index)
+                        .setDuration(3250)
+                        .build());
+            }
+            if(event.sensor.getType() == Sensor.TYPE_LINEAR_ACCELERATION) {
+                double x = event.values[0];
+                double y = event.values[1];
+                double z = event.values[2];
+                double delta = Math.sqrt(x*x + y*y + z*z);
+                if(delta < 10) {
+                    tvState.setText("STOPPING");
                 }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                else if(delta > 25) {
+                    tvState.setText("RUNNING");
                 }
-            });
-
-            // Draw
-            mDecoView.addEvent(new DecoEvent.Builder(mSeriesMax)
-                .setIndex(mBackIndex)
-                .setDuration(3000)
-                .setDelay(30)
-                .build());
-
-            mDecoView.addEvent(new DecoEvent.Builder(evsteps)
-                .setIndex(mSeries1Index)
-                .setDuration(3250)
-                .build());
+                else {
+                    tvState.setText("WALKING");
+                }
+            }
         }
-        else{
-            event.values[0] = 0;
+        else {
+            tvState.setText("STOPPING");
         }
     }
 
@@ -356,14 +372,22 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
         super.onResume();
         activityRunning = true;
 
-        Sensor countSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
+        Sensor sensorStepCounter = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
+        Sensor sensorLinearAcceleration = sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
 
-        if (countSensor != null) {
-            sensorManager.registerListener(this, countSensor, SensorManager.SENSOR_DELAY_UI);
+        if (sensorStepCounter != null) {
+            sensorManager.registerListener(this, sensorStepCounter, SensorManager.SENSOR_DELAY_UI);
         } else {
-            Toast.makeText(this, "Count sensor not available!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Step count sensor not available!", Toast.LENGTH_LONG).show();
+            Log.i("log_err", "Step count sensor not available!");
         }
 
+        if (sensorLinearAcceleration!= null) {
+            sensorManager.registerListener(this, sensorLinearAcceleration, SensorManager.SENSOR_DELAY_UI);
+        } else {
+            Toast.makeText(this, "Linear acceleration sensor not available!", Toast.LENGTH_LONG).show();
+            Log.i("log_err", "Linear acceleration sensor not available");
+        }
     }
 
     @Override
@@ -375,7 +399,7 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
     }
 
     private void resetText() {
-        ((TextView) findViewById(R.id.textPercentage)).setText("");
-        ((TextView) findViewById(R.id.textRemaining)).setText("");
+        tvPercentage.setText("");
+        tvRemaining.setText("");
     }
 }
