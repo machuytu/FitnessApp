@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,6 +33,13 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.tu.fitness_app.R;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -41,13 +47,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     ActionBarDrawerToggle toggle;
-    Button btnDatePicker, btnMonthYear;
-    TextView txtDate, txtMonthYear;
+    Button btnMonthYear;
+    TextView txtMonthYear;
+    String stringOfDate;
+    private DatabaseReference mDatabase;
+    private FirebaseAuth mAuth;
     private int mYear, mMonth, mDay;
 
     private AppBarConfiguration mAppBarConfiguration;
-
-    Button btnExercises, btnSetting, btnCalendar, btnStepCount, btnOverview, btnHistory, btnBarcode;
     ImageView btnTraining;
 
     public static float mSeriesMax = 0f;
@@ -60,6 +67,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
         btnMonthYear = (Button) findViewById(R.id.btnMonthYear);
         txtMonthYear = (TextView) findViewById(R.id.txtMonthYear);
@@ -88,11 +98,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
 
-        mSeriesMax = SetGoalActivity.mSeries;
-        Log.d("SetGoal mseries", String.valueOf(SetGoalActivity.mSeries));
-        if (mSeriesMax == 0) {
-            mSeriesMax = LoginActivity.mSeries1;
-        }
+        getUsersRef("stepgoal").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                mSeriesMax = Float.parseFloat(String.valueOf(dataSnapshot.getValue()));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         final String cap1;
         final float[] m = new float[1];
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -186,11 +203,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-           /* DialogFragment newFragment = new DatePickerFragment();
-            newFragment.show(getSupportFragmentManager(),"Date Picker");*/
-
-            /*MonthYearFragment fragment = new MonthYearFragment();
-            fragment.show(getSupportFragmentManager(),"Date Picker");*/
 
         java.util.Calendar c = java.util.Calendar.getInstance();
         int mYear = c.get(java.util.Calendar.YEAR);
@@ -213,7 +225,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    public static class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
+    public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState){
@@ -249,8 +261,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             //Set the Month & Year to TextView which chosen by the user
             TextView tv = (TextView) getActivity().findViewById(R.id.txtMonthYear);
 
-            String stringOfDate = month + "-" + year;
+            stringOfDate = month + "-" + year;
             tv.setText(stringOfDate);
         }
+    }
+
+    private DatabaseReference getUsersRef(String ref) {
+        FirebaseUser user = mAuth.getCurrentUser();
+        String userId = user.getUid();
+        return mDatabase.child("Users").child(userId).child(ref);
     }
 }

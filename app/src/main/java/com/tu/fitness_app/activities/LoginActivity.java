@@ -2,16 +2,10 @@ package com.tu.fitness_app.activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import android.preference.PreferenceManager;
-import android.text.format.DateUtils;
 import android.util.Log;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.facebook.FacebookSdk;
@@ -20,7 +14,6 @@ import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,7 +23,6 @@ import com.tu.fitness_app.Model.Calories;
 import com.tu.fitness_app.Model.Setting;
 import com.tu.fitness_app.Model.Steps;
 import com.tu.fitness_app.Model.User;
-import com.tu.fitness_app.Model.WorkoutDays;
 import com.tu.fitness_app.R;
 
 import org.jetbrains.annotations.NotNull;
@@ -49,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
     public static String USER_EMAIL = "";
     public static String USER_NAME = "";
     public static int mSeries1 = 0;
-    public static int mSeries2 = 0;
+    public static float mSeries2 = 0;
     public static float calRef = 0f;
     public static float user_fat = 0f;
     public static float user_carbs = 0f;
@@ -168,7 +160,7 @@ public class LoginActivity extends AppCompatActivity {
         getUsersRef("caloriegoal").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
-                mSeries2 = Integer.parseInt(String.valueOf(dataSnapshot.getValue()));
+                mSeries2 = Float.parseFloat(String.valueOf(dataSnapshot.getValue()));
             }
 
             @Override

@@ -1,37 +1,33 @@
 package com.tu.fitness_app.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.EventDay;
 import com.applandeo.materialcalendarview.exceptions.OutOfDateRangeException;
-import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.tu.fitness_app.Model.Calories;
 import com.tu.fitness_app.Model.History;
-import com.tu.fitness_app.Model.User;
 import com.tu.fitness_app.R;
 
 import java.util.ArrayList;
@@ -50,6 +46,7 @@ public class HistoryActivity extends AppCompatActivity {
     ListView historyListView;
     Date today = new Date();
 
+
     static float sumOfCalories;
     static float sumOfFat;
     static float sumOfCarbs;
@@ -59,6 +56,8 @@ public class HistoryActivity extends AppCompatActivity {
     private ActionBar mActionBar;
 
     String UserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,13 +71,15 @@ public class HistoryActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         ref_history = database.getReference("history");
         ref_calories = database.getReference("Calories");
+        mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
         // View
         historyListView = findViewById(R.id.historyListView);
-        final String date = today.getYear() + 1900 + "-" + (1 + today.getMonth()) + "-" + today.getDate();
+        final String date_today = today.getYear() + 1900 + "-" + (1 + today.getMonth()) + "-" + today.getDate();
 
         // Read from database
-        readFromDatabase(date);
+        readFromDatabase(date_today);
 
         // Toolbar
         mToolbar = (Toolbar) findViewById(R.id.recycle_toolbar);
@@ -86,6 +87,7 @@ public class HistoryActivity extends AppCompatActivity {
         mActionBar = getSupportActionBar();
         mActionBar.setDisplayHomeAsUpEnabled(true);
         mActionBar.setHomeButtonEnabled(true);
+        
     }
 
     //      https://github.com/Applandeo/Material-Calendar-View
@@ -106,22 +108,8 @@ public class HistoryActivity extends AppCompatActivity {
         calendarView.setEvents(events);
 
 
-        //calendar icon
-//        ref_basicInfo.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                 User user = dataSnapshot.getValue(User.class);
-//                if (user != null) {
-//                    // read data user (not done)
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
+//        calendar icon
+
 
 
         //setting current date
@@ -130,24 +118,31 @@ public class HistoryActivity extends AppCompatActivity {
 
         final AlertDialog alertDialog = builder.create();
         alertDialog.show();
-
         calendarView.setOnDayClickListener(eventDay -> {
+
             Calendar clickedDayCalendar = eventDay.getCalendar();
             String selectedDate = String.valueOf(clickedDayCalendar.get(Calendar.YEAR))
                     +'-'+ (clickedDayCalendar.get(Calendar.MONTH) + 1)
                     +'-'+ clickedDayCalendar.get(Calendar.DATE);
             textView.setText(selectedDate);
+            Log.d("day:", selectedDate);
             alertDialog.dismiss();
 
             // Read from the database
             readFromDatabase(selectedDate);
         });
 
+    }
 
-
+    private DatabaseReference getCaloriesRef(String ref) {
+        FirebaseUser user = mAuth.getCurrentUser();
+        String userId = user.getUid();
+        final String date = today.getYear() + 1900 + "-" + (1 + today.getMonth()) + "-" + today.getDate();
+        return mDatabase.child("Calories").child(userId).child(ref);
     }
 
     public void readFromDatabase(final String date) {
+        final String date_today = today.getYear() + 1900 + "-" + (1 + today.getMonth()) + "-" + today.getDate();
         ref_history.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -155,51 +150,111 @@ public class HistoryActivity extends AppCompatActivity {
                 for (DataSnapshot historySnapShot: dataSnapshot.child(UserId).child(date).getChildren()) {
                     History history = historySnapShot.getValue(History.class);
                     historyArrayList.add(history);
+                    Log.d("test:", String.valueOf(historyArrayList));
                 }
                 adapter = new ArrayAdapter<>(HistoryActivity.this, android.R.layout.simple_list_item_1,historyArrayList);
                 historyListView.setAdapter(adapter);
 
                 // onClick
-                historyListView.setOnItemClickListener((parent, view, position, idd) -> {
-                    // Dialog -> Delete
-                    History history = historyArrayList.get(position);
-                    final String id = history.getId();
+                if (date.equals(date_today)) {
+                    historyListView.setOnItemClickListener((parent, view, position, idd) -> {
+                        // Dialog -> Delete
+                        History history = historyArrayList.get(position);
+                        final String id = history.getId();
 
-                    // Build dialog with custom layout
-                    // Inflate custom view -> Set it on builder
-                    AlertDialog.Builder builder = new AlertDialog.Builder(HistoryActivity.this);
-                    LayoutInflater inflater = getLayoutInflater();
-                    View dialogView = inflater.inflate(R.layout.dialog_history_delete, null);
-                    builder.setView(dialogView);
+                        // Build dialog with custom layout
+                        // Inflate custom view -> Set it on builder
+                        AlertDialog.Builder builder = new AlertDialog.Builder(HistoryActivity.this);
+                        LayoutInflater inflater = getLayoutInflater();
+                        View dialogView = inflater.inflate(R.layout.dialog_history_delete, null);
+                        builder.setView(dialogView);
 
-                    final AlertDialog alertDialog = builder.create();
-                    alertDialog.show();
+                        final AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
 
-                    Button delete_btn = dialogView.findViewById(R.id.dialog_delete);
-                    delete_btn.setOnClickListener(v -> {
-                        ref_history.child(UserId).child(date).child(id).removeValue();
-                        alertDialog.dismiss();
+                        Button delete_btn = dialogView.findViewById(R.id.dialog_delete);
+                        delete_btn.setOnClickListener(v -> {
+                            getCaloriesRef(date).child("totalcalories").addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.exists()) {
+                                        sumOfCalories = Float.parseFloat(String.valueOf(dataSnapshot.getValue()));
+                                    } else {
+                                        sumOfCalories = 0f;
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                }
+                            });
+
+                            getCaloriesRef(date).child("totalfat").addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.exists()) {
+                                        sumOfFat = Float.parseFloat(String.valueOf(dataSnapshot.getValue()));
+                                    } else {
+                                        sumOfFat = 0f;
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                }
+                            });
+
+                            getCaloriesRef(date).child("totalcarbs").addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.exists()) {
+                                        sumOfCarbs = Float.parseFloat(String.valueOf(dataSnapshot.getValue()));
+                                    } else {
+                                        sumOfCarbs = 0f;
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                }
+                            });
+
+                            getCaloriesRef(date).child("totalprotein").addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.exists()) {
+                                        sumOfProtein = Float.parseFloat(String.valueOf(dataSnapshot.getValue()));
+                                    } else {
+                                        sumOfProtein = 0f;
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                }
+                            });
+
+                            Log.d("tong calories truoc", String.valueOf(sumOfCalories));
+                            sumOfCalories = sumOfCalories - Float.parseFloat(history.getTotalCalories());
+                            sumOfFat = sumOfFat - history.getTotalFat();
+                            sumOfCarbs = sumOfCarbs - history.getTotalCarbs();
+                            sumOfProtein = sumOfProtein - history.getTotalProtein();
+
+                            Log.d("tong calories sau", String.valueOf(sumOfCalories));
+
+                            getCaloriesRef(date).child("totalcalories").setValue(sumOfCalories);
+                            getCaloriesRef(date).child("totalfat").setValue(sumOfFat);
+                            getCaloriesRef(date).child("totalcarbs").setValue(sumOfCarbs);
+                            getCaloriesRef(date).child("totalprotein").setValue(sumOfProtein);
+
+                            ref_history.child(UserId).child(date).child(id).removeValue();
+                            alertDialog.dismiss();
+                        });
+                        Button cancel_btn = dialogView.findViewById(R.id.dialog_cancel);
+                        cancel_btn.setOnClickListener(v -> alertDialog.dismiss());
                     });
-                    Button cancel_btn = dialogView.findViewById(R.id.dialog_cancel);
-                    cancel_btn.setOnClickListener(v -> alertDialog.dismiss());
-                });
-
-                // Find the amount of calories and set text and send to overview
-                sumOfCalories = 0f;
-                sumOfFat = 0f;
-                sumOfProtein = 0f;
-                sumOfCarbs = 0f;
-//
-                for (int i = 0; i < historyArrayList.size(); i++) {
-                    sumOfCalories += Float.valueOf(historyArrayList.get(i).getTotalCalories());
-                    sumOfFat += historyArrayList.get(i).getTotalFat();
-                    sumOfProtein += historyArrayList.get(i).getTotalProtein();
-                    sumOfCarbs += historyArrayList.get(i).getTotalCarbs();
                 }
 
-                Log.d("sum ", String.valueOf(sumOfCalories + sumOfCarbs + sumOfProtein + sumOfFat));
-                Calories calories = new Calories(sumOfCalories, sumOfFat, sumOfCarbs, sumOfProtein);
-                ref_calories.child(UserId).child(date).setValue(calories);
                 textView.setText(date);
             }
 

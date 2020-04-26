@@ -23,6 +23,13 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.natasa.progressviews.CircleProgressBar;
 import com.natasa.progressviews.utils.OnProgressViewListener;
 import com.tu.fitness_app.R;
@@ -30,29 +37,54 @@ import com.tu.fitness_app.R;
 public class OverviewActivity extends AppCompatActivity {
 
     public float food_calories = 0f;
-    public static float stepMax = 0f;
+    public static int stepMax = 0;
     public static float caloriesMax = 0f;
 
     Toolbar toolbar;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     ActionBarDrawerToggle toggle;
-
+    private DatabaseReference mDatabase;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_overview);
 
+        mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
         food_calories = LoginActivity.calRef;
 
         // Setting Steps and Calories
-        stepMax = SetGoalActivity.mSeries;
+        getUsersRef("stepgoal").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                stepMax = Integer.parseInt(String.valueOf(dataSnapshot.getValue()));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         if (stepMax == 0) {
             stepMax = LoginActivity.mSeries1;
         }
-        
-        caloriesMax = SetGoalActivity.mSeries1;
+
+        getUsersRef("caloriegoal").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                caloriesMax = Float.parseFloat(String.valueOf(dataSnapshot.getValue()));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         if (caloriesMax == 0) {
             caloriesMax = LoginActivity.mSeries2;
         }
@@ -179,6 +211,7 @@ public class OverviewActivity extends AppCompatActivity {
         food.setRoundEdgeProgress(true);
         food.startAnimation(translation_food);
 
+
         // Listeners
         steps.setOnProgressViewListener(new OnProgressViewListener() {
             float progress = 0;
@@ -242,8 +275,14 @@ public class OverviewActivity extends AppCompatActivity {
         // Add calories
         ImageView addCal = findViewById(R.id.addcalories);
         addCal.setOnClickListener(v -> {
-            Intent intent = new Intent(OverviewActivity.this, FoodFactFood_RecyclerFrag_Main.class);
+            Intent intent = new Intent(OverviewActivity.this, Food_RecyclerFrag_Main.class);
             startActivity(intent);
         });
+    }
+
+    private DatabaseReference getUsersRef(String ref) {
+        FirebaseUser user = mAuth.getCurrentUser();
+        String userId = user.getUid();
+        return mDatabase.child("Users").child(userId).child(ref);
     }
 }

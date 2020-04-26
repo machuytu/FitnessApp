@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -184,8 +183,8 @@ public class DetailActivity extends AppCompatActivity  {
         FoodFactsServer server = new FoodFactsServer();
         FoodFactsApi api = server.getApi();
 
-        // https://world.openfoodfacts.org/api/v0/product/3329770057258.json
-        Call<FoodFactsApiResponse> call = api.getProduct("01223004");
+        // https://world.openfoodfacts.org/api/v0/product/(barcode).json
+        Call<FoodFactsApiResponse> call = api.getProduct(barcode);
 
         call.enqueue(new Callback<FoodFactsApiResponse>() {
 
@@ -194,7 +193,6 @@ public class DetailActivity extends AppCompatActivity  {
                 if (response.isSuccessful()) {
                     product = response.body().getProduct();
                     if (product != null) {
-                        Log.d("FoodFactsTest", String.valueOf(product));
                         Nutriments nutriment = product.getNutriments();
                         name = product.getProductName();
                         url = product.getImageFrontUrl();
@@ -203,7 +201,7 @@ public class DetailActivity extends AppCompatActivity  {
                         fat.setText("Fats: " + nutriment.getFat() + " g");
                         carbohydrates.setText("Carbs: " + nutriment.getCarbohydrates() + " g");
                         productName.setText(name);
-//                        new DownLoadImageTask(picture).execute(url);
+                        new DownLoadImageTask(picture).execute(url);
                     } else {
                         Toast.makeText(DetailActivity.this, "NOT FOUND FOOD", Toast.LENGTH_SHORT).show();
                     }

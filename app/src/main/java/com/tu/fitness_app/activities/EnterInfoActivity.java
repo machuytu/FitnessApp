@@ -99,6 +99,7 @@ public class EnterInfoActivity extends AppCompatActivity {
                 }
 
                 totalCarolies = BMR * zLevel;
+                Log.d("totalcalries", String.valueOf(totalCarolies));
                 getUsersRef("caloriegoal").setValue(totalCarolies);
 
                 if (zLevel == 1.2) {
@@ -121,7 +122,7 @@ public class EnterInfoActivity extends AppCompatActivity {
                 imgHigh.setAlpha((float) 1);
                 tvHigh.setAlpha((float)1);
 
-                zLevel = (float) 1.2;
+                zLevel = (float) 1.9;
             }
         });
         imgAvg.setOnClickListener(new View.OnClickListener() {
@@ -147,7 +148,7 @@ public class EnterInfoActivity extends AppCompatActivity {
                 imgLow.setAlpha((float) 1);
                 tvLow.setAlpha((float) 1);
 
-                zLevel = (float) 1.9;
+                zLevel = (float) 1.2;
             }
         });
     }

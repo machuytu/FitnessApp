@@ -101,7 +101,19 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         mDecoView = findViewById(R.id.dynamicArcView);
-        mSeriesMax = SetGoalActivity.mSeries;
+
+        getUsersRef("stepgoal").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                mSeriesMax =  Integer.parseInt(String.valueOf(dataSnapshot.getValue()));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 
         stepsAtReset = stepsInSensor;
@@ -127,7 +139,6 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
 
-        mSeriesMax = SetGoalActivity.mSeries;
         if (mSeriesMax == 0) {
             mSeriesMax = LoginActivity.mSeries1;
         }
@@ -376,5 +387,11 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
     private void resetText() {
         ((TextView) findViewById(R.id.textPercentage)).setText("");
         ((TextView) findViewById(R.id.textRemaining)).setText("");
+    }
+
+    private DatabaseReference getUsersRef(String ref) {
+        FirebaseUser user = mAuth.getCurrentUser();
+        String userId = user.getUid();
+        return mDatabase.child("Users").child(userId).child(ref);
     }
 }

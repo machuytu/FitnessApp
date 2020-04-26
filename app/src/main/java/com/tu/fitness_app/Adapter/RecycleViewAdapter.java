@@ -72,6 +72,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder>
                 Intent intent = new Intent(context, ViewEx.class);
                 intent.putExtra("image_id", excerciseList.get(position).getImage_id());
                 intent.putExtra("name", excerciseList.get(position).getName());
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
         });
