@@ -167,6 +167,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         intent = new Intent(MainActivity.this, BarcodeScanner.class);
                         startActivity(intent);
                         break;
+                    case R.id.item10:
+                        intent = new Intent(MainActivity.this, Chart.class);
+                        startActivity(intent);
+                        break;
                 }
                 drawerLayout.closeDrawers();
                 return false;

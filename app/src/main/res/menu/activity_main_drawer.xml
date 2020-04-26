@@ -27,6 +27,9 @@
             android:icon="@drawable/ic_pie_chart_black_24dp"
             android:title="@string/overview" />
         <item
+            android:id="@+id/item10"
+            android:title="Chart" />
+        <item
             android:id="@+id/item8"
             android:icon="@drawable/ic_history_black_24dp"
             android:title="@string/history" />
@@ -34,6 +37,7 @@
             android:id="@+id/item9"
             android:icon="@drawable/ic_scanner_black_24dp"
             android:title="@string/scanner" />
+
     </group>
 
     <item android:title="@string/settings">
