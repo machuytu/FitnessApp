@@ -31,9 +31,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activities.DetailActivity">
-
-        </activity>
+        <activity android:name=".activities.Chart"></activity>
+        <activity android:name=".activities.DetailActivity"></activity>
         <activity android:name=".activities.BarcodeScanner" />
         <activity android:name=".activities.Test" />
         <activity android:name=".activities.Calendar" />

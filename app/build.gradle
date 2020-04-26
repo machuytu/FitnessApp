@@ -52,7 +52,8 @@ android {
         mavenCentral()
     }
 }
-
+//repositories {
+//    maven { url "https://jitpack.io" }
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.1.0'
@@ -122,7 +123,7 @@ dependencies {
     implementation 'com.github.AppIntro:AppIntro:5.1.0'
 
     // Bar Chart
-    implementation 'com.github.PhilJay:MPAndroidChart:v2.2.3'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.2'
 
     // Profile Picture
     implementation 'de.hdodenhof:circleimageview:3.0.1'
