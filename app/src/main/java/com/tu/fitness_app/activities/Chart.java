@@ -1,39 +1,27 @@
 package com.tu.fitness_app.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
-
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.github.mikephil.charting.charts.CombinedChart;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
-import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.CombinedData;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -44,13 +32,10 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.tu.fitness_app.R;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.AbstractQueue;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.List;
 
 public class Chart extends AppCompatActivity implements View.OnClickListener {
     TextView txtMonthYear;
@@ -69,8 +54,6 @@ public class Chart extends AppCompatActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chart);
-        listkey = new ArrayList<String>();
-        listvalue = new ArrayList<String>();
         mAuth = FirebaseAuth.getInstance();
         txtMonthYear = findViewById(R.id.txtMonthYear);
         txtMonthYear.setText(stringOfDate);
@@ -93,14 +76,13 @@ public class Chart extends AppCompatActivity implements View.OnClickListener {
                 }
             }
         });
-
         retrieveData(stringOfDate);
+
         btnMonthYear.setOnClickListener(this);
 
     }
     @Override
     public void onClick(View view) {
-
         java.util.Calendar c = java.util.Calendar.getInstance();
         int mYear = c.get(java.util.Calendar.YEAR);
         int mMonth = c.get(java.util.Calendar.MONTH);
@@ -111,53 +93,19 @@ public class Chart extends AppCompatActivity implements View.OnClickListener {
                     public void onDateSet(DatePicker view, int year,
                                           int monthOfYear, int dayOfMonth) {
                         txtMonthYear.setText((monthOfYear + 1) + "-" + year);
-                        Log.d("text month", (monthOfYear + 1) + "-" + year);
+                        stringOfDate = year + "-" + (monthOfYear + 1);
+                        retrieveData(stringOfDate);
                     }
                 }, mYear, mMonth, mDay);
         ((ViewGroup) datePickerDialog.getDatePicker()).findViewById(Resources.getSystem().getIdentifier("day", "id", "android")).setVisibility(View.GONE);
         datePickerDialog.show();
 
     }
-    public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState){
-            //Use the current date as the default date in the date picker
-
-            final java.util.Calendar c = java.util.Calendar.getInstance();
-            int year = c.get(java.util.Calendar.YEAR);
-            int month = c.get(java.util.Calendar.MONTH);
-            int day = c.get(java.util.Calendar.DAY_OF_MONTH);
-            DatePickerDialog dpd = new DatePickerDialog(getActivity(),AlertDialog.THEME_HOLO_DARK,this,year, month, day){
-                //DatePickerDialog dpd = new DatePickerDialog(getActivity(),AlertDialog.THEME_HOLO_LIGHT,this,year, month, day){
-                // DatePickerDialog dpd = new DatePickerDialog(getActivity(), AlertDialog.THEME_TRADITIONAL,this,year, month, day){
-                @Override
-                protected void onCreate(Bundle savedInstanceState)
-                {
-                    super.onCreate(savedInstanceState);
-                    int day = getContext().getResources().getIdentifier("android:id/day", null, null);
-                    if(day != 0){
-                        View dayPicker = findViewById(day);
-                        if(dayPicker != null){
-                            //Set Day view visibility Off/Gone
-                            dayPicker.setVisibility(View.GONE);
-                        }
-                    }
-
-                }
-            };
-            return dpd;
-        }
-
-        public void onDateSet(DatePicker view, int year, int month, int day) {
-            //Set the Month & Year to TextView which chosen by the user
-            TextView tv = (TextView) getActivity().findViewById(R.id.txtMonthYear);
-            stringOfDate = month + "-" + year;
-            tv.setText(stringOfDate);
-            retrieveData(stringOfDate);
-        }
-    }
     private void retrieveData(String stringOfDate) {
+        Log.d("stringOfDate", String.valueOf(stringOfDate));
+        listkey = new ArrayList<String>();
+        listvalue = new ArrayList<String>();
         FirebaseUser user = mAuth.getCurrentUser();
         String userId = user.getUid();
         myref = FirebaseDatabase.getInstance().getReference("Calories").child(userId);
@@ -180,12 +128,14 @@ public class Chart extends AppCompatActivity implements View.OnClickListener {
                     dataVals.add(new Entry(dem,y));
                     dem++;
                 }
-                Log.d("list:", String.valueOf(listvalue));
-                if (dataVals == null) {
+                Log.d("dataVals", String.valueOf(dataVals));
+                if (dataVals.isEmpty()) {
                     lineChart.clear();
                     lineChart.invalidate();
                 }
                 else {
+                    lineChart.invalidate();
+                    lineChart.clear();
                     showChart(dataVals);
                 }
             }
@@ -197,9 +147,12 @@ public class Chart extends AppCompatActivity implements View.OnClickListener {
         });
     }
     private void showChart(ArrayList<Entry> dataVals) {
+        lineDataSet.clear();
+        lineDataSet = new LineDataSet(null, null);
         lineDataSet.setValues(dataVals);
         lineDataSet.setLabel("DataSet 1");
         iLineDataSets.clear();
+        iLineDataSets = new ArrayList<>();
         iLineDataSets.add(lineDataSet);
         lineData = new LineData(iLineDataSets);
         lineChart.clear();

@@ -123,7 +123,7 @@ dependencies {
     implementation 'com.github.AppIntro:AppIntro:5.1.0'
 
     // Bar Chart
-    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.2'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.1'
 
     // Profile Picture
     implementation 'de.hdodenhof:circleimageview:3.0.1'
