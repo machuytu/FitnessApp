@@ -1,4 +1,4 @@
-package com.tu.fitness_app;
+package com.tu.fitness_app.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +22,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.tu.fitness_app.R;
 
 import java.util.Date;
 import java.util.Locale;
