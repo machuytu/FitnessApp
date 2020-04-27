@@ -36,15 +36,6 @@
             android:padding="@dimen/activity_horizontal_margin">
 
             <TextView
-                android:id="@+id/textState"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/textPercentage"
-                android:layout_centerHorizontal="true"
-                android:maxWidth="200dp"
-                android:textAppearance="?android:attr/textAppearanceSmall"/>
-
-            <TextView
                 android:id="@+id/textPercentage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
