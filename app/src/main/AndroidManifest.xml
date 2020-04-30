@@ -49,12 +49,12 @@
         <activity
             android:name=".activities.LoginActivity"
             android:theme="@style/AppTheme.AppThemeNoBar">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity android:name=".activities.SetGoalActivity" />
         <activity android:name=".activities.AppIntroActivity" />
@@ -73,7 +73,9 @@
         <activity android:name=".activities.SettingPage" />
         <activity android:name=".activities.ViewEx" />
         <activity android:name=".activities.ListExercises" />
-        <activity android:name=".activities.MainActivity" />
+        <activity android:name=".activities.MainActivity" >
+
+        </activity>
 
         <receiver
             android:name=".activities.AlarmNotificationReceiver"

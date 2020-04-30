@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:id="@+id/cardgt8"
     android:layout_marginBottom="8dp"
     android:layout_marginRight="6dp"
@@ -10,7 +10,7 @@
     android:clickable="true">
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -24,13 +24,13 @@
                 android:textStyle="bold"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="12dp"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="#00688B"
                 />
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginTop="38dp"
-                android:src="@drawable/food"
+                android:src="@drawable/foodcard"
                 android:layout_marginStart="10dp"
                 android:id="@+id/food"/>
             <TextView
@@ -42,13 +42,14 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="45dp"
                 android:layout_marginEnd="4dp"
-                android:textColor="@color/green"
+                android:textColor="#00688B"
                 android:text="@string/card_view"/>
 
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginTop="78dp"
+                android:paddingBottom="5dp"
                 android:src="@drawable/calories"
                 android:layout_marginStart="10dp"/>
             <TextView
@@ -56,31 +57,33 @@
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:id="@+id/calories"
+                android:paddingBottom="5dp"
                 android:layout_toEndOf="@+id/food"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="85dp"
-                android:textColor="@color/blue"
+                android:textColor="@color/red"
                 android:text="@string/card_view"/>
 
             <TextView
+                android:id="@+id/cal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/cal"
-                android:layout_toEndOf="@+id/calories"
-                android:layout_marginTop="85dp"
-                android:text="@string/calories"
                 android:layout_marginStart="5dp"
-                android:textSize="15sp"
-                android:textColor="@color/blue"
-                />
+                android:layout_marginTop="85dp"
+                android:paddingBottom="5dp"
+                android:layout_toEndOf="@+id/calories"
+                android:text="@string/calories"
+                android:textColor="@color/red"
+                android:textSize="15sp" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/add"
                 android:id="@+id/addFood"
-                android:textColor="@color/white"
-                android:backgroundTint="@color/green"
+                android:background="@drawable/custom_button"
+                android:textColor="#00688B"
+
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"

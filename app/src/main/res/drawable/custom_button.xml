@@ -12,7 +12,7 @@
         android:radius="20dp"/>
     <stroke
         android:color="@color/blue"
-        android:width="4dp"
+        android:width="2dp"
         />
     />
 

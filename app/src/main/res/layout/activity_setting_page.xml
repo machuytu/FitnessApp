@@ -15,7 +15,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true">
         <FrameLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <include
@@ -32,6 +32,7 @@
                     android:id="@+id/cardView"
                     android:layout_below="@+id/switchAlarm"
                     android:padding="16dp"
+                    android:background="@drawable/btn"
                     android:layout_margin="6dp"
                     app:cardElevation="4dp"
                     android:layout_width="match_parent"
@@ -39,35 +40,70 @@
 
                     <RadioGroup
                         android:id="@+id/rdiGroup"
-                        android:orientation="horizontal"
-                        android:weightSum="3"
-                        android:padding="10dp"
+                        android:checkedButton="@+id/calm"
+
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginRight="24dp"
+                        android:layout_marginBottom="24dp"
+                        android:layout_marginTop="24dp"
+                        android:background="@drawable/control_switch_background_border"
+                        android:orientation="horizontal">
 
                         <RadioButton
+                            android:layout_marginTop="3dp"
+                            android:layout_marginBottom="3dp"
+                            android:layout_marginLeft="3dp"
+                            android:paddingTop="16dp"
+                            android:paddingBottom="16dp"
                             android:id="@+id/rdiEasy"
-                            android:text="@string/easy"
+                            android:background="@drawable/control_switch_background_selector_middle"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:theme="@style/MyRadioButton"
-                            android:layout_height="wrap_content"
-                            android:layout_width="0dp" />
+                            android:button="@null"
+                            android:gravity="center"
+                            android:text="Easy"
+                            android:fontFamily="sans-serif-medium"
+                            android:textColor="@color/control_switch_color_selector" />
 
                         <RadioButton
                             android:id="@+id/rdiMedium"
                             android:text="@string/medium"
+                            android:layout_marginTop="3dp"
+                            android:layout_marginBottom="3dp"
+                            android:paddingTop="16dp"
+                            android:paddingBottom="16dp"
+
+                            android:background="@drawable/control_switch_background_selector_middle"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:theme="@style/MyRadioButton"
-                            android:layout_height="wrap_content"
-                            android:layout_width="0dp" />
+                            android:button="@null"
+                            android:gravity="center"
+
+                            android:fontFamily="sans-serif-medium"
+                            android:textColor="@color/control_switch_color_selector" />
 
                         <RadioButton
                             android:id="@+id/rdiHard"
                             android:text="@string/hard"
+                            android:layout_marginTop="3dp"
+                            android:layout_marginBottom="3dp"
+                            android:layout_marginRight="3dp"
+                            android:paddingTop="16dp"
+                            android:paddingBottom="16dp"
+
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:theme="@style/MyRadioButton"
-                            android:layout_height="wrap_content"
-                            android:layout_width="0dp" />
+                            android:background="@drawable/control_switch_background_selector"
+                            android:button="@null"
+                            android:gravity="center"
+
+                            android:fontFamily="sans-serif-medium"
+                            android:textColor="@color/control_switch_color_selector" />
                     </RadioGroup>
 
                 </androidx.cardview.widget.CardView>
@@ -79,89 +115,121 @@
                     android:padding="16dp"
                     android:layout_margin="6dp"
                     app:cardElevation="4dp"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
                     <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_width="400dp"
+                        android:layout_height="129dp"
+                        android:background="@drawable/btn">
 
                         <TextView
+                            android:id="@+id/textView6"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="15sp"
-                            android:text="@string/text9"
-                            android:textColor="@color/black"
-                            android:id="@+id/textView6"
                             android:layout_marginStart="20dp"
-                            android:layout_marginTop="15dp"/>
+                            android:layout_marginTop="15dp"
+                            android:padding="5dp"
+                            android:drawableLeft="@drawable/calo"
+                            android:text="@string/text9"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:textSize="15sp" />
 
                         <EditText
-                            android:layout_width="70dp"
                             android:id="@+id/et4"
-                            android:layout_height="wrap_content"
-                            android:textSize="15sp"
-                            android:layout_marginStart="110dp"
-                            android:backgroundTint="@color/black"
-                            android:layout_toEndOf="@id/textView6"/>
-
-                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="15sp"
-                            android:text="@string/text10"
-                            android:textColor="@color/black"
+                            android:layout_marginStart="100dp"
+                            android:layout_toEndOf="@id/textView6"
+                            android:backgroundTint="@color/black"
+                            android:textSize="15sp" />
+
+                        <TextView
                             android:id="@+id/textView7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_below="@id/textView6"
                             android:layout_marginStart="20dp"
-                            android:layout_marginTop="15dp"/>
+                            android:layout_marginTop="18dp"
+                            android:drawableLeft="@drawable/foot"
+                            android:padding="5dp"
+                            android:text="@string/text10"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
 
                         <EditText
-                            android:layout_width="70dp"
                             android:id="@+id/et5"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="15sp"
-                            android:layout_marginStart="119dp"
-                            android:backgroundTint="@color/black"
+                            android:layout_below="@id/textView6"
+                            android:layout_marginStart="110dp"
+                            android:layout_marginTop="15dp"
                             android:layout_toEndOf="@id/textView7"
-                            android:layout_below="@id/textView6"/>
+                            android:backgroundTint="@color/black"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
                     </RelativeLayout>
-
 
 
                 </androidx.cardview.widget.CardView>
 
-                <ToggleButton
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/switchAlarm"
                     android:layout_below="@+id/timePicker"
                     android:layout_centerHorizontal="true"
-                    android:textOn="@string/on"
-                    android:textOff="@string/off"
+                    android:scaleX="1.5"
+                    android:scaleY="1.5"
+
+                    app:thumbTint="@drawable/switch_thumb"
+                    app:trackTint="@drawable/switch_track"
+                    android:backgroundTint="@color/fbutton_color_transparent"
+                    app:switchMinWidth="60dp"
+                    android:background="#bdc3c7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:id="@+id/tvAlarm"
+                    android:layout_below="@id/switchAlarm"
+                    android:layout_toLeftOf="@id/switchAlarm"
+                    />
 
                 <TimePicker
                     android:id="@+id/timePicker"
-                    android:numbersSelectorColor="@color/colorPrimary"
-                    android:headerBackground="@color/cardview_dark_background"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+
+                    android:headerBackground="#00688B"
+                    android:numbersSelectorColor="@color/greyXL" />
 
                 <info.hoang8f.widget.FButton
                     android:id="@+id/btnSave"
+                    android:layout_width="169dp"
+                    android:layout_height="50dp"
                     android:layout_below="@id/cardView2"
-                    android:layout_width="393dp"
-                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
                     android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginEnd="4dp"
                     android:layout_marginBottom="8dp"
+                    android:background="@drawable/custom_button"
                     android:text="@string/save"
-                    android:textColor="@android:color/white"
-                    app:fButtonColor="@color/colorPrimary"
-                    app:cornerRadius="2dp"
-                    app:shadowColor="@color/colorPrimaryDark"
-                    app:shadowEnabled="true"
-                    app:shadowHeight="2dp" />
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    app:cornerRadius="40dp"
+                    app:fButtonColor="#2980b9" />
+
+
+
+
+<!--                    app:shadowEnabled="true"-->
+<!--                    app:shadowHeight="2dp" />-->
+
             </RelativeLayout>
         </FrameLayout>
     </ScrollView>

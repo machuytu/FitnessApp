@@ -5,13 +5,16 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -19,6 +22,7 @@ import android.widget.ToggleButton;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
@@ -49,8 +53,9 @@ public class SettingPage extends AppCompatActivity {
     RadioGroup rdiGroup;
     Fitness fitness;
     Setting setting;
-    ToggleButton switchAlarm;
+    SwitchCompat switchAlarm;
     TimePicker timePicker;
+    TextView tvAlarm;
 
     EditText editText1;
     EditText editText2;
@@ -87,6 +92,9 @@ public class SettingPage extends AppCompatActivity {
         editText1 = findViewById(R.id.et4);
         editText2 = findViewById(R.id.et5);
 
+        tvAlarm = findViewById(R.id.tvAlarm);
+        switchAlarm = findViewById(R.id.switchAlarm);
+
 //        fitness = new Fitness(this);
 //        int mode = fitness.getSettingMode();
 //        setRadioButton(mode);
@@ -97,6 +105,7 @@ public class SettingPage extends AppCompatActivity {
         progressBar = (MaterialProgressBar)findViewById(R.id.progressBar);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitleTextColor(Color.BLACK);
         setSupportActionBar(toolbar);
         NavigationView navigationView = findViewById(R.id.nav_view);
 
@@ -114,6 +123,7 @@ public class SettingPage extends AppCompatActivity {
                     }
                 };
         actionBarDrawerToggle.syncState();
+
 
         AppBarConfiguration mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,
@@ -173,6 +183,8 @@ public class SettingPage extends AppCompatActivity {
             return false;
         });
 
+
+
         // Show data
         float seriesCalo = LoginActivity.mSeries2;
         editText1.setText(Integer.toString((int) seriesCalo));
@@ -223,7 +235,17 @@ public class SettingPage extends AppCompatActivity {
             AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
             alarmManager.cancel(pendingIntent);
         }
+        switchAlarm.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                tvAlarm.setText("Alarm is " +
+                        (switchAlarm.isChecked() ? "On" : "Off"));
+            }
+        });
+
     }
+
+
 
     private void saveWorkoutState() {
 //        int selectID = rdiGroup.getCheckedRadioButtonId();
