@@ -3,19 +3,15 @@ package com.tu.fitness_app.activities;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -291,18 +287,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnTraining = findViewById(R.id.btnTraining);
+    }
 
-        btnTraining.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Daily_Training.class);
-                startActivity(intent);
-            }
-        });
-
-
-
+    private DatabaseReference getUsersRef(String ref) {
+        FirebaseUser user = mAuth.getCurrentUser();
+        String userId = user.getUid();
+        return mDatabase.child("Users").child(userId).child(ref);
     }
 
     @Override

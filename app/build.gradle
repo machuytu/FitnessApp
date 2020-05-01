@@ -51,7 +51,7 @@ android {
     repositories {
         mavenCentral()
         maven { url "https://jitpack.io" }
-
+        jcenter()
     }
 }
 //repositories {
@@ -149,5 +149,5 @@ dependencies {
     //Progress
     implementation 'com.github.lzyzsd:circleprogress:1.2.1'
 
-
+    implementation 'me.dm7.barcodescanner:zxing:1.9.13'
 }
