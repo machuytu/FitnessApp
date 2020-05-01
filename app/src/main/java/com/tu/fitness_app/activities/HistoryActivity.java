@@ -42,7 +42,9 @@ public class HistoryActivity extends AppCompatActivity {
 
     TextView textView;
     private ArrayList<History> historyArrayList;
+    private ArrayList<String> historyArrayList1;
     ArrayAdapter<History> adapter;
+    ArrayAdapter<String> adapter1;
     ListView historyListView;
     Date today = new Date();
 
@@ -67,6 +69,7 @@ public class HistoryActivity extends AppCompatActivity {
         textView = findViewById(R.id.selectedDate);
 
         historyArrayList =new ArrayList<>();
+        historyArrayList1 =new ArrayList<>();
         // Database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         ref_history = database.getReference("history");
@@ -147,13 +150,17 @@ public class HistoryActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 historyArrayList.clear();
+                historyArrayList1.clear();
+
                 for (DataSnapshot historySnapShot: dataSnapshot.child(UserId).child(date).getChildren()) {
                     History history = historySnapShot.getValue(History.class);
+                    historyArrayList1.add(history.getItem());
                     historyArrayList.add(history);
                     Log.d("test:", String.valueOf(historyArrayList));
                 }
-                adapter = new ArrayAdapter<>(HistoryActivity.this, android.R.layout.simple_list_item_1,historyArrayList);
-                historyListView.setAdapter(adapter);
+                adapter1 = new ArrayAdapter<>(HistoryActivity.this, android.R.layout.simple_list_item_1,historyArrayList1);
+//                historyListView.setAdapter(adapter);
+                historyListView.setAdapter(adapter1);
 
                 // onClick
                 if (date.equals(date_today)) {

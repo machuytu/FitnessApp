@@ -1,20 +1,21 @@
 package com.tu.fitness_app.activities;
 
-import android.app.AlertDialog;
-import android.app.DatePickerDialog;
-import android.app.Dialog;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,13 +24,19 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.DialogFragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.firebase.ui.auth.AuthUI;
+import com.github.lzyzsd.circleprogress.ArcProgress;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
@@ -42,11 +49,29 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.tu.fitness_app.R;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+import java.util.ArrayList;
+
+public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     ActionBarDrawerToggle toggle;
+    private PieChart pieChart;
+    private ArcProgress progressBarSteps;
+    private ArcProgress progressBarBurns;
+    private ArcProgress progressBarCalo;
+    private NumberProgressBar progressBarCarbs;
+    private NumberProgressBar progressBarProtein;
+    private NumberProgressBar progressBarFat;
+    private int pStatus = 50;
+    private int pBurn = 50;
+    private int pCalo = 50;
+    private Handler handler = new Handler();
+    private  TextView step;
+    private  TextView burn;
+    private Button btnTrain;
+    private TextView tvcaloTotal;
+    private Boolean done =false;
     Button btnMonthYear;
     TextView txtMonthYear;
     String stringOfDate;
@@ -62,20 +87,109 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView textView;
     private SensorManager msensorManager;
     private SensorManager sensorManager;
+    private ImageView imgDone;
+    private TextView tvDone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        btnTrain = findViewById(R.id.btnTrainning);
+        imgDone = findViewById(R.id.imgDone);
+        tvDone = findViewById(R.id.tvDone);
+        //Pie chart
+        pieChart = (PieChart) findViewById(R.id.piechart);
+        PieDataSet pieDataSet = new PieDataSet(getData(),"Overview");
+        pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        PieData pieData = new PieData(pieDataSet);
+        pieChart.setData(pieData);
+        pieChart.animateXY(1000, 1000);
+        pieChart.invalidate();
+
+        //----------------------------------------------------Progress bar---------------------------------------------------------
+        //progressBarSteps = (ProgressBar) findViewById(R.id.progressBar2);
+
+        //Steps progress
+
+//        progressBarSteps.setProgress(pStatus);
+//        progressBarSteps.setBottomText("Steps");
+//        ObjectAnimator animation = ObjectAnimator.ofInt(progressBarSteps, "progress", 0, 50); // see this max value coming back here, we animate towards that value
+//        animation.setDuration(5000); // in milliseconds
+//        animation.setInterpolator(new DecelerateInterpolator());
+//        animation.start();
+//        progressBarSteps.clearAnimation();
+
+        //Burn progress
+
+//        progressBarBurns.setProgress((pBurn));
+//        progressBarBurns.setBottomText("Burn");
+//        ObjectAnimator animation2 = ObjectAnimator.ofInt(progressBarBurns, "progress", 0, 50); // see this max value coming back here, we animate towards that value
+//        animation2.setDuration(5000); // in milliseconds
+//        animation2.setInterpolator(new DecelerateInterpolator());
+//        animation2.start();
+//        progressBarBurns.clearAnimation();
+
+        //Calo progress
+        progressBarCalo = (ArcProgress) findViewById(R.id.progressCalo);
+        progressBarCalo.setProgress(pCalo);
+        progressBarCalo.setBottomText("Calo");
+        ObjectAnimator animation3 = ObjectAnimator.ofInt(progressBarCalo, "progress", 100, 50); // see this max value coming back here, we animate towards that value
+        animation3.setDuration(5000); // in milliseconds
+        animation3.setInterpolator(new DecelerateInterpolator());
+        animation3.start();
+        progressBarCalo.clearAnimation();
+
+        //Protein progress
+        progressBarProtein = (NumberProgressBar) findViewById(R.id.progressProtein);
+
+        progressBarProtein.setProgress(pCalo);
+
+
+        //Carb progress
+        progressBarCarbs = (NumberProgressBar) findViewById(R.id.progressCarbs);
+        progressBarCarbs.setProgress(pCalo);
+
+
+        //Fat progress
+        progressBarFat = (NumberProgressBar) findViewById(R.id.progressFat);
+        progressBarFat.setProgress(pCalo);
+
+
+
+//        progressBarBurns = (ArcProgress) findViewById(R.id.progressBar3);
+//        burn = (TextView)findViewById(R.id.tvstepBurn);
+//
+//        progressBarBurns.setProgress(pBurn);
+//        burn.setText(pBurn + " %");
+
+        progressBarCalo = findViewById(R.id.progressCalo);
+        tvcaloTotal = findViewById(R.id.tvCaloTotal);
+
+//        progressBarCalo.setProgress(pCalo);
+
+        progressBarCarbs = findViewById(R.id.progressCarbs);
+        progressBarCarbs.getProgress();
+        progressBarCarbs.getMax();
+
+
+
+        //Set enable and disable training button
+        if (done == true)
+        {
+            btnTrain.setEnabled(false);
+        }else{
+            btnTrain.setEnabled(true);
+        }
+        if(tvDone.getText()=="Done")
+        {
+            btnTrain.setEnabled(false);
+        }else{
+            btnTrain.setEnabled(true);
+        }
+
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
-
-        btnMonthYear = (Button) findViewById(R.id.btnMonthYear);
-        txtMonthYear = (TextView) findViewById(R.id.txtMonthYear);
-
-        btnMonthYear.setOnClickListener(this);
-
         // Navigation Bar
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -205,74 +319,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 || super.onSupportNavigateUp();
     }
 
-    @Override
-    public void onClick(View view) {
-
-        java.util.Calendar c = java.util.Calendar.getInstance();
-        int mYear = c.get(java.util.Calendar.YEAR);
-        int mMonth = c.get(java.util.Calendar.MONTH);
-        int mDay = c.get(java.util.Calendar.DAY_OF_MONTH);
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this, AlertDialog.THEME_HOLO_DARK,
-                new DatePickerDialog.OnDateSetListener() {
-
-                    @Override
-                    public void onDateSet(DatePicker view, int year,
-                                          int monthOfYear, int dayOfMonth) {
-
-                        txtMonthYear.setText((monthOfYear + 1) + "-" + year);
-
-                    }
-                }, mYear, mMonth, mDay);
-        ((ViewGroup) datePickerDialog.getDatePicker()).findViewById(Resources.getSystem().getIdentifier("day", "id", "android")).setVisibility(View.GONE);
-        datePickerDialog.show();
-
+    private ArrayList getData(){
+        ArrayList<PieEntry> entries = new ArrayList<>();
+        entries.add(new PieEntry(945f, "Running"));
+        entries.add(new PieEntry(1030f, "Walking"));
+        entries.add(new PieEntry(1143f, "Trainning"));
+        entries.add(new PieEntry(1250f, "Calo"));
+        return entries;
     }
 
 
-    public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState){
-            //Use the current date as the default date in the date picker
-            final java.util.Calendar c = java.util.Calendar.getInstance();
-            int year = c.get(java.util.Calendar.YEAR);
-            int month = c.get(java.util.Calendar.MONTH);
-            int day = c.get(java.util.Calendar.DAY_OF_MONTH);
-
-
-
-            DatePickerDialog dpd = new DatePickerDialog(getActivity(),AlertDialog.THEME_HOLO_DARK,this,year, month, day){
-                //DatePickerDialog dpd = new DatePickerDialog(getActivity(),AlertDialog.THEME_HOLO_LIGHT,this,year, month, day){
-                // DatePickerDialog dpd = new DatePickerDialog(getActivity(), AlertDialog.THEME_TRADITIONAL,this,year, month, day){
-                @Override
-                protected void onCreate(Bundle savedInstanceState)
-                {
-                    super.onCreate(savedInstanceState);
-                    int day = getContext().getResources().getIdentifier("android:id/day", null, null);
-                    if(day != 0){
-                        View dayPicker = findViewById(day);
-                        if(dayPicker != null){
-                            //Set Day view visibility Off/Gone
-                            dayPicker.setVisibility(View.GONE);
-                        }
-                    }
-                }
-            };
-            return dpd;
-        }
-
-        public void onDateSet(DatePicker view, int year, int month, int day) {
-            //Set the Month & Year to TextView which chosen by the user
-            TextView tv = (TextView) getActivity().findViewById(R.id.txtMonthYear);
-
-            stringOfDate = month + "-" + year;
-            tv.setText(stringOfDate);
-        }
-    }
-
-    private DatabaseReference getUsersRef(String ref) {
-        FirebaseUser user = mAuth.getCurrentUser();
-        String userId = user.getUid();
-        return mDatabase.child("Users").child(userId).child(ref);
-    }
 }

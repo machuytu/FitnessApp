@@ -1,0 +1,192 @@
+{
+    "logs": [
+        {
+            "outputFile": "C:\\Users\\Thuy Trinh\\Desktop\\FitnessApp\\progressviewslib\\build\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values\\values.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\Thuy Trinh\\Desktop\\FitnessApp\\progressviewslib\\src\\main\\res\\values\\styles.xml",
+                    "from": {
+                        "startLines": "6,15",
+                        "startColumns": "4,4",
+                        "startOffsets": "192,497",
+                        "endLines": "12,17",
+                        "endColumns": "12,12",
+                        "endOffsets": "456,654"
+                    },
+                    "to": {
+                        "startLines": "13,20",
+                        "startColumns": "4,4",
+                        "startOffsets": "632,894",
+                        "endLines": "19,22",
+                        "endColumns": "12,12",
+                        "endOffsets": "889,1049"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Thuy Trinh\\Desktop\\FitnessApp\\progressviewslib\\src\\main\\res\\values\\colors.xml",
+                    "from": {
+                        "startLines": "24,23,22",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "952,902,854",
+                        "endColumns": "50,48,46",
+                        "endOffsets": "998,946,896"
+                    },
+                    "to": {
+                        "startLines": "2,3,4",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "55,106,155",
+                        "endColumns": "50,48,46",
+                        "endOffsets": "101,150,197"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Thuy Trinh\\Desktop\\FitnessApp\\progressviewslib\\src\\main\\res\\values\\strings.xml",
+                    "from": {
+                        "startLines": "5,3,4,6",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "165,59,111,219",
+                        "endColumns": "52,50,52,45",
+                        "endOffsets": "213,105,159,260"
+                    },
+                    "to": {
+                        "startLines": "9,10,11,12",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "429,482,533,586",
+                        "endColumns": "52,50,52,45",
+                        "endOffsets": "477,528,581,627"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Thuy Trinh\\Desktop\\FitnessApp\\progressviewslib\\src\\main\\res\\values\\attrs.xml",
+                    "from": {
+                        "startLines": "3",
+                        "startColumns": "4",
+                        "startOffsets": "59",
+                        "endLines": "11",
+                        "endColumns": "24",
+                        "endOffsets": "503"
+                    },
+                    "to": {
+                        "startLines": "23",
+                        "startColumns": "4",
+                        "startOffsets": "1054",
+                        "endLines": "31",
+                        "endColumns": "24",
+                        "endOffsets": "1483"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Thuy Trinh\\Desktop\\FitnessApp\\progressviewslib\\src\\main\\res\\values\\dimens.xml",
+                    "from": {
+                        "startLines": "3,4,9,8",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "92,151,291,239",
+                        "endColumns": "57,55,61,50",
+                        "endOffsets": "145,202,348,285"
+                    },
+                    "to": {
+                        "startLines": "5,6,7,8",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "202,260,316,378",
+                        "endColumns": "57,55,61,50",
+                        "endOffsets": "255,311,373,424"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "C:\\Users\\Thuy Trinh\\Desktop\\FitnessApp\\progressviewslib\\build\\intermediates\\res\\merged\\release\\values\\values.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\Thuy Trinh\\Desktop\\FitnessApp\\progressviewslib\\src\\main\\res\\values\\styles.xml",
+                    "from": {
+                        "startLines": "6,15",
+                        "startColumns": "4,4",
+                        "startOffsets": "192,497",
+                        "endLines": "12,17",
+                        "endColumns": "12,12",
+                        "endOffsets": "456,654"
+                    },
+                    "to": {
+                        "startLines": "13,20",
+                        "startColumns": "4,4",
+                        "startOffsets": "632,894",
+                        "endLines": "19,22",
+                        "endColumns": "12,12",
+                        "endOffsets": "889,1049"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Thuy Trinh\\Desktop\\FitnessApp\\progressviewslib\\src\\main\\res\\values\\colors.xml",
+                    "from": {
+                        "startLines": "24,23,22",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "952,902,854",
+                        "endColumns": "50,48,46",
+                        "endOffsets": "998,946,896"
+                    },
+                    "to": {
+                        "startLines": "2,3,4",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "55,106,155",
+                        "endColumns": "50,48,46",
+                        "endOffsets": "101,150,197"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Thuy Trinh\\Desktop\\FitnessApp\\progressviewslib\\src\\main\\res\\values\\strings.xml",
+                    "from": {
+                        "startLines": "5,3,4,6",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "165,59,111,219",
+                        "endColumns": "52,50,52,45",
+                        "endOffsets": "213,105,159,260"
+                    },
+                    "to": {
+                        "startLines": "9,10,11,12",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "429,482,533,586",
+                        "endColumns": "52,50,52,45",
+                        "endOffsets": "477,528,581,627"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Thuy Trinh\\Desktop\\FitnessApp\\progressviewslib\\src\\main\\res\\values\\attrs.xml",
+                    "from": {
+                        "startLines": "3",
+                        "startColumns": "4",
+                        "startOffsets": "59",
+                        "endLines": "11",
+                        "endColumns": "24",
+                        "endOffsets": "503"
+                    },
+                    "to": {
+                        "startLines": "23",
+                        "startColumns": "4",
+                        "startOffsets": "1054",
+                        "endLines": "31",
+                        "endColumns": "24",
+                        "endOffsets": "1483"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Thuy Trinh\\Desktop\\FitnessApp\\progressviewslib\\src\\main\\res\\values\\dimens.xml",
+                    "from": {
+                        "startLines": "3,4,9,8",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "92,151,291,239",
+                        "endColumns": "57,55,61,50",
+                        "endOffsets": "145,202,348,285"
+                    },
+                    "to": {
+                        "startLines": "5,6,7,8",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "202,260,316,378",
+                        "endColumns": "57,55,61,50",
+                        "endOffsets": "255,311,373,424"
+                    }
+                }
+            ]
+        }
+    ]
+}
