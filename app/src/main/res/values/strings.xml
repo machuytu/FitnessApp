@@ -54,9 +54,14 @@
     <string name="step_detector">
          android.hardware.sensor.stepdetector
     </string>
-    <string name="facebook_app_id">2781125205267330</string>
-    <string name="facebook_application_id" translatable="false">2781125205267330</string>
-    <string name="facebook_login_protocol_scheme" translatable="false">fb2781125205267330</string>
+    <!--fb-->
+    <string name="facebook_application_id" translatable="false">864005144100459</string>
+    <string name="facebook_login_protocol_scheme" translatable="false">fb864005144100459</string>
+
+<!--    <string name="facebook_app_id">2781125205267330</string>-->
+<!--    <string name="facebook_application_id" translatable="false">2781125205267330</string>-->
+<!--    <string name="facebook_login_protocol_scheme" translatable="false">fb2781125205267330</string>-->
+    <!--/fb-->
     <string name="txt1">Linked Account</string>
     <string name="txt2">Refer A Friend</string>
     <string name="txt3">Rate Us</string>
@@ -154,4 +159,5 @@
     <string name="medium">Medium</string>
     <string name="easy">Easy</string>
     <string name="scanner">Scanner</string>
+    <string name="run_mode">Run Mode</string>
 </resources>

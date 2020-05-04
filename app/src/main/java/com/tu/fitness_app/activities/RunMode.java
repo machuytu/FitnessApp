@@ -1,8 +1,15 @@
 package com.tu.fitness_app.activities;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -10,11 +17,16 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -46,6 +58,11 @@ public class RunMode extends AppCompatActivity implements SensorEventListener {
     private int stepOnPause;
     private int stepBD;
 
+    Toolbar toolbar;
+    DrawerLayout drawerLayout;
+    NavigationView navigationView;
+    ActionBarDrawerToggle toggle;
+
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
 
@@ -66,6 +83,90 @@ public class RunMode extends AppCompatActivity implements SensorEventListener {
         btnStartStop = findViewById(R.id.btn_start_stop);
         btnReset = findViewById(R.id.btn_reset);
         mSensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
+
+        // Navigation Bar
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_drawer, R.string.close_drawer) {
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+            }
+        };
+
+        drawerLayout.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavigationUI.setupWithNavController(navigationView, navController);
+
+        navigationView.bringToFront();
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId())
+                {
+                    case R.id.item1:
+                        Intent intent = new Intent(RunMode.this, ListExercises.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.item2:
+                        intent = new Intent(RunMode.this, Daily_Training.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.item3:
+                        intent = new Intent(RunMode.this, Calendar.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.item4:
+                        intent = new Intent(RunMode.this, SettingPage.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.item5:
+                        intent = new Intent(RunMode.this, StepCountDaily.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.item6:
+                        AuthUI.getInstance().signOut(RunMode.this).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Toast.makeText(RunMode.this, "Signed out successfully", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        Intent myIntent = new Intent(RunMode.this, LoginActivity.class);
+                        myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);// clear back stack
+                        startActivity(myIntent);
+                        finish();
+                    case R.id.item7:
+                        intent = new Intent(RunMode.this, OverviewActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.item8:
+                        intent = new Intent(RunMode.this, HistoryActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.item9:
+                        intent = new Intent(RunMode.this, BarcodeScanner.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.item10:
+                        intent = new Intent(RunMode.this, RunMode.class);
+                        startActivity(intent);
+                        break;
+                    default:
+                        break;
+                }
+                drawerLayout.closeDrawers();
+                return false;
+            }
+        });
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -130,7 +231,6 @@ public class RunMode extends AppCompatActivity implements SensorEventListener {
         isRunning = false;
         btnReset.setVisibility(View.VISIBLE);
         btnStartStop.setText("Start");
-
         stepOnPause = step;
         stepAtReset = stepInSensor;
         Toast.makeText(this, "Stop!",Toast.LENGTH_LONG).show();
@@ -140,7 +240,6 @@ public class RunMode extends AppCompatActivity implements SensorEventListener {
         isRunning = false;
         millisTime = milisStart;
         btnReset.setVisibility(View.INVISIBLE);
-        btnStartStop.setVisibility(View.VISIBLE);
         setTVTimer();
 
         stepOnPause = 0;

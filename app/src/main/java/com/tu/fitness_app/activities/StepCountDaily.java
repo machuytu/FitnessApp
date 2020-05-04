@@ -176,6 +176,14 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
                         intent = new Intent(StepCountDaily.this, HistoryActivity.class);
                         startActivity(intent);
                         break;
+                    case R.id.item9:
+                        intent = new Intent(StepCountDaily.this, BarcodeScanner.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.item10:
+                        intent = new Intent(StepCountDaily.this, RunMode.class);
+                        startActivity(intent);
+                        break;
                     default:
                         break;
                 }
@@ -184,7 +192,6 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
             }
         });
 
-        mSeriesMax = SetGoalActivity.mSeries;
         if (mSeriesMax == 0) {
             mSeriesMax = LoginActivity.mSeries1;
         }
@@ -261,7 +268,12 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
         getStepsRef().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                stepInDB = Integer.parseInt(String.valueOf(dataSnapshot.getValue()));
+                if (dataSnapshot.exists()) {
+                    stepInDB = Integer.parseInt(String.valueOf(dataSnapshot.getValue()));
+                }
+                else {
+                    stepInDB = 0;
+                }
                 Log.i("TAG", "stepDB = " + stepInDB);
                 evsteps = stepInDB;
 
