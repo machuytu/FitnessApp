@@ -89,8 +89,8 @@ public class LoginActivity extends AppCompatActivity {
                         .setLogo(R.drawable.fitness_logo)
                         .build(),
                 RC_SIGN_IN);
-
     }
+
 
     private void initializeUserInfo() {
         FirebaseUser user = mAuth.getCurrentUser();

@@ -61,7 +61,7 @@
                 android:layout_height="match_parent" />
 
             <ImageView
-                android:id="@+id/imageActivity1"
+                android:id="@+id/imageRun"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_alignParentBottom="true"
@@ -76,14 +76,14 @@
                 tools:ignore="HardcodedText,RtlHardcoded" />
 
             <TextView
-                android:id="@+id/textActivity1"
+                android:id="@+id/textRun"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:paddingStart="4dp"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:layout_alignTop="@+id/imageActivity1"
-                android:layout_toEndOf="@+id/imageActivity1"
+                android:layout_alignTop="@+id/imageRun"
+                android:layout_toEndOf="@+id/imageRun"
                 android:textSize="28sp"
                 android:layout_alignParentBottom="true"
                 tools:ignore="RtlSymmetry" />

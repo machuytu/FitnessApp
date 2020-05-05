@@ -250,8 +250,8 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     case R.id.item5:
-                        intent = new Intent(MainActivity.this, StepCountDaily.class);
-                        startActivity(intent);
+                                intent = new Intent(MainActivity.this, StepCountDaily.class);
+                                startActivity(intent);
                         break;
                     case R.id.item6:
                         AuthUI.getInstance().signOut(MainActivity.this).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -279,6 +279,10 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.item10:
                         intent = new Intent(MainActivity.this, Chart.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.item10:
+                        intent = new Intent(MainActivity.this, RunMode.class);
                         startActivity(intent);
                         break;
                 }
