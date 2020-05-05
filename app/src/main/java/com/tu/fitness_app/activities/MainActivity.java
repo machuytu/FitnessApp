@@ -281,7 +281,7 @@ public class MainActivity extends AppCompatActivity {
                         intent = new Intent(MainActivity.this, Chart.class);
                         startActivity(intent);
                         break;
-                    case R.id.item10:
+                    case R.id.item11:
                         intent = new Intent(MainActivity.this, RunMode.class);
                         startActivity(intent);
                         break;

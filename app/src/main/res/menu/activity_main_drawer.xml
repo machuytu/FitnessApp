@@ -38,7 +38,7 @@
             android:icon="@drawable/ic_scanner_black_24dp"
             android:title="@string/scanner" />
         <item
-            android:id="@+id/item10"
+            android:id="@+id/item11"
             android:icon="@drawable/ic_directions_run_black_24dp"
             android:title="@string/run_mode" />
     </group>

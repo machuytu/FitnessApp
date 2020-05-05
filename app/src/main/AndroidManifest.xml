@@ -92,8 +92,6 @@
         <activity android:name=".activities.MainActivity" />
         <activity android:name=".activities.RunMode" />
 
-        </activity>
-
         <receiver
             android:name=".activities.AlarmNotificationReceiver"
             android:process=":remote" />
