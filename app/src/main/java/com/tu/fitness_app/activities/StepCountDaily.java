@@ -27,8 +27,6 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,6 +36,7 @@ import com.hookedonplay.decoviewlib.DecoView;
 import com.hookedonplay.decoviewlib.charts.DecoDrawEffect;
 import com.hookedonplay.decoviewlib.charts.SeriesItem;
 import com.hookedonplay.decoviewlib.events.DecoEvent;
+import com.tu.fitness_app.Model.StepCalculate;
 import com.tu.fitness_app.R;
 
 import java.util.Date;
@@ -63,69 +62,57 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
     private int mBackIndex;
     private int mSeriesIndex;
 
+    private static final String TAG = "Step count daily";
     private SensorManager sensorManager;
 
     public static int evsteps;
     private int stepAtStart;
     private int stepInDB;
 
-    Toolbar toolbar;
-    DrawerLayout drawerLayout;
-    NavigationView navigationView;
-    ActionBarDrawerToggle toggle;
-
-    TextView tvPercentage;
-    TextView tvRemaining;
-    TextView tvRun;
+    private TextView tvPercentage;
+    private TextView tvRemaining;
+    private TextView tvRun;
 
     // Firebase database init
     private DatabaseReference mDatabase;
-    private FirebaseAuth mAuth;
+    private String userId;
 
-    private DatabaseReference getStepsRef() {
-        FirebaseUser user = mAuth.getCurrentUser();
-        String userId = user.getUid();
-        Date today = new Date();
-        final String date = today.getYear() + 1900 + "-" + (1 + today.getMonth()) + "-" + today.getDate();
-        return mDatabase.child("Steps").child(userId).child(date).child("totalsteps");
+    Date today = new Date();
+    final String date = today.getYear() + 1900 + "-" + (1 + today.getMonth()) + "-" + today.getDate();
+
+    private DatabaseReference getRef() {
+        return mDatabase.child("DailyWalk").child(userId).child(date);
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step_count_daily);
-
+        mDecoView = findViewById(R.id.dynamicArcView);
         tvRemaining = findViewById(R.id.textRemaining);
         tvPercentage = findViewById(R.id.textPercentage);
         tvRun = findViewById(R.id.textRun);
 
-        mAuth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-
-        mDecoView = findViewById(R.id.dynamicArcView);
-
-        getUsersRef("stepgoal").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                mSeriesMax =  Integer.parseInt(String.valueOf(dataSnapshot.getValue()));
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+        createNavBar();
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        StepCalculate.mode = 0; //walk
 
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        userId = LoginActivity.USER_ID;
+        mSeriesMax = LoginActivity.mSeries1;
+        createDataSeries();
+        createEvents();
+    }
+
+    private void createNavBar() {
         // Navigation Bar
-        toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        drawerLayout = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.nav_view);
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
 
-        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_drawer, R.string.close_drawer) {
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_drawer, R.string.close_drawer) {
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
@@ -139,11 +126,6 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
 
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
-
-        if (mSeriesMax == 0) {
-            mSeriesMax = LoginActivity.mSeries1;
-        }
-        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(navigationView, navController);
@@ -197,6 +179,10 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
                         startActivity(intent);
                         break;
                     case R.id.item10:
+                        intent = new Intent(StepCountDaily.this, Chart.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.item11:
                         intent = new Intent(StepCountDaily.this, RunMode.class);
                         startActivity(intent);
                         break;
@@ -207,17 +193,6 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
                 return false;
             }
         });
-
-        if (mSeriesMax == 0) {
-            mSeriesMax = LoginActivity.mSeries1;
-        }
-        if(mSeriesMax > 0) {
-            // Create required data series on the DecoView
-            createDataSeries();
-
-            // Setup events to be fired on a schedule
-            createEvents();
-        }
     }
 
     private void createDataSeries() {
@@ -281,18 +256,18 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
 //                .setDelay(30)
                 .build());
 
-        getStepsRef().addListenerForSingleValueEvent(new ValueEventListener() {
+        getRef().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                StepCalculate stepCalculate = new StepCalculate();
                 if (dataSnapshot.exists()) {
-                    stepInDB = Integer.parseInt(String.valueOf(dataSnapshot.getValue()));
+                    stepCalculate = dataSnapshot.getValue(StepCalculate.class);
                 }
                 else {
-                    stepInDB = 0;
+                    getRef().setValue(stepCalculate);
                 }
-                Log.i("TAG", "stepDB = " + stepInDB);
+                stepInDB = stepCalculate.getTotalsteps();
                 evsteps = stepInDB;
-
                 mDecoView.addEvent(new DecoEvent.Builder(evsteps)
                         .setIndex(mSeriesIndex)
                         .build());
@@ -300,7 +275,7 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Log.w(TAG, "get step in DB Error:", databaseError.toException());
             }
         });
     }
@@ -315,14 +290,14 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
             sensorManager.registerListener(this, sensorStepCounter, SensorManager.SENSOR_DELAY_UI);
         } else {
             Toast.makeText(this, "Step count sensor not available!", Toast.LENGTH_LONG).show();
-            Log.i("log_err", "Step count sensor not available!");
+            Log.i(TAG, "Step count sensor not available!");
         }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        getStepsRef().setValue(evsteps);
+        getRef().setValue(new StepCalculate(evsteps));
         sensorManager.unregisterListener(this);
     }
 
@@ -334,7 +309,7 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
             if (stepAtStart == 0)
                 stepAtStart = stepInSensor;
             evsteps = stepInSensor - stepAtStart + stepInDB;
-            Log.i("TAG", "total steps = " + evsteps);
+            Log.i(TAG, "total steps = " + evsteps);
 
             // Draw
             mDecoView.addEvent(new DecoEvent.Builder(evsteps)
@@ -342,12 +317,6 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
                     .setDuration(3250)
                     .build());
         }
-    }
-
-    private DatabaseReference getUsersRef(String ref) {
-        FirebaseUser user = mAuth.getCurrentUser();
-        String userId = user.getUid();
-        return mDatabase.child("Users").child(userId).child(ref);
     }
 
     @Override

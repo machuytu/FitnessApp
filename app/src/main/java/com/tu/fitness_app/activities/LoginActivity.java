@@ -21,7 +21,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.tu.fitness_app.Model.Calories;
 import com.tu.fitness_app.Model.Setting;
-import com.tu.fitness_app.Model.Steps;
 import com.tu.fitness_app.Model.User;
 import com.tu.fitness_app.R;
 
@@ -98,7 +97,6 @@ public class LoginActivity extends AppCompatActivity {
         String userId = user.getUid();
 
         DatabaseReference usersRef = mDatabase.child("Users");
-        DatabaseReference stepsRef = mDatabase.child("Steps");
         DatabaseReference caloriesRef = mDatabase.child("Calories");
         DatabaseReference settingRef = mDatabase.child("Setting");
 
@@ -106,8 +104,6 @@ public class LoginActivity extends AppCompatActivity {
         usersRef.child(userId).setValue(newUser);
 
         final String date = today.getYear() + 1900 + "-" + (1 + today.getMonth()) + "-" + today.getDate();
-        Steps steps = new Steps(0);
-        stepsRef.child(userId).child(date).setValue(steps);
         Calories calories = new Calories(0, 0, 0, 0);
         caloriesRef.child(userId).child(date).setValue(calories);
 

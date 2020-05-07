@@ -8,7 +8,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
-
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -19,7 +18,10 @@ import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,15 +29,15 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.tu.fitness_app.Model.StepCalculate;
 import com.tu.fitness_app.R;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -43,54 +45,45 @@ public class RunMode extends AppCompatActivity implements SensorEventListener {
 
     private SensorManager mSensorManager;
     private static final String TAG = "RunCountDown";
-    private static final long milisStart = 30000;
 
-    private TextView tvStep;
-    private TextView tvTimer;
-    private Button btnStartStop;
-    private Button btnReset;
     private CountDownTimer timer;
     private boolean isRunning;
-    private long millisTime;
+    private long timeStart;
+    private long timeLeft;
     private int step;
     private int stepInSensor;
     private int stepAtReset;
     private int stepOnPause;
     private int stepBD;
 
-    Toolbar toolbar;
-    DrawerLayout drawerLayout;
-    NavigationView navigationView;
-    ActionBarDrawerToggle toggle;
+    private TextView tvStep;
+    private TextView tvTimer;
+    private Button btnStart;
+    private Button btnStop;
+    private Button btnReset;
+    private Spinner spinnerTime;
+
+    ArrayList<String> listString;
+    ArrayList<Long> listTime;
 
     private DatabaseReference mDatabase;
-    private FirebaseAuth mAuth;
+    private String userId;
 
-    private DatabaseReference getStepsRef() {
-        FirebaseUser user = mAuth.getCurrentUser();
-        String userId = user.getUid();
-        Date today = new Date();
-        final String date = today.getYear() + 1900 + "-" + (1 + today.getMonth()) + "-" + today.getDate();
-        return mDatabase.child("RunMode").child(userId).child(date).child("totalsteps");
+    Date today = new Date();
+    final String date = today.getYear() + 1900 + "-" + (1 + today.getMonth()) + "-" + today.getDate();
+
+    private DatabaseReference getRef() {
+        return mDatabase.child("RunMode").child(userId).child(date);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_run_mode);
-        tvStep = findViewById(R.id.tv_step);
-        tvTimer = findViewById(R.id.tv_timer);
-        btnStartStop = findViewById(R.id.btn_start_stop);
-        btnReset = findViewById(R.id.btn_reset);
-        mSensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
-
+    private void createNavBar() {
         // Navigation Bar
-        toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        drawerLayout = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.nav_view);
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
 
-        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_drawer, R.string.close_drawer) {
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_drawer, R.string.close_drawer) {
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
@@ -157,6 +150,10 @@ public class RunMode extends AppCompatActivity implements SensorEventListener {
                         startActivity(intent);
                         break;
                     case R.id.item10:
+                        intent = new Intent(RunMode.this, Chart.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.item11:
                         intent = new Intent(RunMode.this, RunMode.class);
                         startActivity(intent);
                         break;
@@ -167,106 +164,41 @@ public class RunMode extends AppCompatActivity implements SensorEventListener {
                 return false;
             }
         });
-
-        mAuth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-
-        millisTime = milisStart;
-        isRunning = false;
-        tvStep.setText(String.valueOf(0));
-        setTVTimer();
-        btnReset.setVisibility(View.INVISIBLE);
-
-        btnReset.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Reset();
-            }
-        });
-
-        btnStartStop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isRunning) {
-                    Stop();
-                } else {
-                    Start();
-                }
-            }
-        });
-    }
-
-    private void Start() {
-        timer = new CountDownTimer(millisTime,1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                millisTime = millisUntilFinished;
-                setTVTimer();
-            }
-
-            @Override
-            public void onFinish() {
-                isRunning = false;
-                getStepsRef().setValue(step + stepBD);
-                step = 0;
-                stepOnPause = step;
-                stepAtReset = stepInSensor;
-                btnStartStop.setText("Start");
-                btnStartStop.setVisibility(View.INVISIBLE);
-                btnReset.setVisibility(View.VISIBLE);
-                setTVTimer();
-            }
-        }.start();
-
-        isRunning = true;
-        btnReset.setVisibility(View.INVISIBLE);
-        btnStartStop.setText("Stop");
-
-        Toast.makeText(this, "Start!",Toast.LENGTH_LONG).show();
-    }
-
-    private void Stop() {
-        timer.cancel();
-
-        isRunning = false;
-        btnReset.setVisibility(View.VISIBLE);
-        btnStartStop.setText("Start");
-        stepOnPause = step;
-        stepAtReset = stepInSensor;
-        Toast.makeText(this, "Stop!",Toast.LENGTH_LONG).show();
-    }
-
-    private void Reset() {
-        isRunning = false;
-        millisTime = milisStart;
-        btnReset.setVisibility(View.INVISIBLE);
-        setTVTimer();
-
-        stepOnPause = 0;
-        stepAtReset = stepInSensor;
-        tvStep.setText(String.valueOf(0));
-        Toast.makeText(this, "Restart!",Toast.LENGTH_LONG).show();
-    }
-
-    private void setTVTimer () {
-        int minutes = (int) (millisTime / 1000) / 60;
-        int seconds = (int) (millisTime / 1000) % 60;
-        String timeFormat = String.format(Locale.getDefault(),"%02d:%02d", minutes, seconds);
-        tvTimer.setText(timeFormat);
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        getStepsRef().addValueEventListener(new ValueEventListener() {
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_run_mode);
+        tvStep = findViewById(R.id.tv_step);
+        tvTimer = findViewById(R.id.tv_timer);
+        btnStart = findViewById(R.id.btn_start);
+        btnStop = findViewById(R.id.btn_stop);
+        btnReset = findViewById(R.id.btn_restart);
+        btnStop.setVisibility(View.INVISIBLE);
+        btnReset.setVisibility(View.INVISIBLE);
+
+        createNavBar();
+
+        createSpinner();
+
+        mSensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
+        StepCalculate.mode = 1; // run
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        userId = LoginActivity.USER_ID;
+
+        getRef().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                StepCalculate stepCalculate = new StepCalculate();
                 if (dataSnapshot.exists()) {
-                    stepBD = Integer.parseInt(String.valueOf(dataSnapshot.getValue()));
+                    stepCalculate = dataSnapshot.getValue(StepCalculate.class);
                 }
                 else {
-                    stepBD = 0;
+                    getRef().setValue(stepCalculate);
                 }
+                stepBD = stepCalculate.getTotalsteps();
                 Log.i(TAG, "stepDB = " + stepBD);
             }
             @Override
@@ -275,6 +207,122 @@ public class RunMode extends AppCompatActivity implements SensorEventListener {
             }
         });
 
+        btnStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Start();
+                Toast.makeText(RunMode.this, "Start!",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        btnStop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Stop();
+                Toast.makeText(RunMode.this, "Stop!",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        btnReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Restart();
+                Toast.makeText(RunMode.this, "Restart!",Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void listAdd(long time) {
+        listString.add(getStringTime(time));
+        listTime.add(time);
+    }
+
+    private void createSpinner() {
+        spinnerTime = findViewById(R.id.spinner_time);
+
+        listString = new ArrayList<>();
+        listTime = new ArrayList<>();
+
+        listAdd(60000L); // for test fast!!!
+        listAdd(300000L);
+        listAdd(600000L);
+        listAdd(900000L);
+        listAdd(1200000L);
+        listAdd(1800000L);
+
+        ArrayAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, listString);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerTime.setAdapter(adapter);
+        spinnerTime.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                timeStart = listTime.get(position);
+                Restart();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void Start() {
+        isRunning = true;
+        spinnerTime.setEnabled(false);
+        btnStart.setVisibility(View.INVISIBLE);
+        btnStop.setVisibility(View.VISIBLE);
+        btnReset.setVisibility(View.INVISIBLE);
+
+        timer = new CountDownTimer(timeLeft,1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timeLeft = millisUntilFinished;
+                tvTimer.setText(getStringTime(timeLeft));
+            }
+
+            @Override
+            public void onFinish() {
+                getRef().setValue(new StepCalculate(step + stepBD));
+                step = 0;
+                Stop();
+                btnStart.setVisibility(View.INVISIBLE);
+            }
+        }.start();
+    }
+
+    private void Stop() {
+        btnStart.setVisibility(View.VISIBLE);
+        btnStop.setVisibility(View.INVISIBLE);
+        btnReset.setVisibility(View.VISIBLE);
+        isRunning = false;
+        spinnerTime.setEnabled(true);
+        timer.cancel();
+
+        stepOnPause = step;
+        stepAtReset = stepInSensor;
+    }
+
+    private void Restart() {
+        btnStart.setVisibility(View.VISIBLE);
+        btnReset.setVisibility(View.INVISIBLE);
+        timeLeft = timeStart;
+        tvTimer.setText(getStringTime(timeLeft));
+        step = 0;
+        stepOnPause = 0;
+        tvStep.setText(String.valueOf(step));
+    }
+
+    private String getStringTime (long time) {
+        int minutes = (int) (time / 1000 / 60);
+        int seconds = (int) (time / 1000 % 60);
+        return String.format(Locale.getDefault(),"%02d:%02d", minutes, seconds);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
         Sensor mSensorStepCounter = mSensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
         if (mSensorStepCounter != null) {
             mSensorManager.registerListener(this, mSensorStepCounter, SensorManager.SENSOR_DELAY_FASTEST);
@@ -282,6 +330,7 @@ public class RunMode extends AppCompatActivity implements SensorEventListener {
         else {
             Log.i(TAG, "Sensor step counter not found");
             Toast.makeText(this,"Sensor step counter not found!", Toast.LENGTH_LONG).show();
+
         }
     }
 
