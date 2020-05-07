@@ -52,7 +52,7 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
      * data series, in this example we are applying the same all data series
      */
 
-    public static int mSeriesMax = 0;
+    private int mSeriesMax = 0;
 
     /**
      * Data series index used for controlling animation of {@link DecoView}. These are set when

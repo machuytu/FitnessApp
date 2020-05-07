@@ -43,10 +43,11 @@ import java.util.Locale;
 
 public class RunMode extends AppCompatActivity implements SensorEventListener {
 
-    private SensorManager mSensorManager;
     private static final String TAG = "RunCountDown";
 
+    private SensorManager mSensorManager;
     private CountDownTimer timer;
+
     private boolean isRunning;
     private long timeStart;
     private long timeLeft;
@@ -63,8 +64,8 @@ public class RunMode extends AppCompatActivity implements SensorEventListener {
     private Button btnReset;
     private Spinner spinnerTime;
 
-    ArrayList<String> listString;
-    ArrayList<Long> listTime;
+    private ArrayList<String> listString;
+    private ArrayList<Long> listTime;
 
     private DatabaseReference mDatabase;
     private String userId;
