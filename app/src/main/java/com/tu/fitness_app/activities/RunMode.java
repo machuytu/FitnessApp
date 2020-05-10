@@ -192,15 +192,16 @@ public class RunMode extends AppCompatActivity implements SensorEventListener {
         getRef().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                StepCalculate stepCalculate = new StepCalculate();
+                StepCalculate stepCalculate;
                 if (dataSnapshot.exists()) {
                     stepCalculate = dataSnapshot.getValue(StepCalculate.class);
                 }
                 else {
+                    stepCalculate = new StepCalculate();
                     getRef().setValue(stepCalculate);
                 }
                 stepBD = stepCalculate.getTotalsteps();
-                Log.i(TAG, "stepDB = " + stepBD);
+                Log.i(TAG, "step in db = " + stepBD);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {

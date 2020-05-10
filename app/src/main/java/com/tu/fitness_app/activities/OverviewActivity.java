@@ -391,4 +391,10 @@ public class OverviewActivity extends AppCompatActivity {
             startActivity(intent);
         });
     }
+
+    private DatabaseReference getUsersRef(String ref) {
+        FirebaseUser user = mAuth.getCurrentUser();
+        String userId = user.getUid();
+        return mDatabase.child("Users").child(userId).child(ref);
+    }
 }

@@ -259,17 +259,19 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
         getRef().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                StepCalculate stepCalculate = new StepCalculate();
+                StepCalculate stepCalculate;
                 if (dataSnapshot.exists()) {
                     stepCalculate = dataSnapshot.getValue(StepCalculate.class);
                 }
                 else {
+                    stepCalculate = new StepCalculate();
                     getRef().setValue(stepCalculate);
                 }
                 stepInDB = stepCalculate.getTotalsteps();
                 evsteps = stepInDB;
                 mDecoView.addEvent(new DecoEvent.Builder(evsteps)
                         .setIndex(mSeriesIndex)
+                        .setDuration(1000)
                         .build());
             }
 
