@@ -9,30 +9,29 @@
     tools:openDrawer="start"
     tools:context=".activities.Calendar">
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="3">
 
-        <include
-            layout="@layout/app_bar_main"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+<!--        <include-->
+<!--            layout="@layout/app_bar_main"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent" />-->
 
-        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/shadow"
             android:layout_marginTop="60dp">
 
             <com.prolificinteractive.materialcalendarview.MaterialCalendarView
                 android:id="@+id/calendar"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:mcv_showOtherDates="all"
-                app:mcv_selectionColor="#00F"/>
+                app:mcv_selectionColor="#00F"
+                app:mcv_showOtherDates="all" />
 
             <LinearLayout
                 android:layout_below="@+id/calendar"
@@ -59,13 +58,13 @@
             </LinearLayout>
         </RelativeLayout>    </FrameLayout>
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:headerLayout="@layout/nav_header_main"
-        app:menu="@menu/activity_main_drawer" />
+<!--    <com.google.android.material.navigation.NavigationView-->
+<!--        android:id="@+id/nav_view"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_gravity="start"-->
+<!--        app:headerLayout="@layout/nav_header_main"-->
+<!--        app:menu="@menu/activity_main_drawer" />-->
 
 </androidx.drawerlayout.widget.DrawerLayout>
 

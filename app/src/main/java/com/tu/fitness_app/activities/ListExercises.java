@@ -139,9 +139,9 @@ public class ListExercises extends AppCompatActivity {
     }
 
     private void initData() {
-        exerciseList.add(new Exercise(R.drawable.artistic_gymnastics,"Artistic Gymnastics"));
-        exerciseList.add(new Exercise(R.drawable.buddhist_meditation,"Buddhist Meditation"));
-        exerciseList.add(new Exercise(R.drawable.exercise_stretching,"Exercise Stretching"));
+        exerciseList.add(new Exercise(R.drawable.flowyoga,"Flow Yoga"));
+        exerciseList.add(new Exercise(R.drawable.squat,"Split Squat"));
+        exerciseList.add(new Exercise(R.drawable.plank,"Plank"));
         exerciseList.add(new Exercise(R.drawable.fitness_centre,"Fitness Centre"));
         exerciseList.add(new Exercise(R.drawable.jump_ropes_jumping_exercise,"Jump Ropes"));
         exerciseList.add(new Exercise(R.drawable.olympic_weightlifting,"Olympic Weightlifting"));
