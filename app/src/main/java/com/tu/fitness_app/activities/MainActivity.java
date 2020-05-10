@@ -77,6 +77,8 @@ public class MainActivity extends AppCompatActivity {
     private SensorManager sensorManager;
     private ImageView imgDone;
     private TextView tvDone;
+    private ImageView imgNotDone;
+    private TextView tvNotDone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +87,8 @@ public class MainActivity extends AppCompatActivity {
         btnTrain = findViewById(R.id.btnTrainning);
         imgDone = findViewById(R.id.imgDone);
         tvDone = findViewById(R.id.tvDone);
+        imgNotDone = findViewById(R.id.imgNotDone);
+        tvNotDone = findViewById(R.id.tvNotDone);
         //Pie chart
         pieChart = (PieChart) findViewById(R.id.piechart);
         PieDataSet pieDataSet = new PieDataSet(getData(),"Overview");
@@ -127,6 +131,8 @@ public class MainActivity extends AppCompatActivity {
         animation3.start();
         progressBarCalo.clearAnimation();
 
+        progressBarCalo.setSuffixText("");
+
         //Protein progress
         progressBarProtein = (NumberProgressBar) findViewById(R.id.progressProtein);
 
@@ -162,18 +168,20 @@ public class MainActivity extends AppCompatActivity {
 
 
         //Set enable and disable training button
+
         if (done == true)
         {
-            btnTrain.setEnabled(false);
+            imgDone.setVisibility(View.VISIBLE);
+            tvDone.setVisibility(View.VISIBLE);
+            btnTrain.setVisibility(View.INVISIBLE);
+            //btnTrain.setEnabled(true);
         }else{
-            btnTrain.setEnabled(true);
+            tvNotDone.setVisibility(View.VISIBLE);
+            imgNotDone.setVisibility(View.VISIBLE);
+            btnTrain.setVisibility(View.VISIBLE);
+
         }
-        if(tvDone.getText()=="Done")
-        {
-            btnTrain.setEnabled(false);
-        }else{
-            btnTrain.setEnabled(true);
-        }
+
 
 
         // Navigation Bar
