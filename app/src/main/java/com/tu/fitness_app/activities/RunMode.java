@@ -150,10 +150,6 @@ public class RunMode extends AppCompatActivity implements SensorEventListener {
                         intent = new Intent(RunMode.this, BarcodeScanner.class);
                         startActivity(intent);
                         break;
-                    case R.id.item10:
-                        intent = new Intent(RunMode.this, Chart.class);
-                        startActivity(intent);
-                        break;
                     case R.id.item11:
                         intent = new Intent(RunMode.this, RunMode.class);
                         startActivity(intent);

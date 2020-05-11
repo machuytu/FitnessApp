@@ -196,8 +196,6 @@ public class OverviewActivity extends AppCompatActivity {
 //        protein.setRoundEdgeProgress(true);
 //        protein.setAnimation(translation_protein);
 
-
-
        // final CircleProgressBar steps = findViewById(R.id.step_progress);
         final CircleProgressBar food = findViewById(R.id.food_progress);
 

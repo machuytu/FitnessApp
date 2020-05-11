@@ -183,8 +183,6 @@ public class SettingPage extends AppCompatActivity {
             return false;
         });
 
-
-
         // Show data
         float seriesCalo = LoginActivity.mSeries2;
         editText1.setText(Integer.toString((int) seriesCalo));
@@ -242,10 +240,7 @@ public class SettingPage extends AppCompatActivity {
                         (switchAlarm.isChecked() ? "On" : "Off"));
             }
         });
-
     }
-
-
 
     private void saveWorkoutState() {
 //        int selectID = rdiGroup.getCheckedRadioButtonId();

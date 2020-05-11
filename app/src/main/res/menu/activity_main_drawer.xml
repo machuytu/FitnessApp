@@ -38,9 +38,6 @@
             android:id="@+id/item9"
             android:icon="@drawable/ic_scanner_black_24dp"
             android:title="@string/scanner" />
-        <item
-            android:id="@+id/item10"
-            android:title="Chart" />
 
     </group>
 

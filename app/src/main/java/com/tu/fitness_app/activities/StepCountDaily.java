@@ -178,10 +178,6 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
                         intent = new Intent(StepCountDaily.this, BarcodeScanner.class);
                         startActivity(intent);
                         break;
-                    case R.id.item10:
-                        intent = new Intent(StepCountDaily.this, Chart.class);
-                        startActivity(intent);
-                        break;
                     case R.id.item11:
                         intent = new Intent(StepCountDaily.this, RunMode.class);
                         startActivity(intent);
