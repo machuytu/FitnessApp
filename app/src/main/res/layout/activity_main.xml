@@ -253,14 +253,14 @@
                         android:layout_height="20dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginRight="2dp"
-                        android:layout_toLeftOf="@+id/btnSelect"
+                        android:layout_toLeftOf="@+id/btnMonthYear"
                         android:alpha="0.5"
                         app:srcCompat="@drawable/downarrow">
 
                     </ImageView>
 
                     <Button
-                        android:id="@+id/btnSelect"
+                        android:id="@+id/btnMonthYear"
                         android:layout_width="40dp"
                         android:layout_height="20dp"
                         android:layout_alignParentRight="true"
@@ -273,20 +273,31 @@
                         android:textAllCaps="false" />
 
                     <TextView
-                        android:id="@+id/tvDate"
+                        android:id="@+id/txtMonthYear"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="226dp"
                         android:paddingTop="5dp"
-                     android:layout_centerHorizontal="true"
-                        android:text="TextView" />
-                    <com.github.mikephil.charting.charts.PieChart
-                        android:id="@+id/piechart"
+                        android:layout_centerHorizontal="true"
+                        android:text="YYYY-MM" />
+
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/chart"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" >
+                        android:layout_height="208dp"
+                        android:layout_below="@+id/txtMonthYear"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="0dp"
+                        android:layout_marginBottom="0dp">
+
+                    </com.github.mikephil.charting.charts.LineChart>
 
 
-                    </com.github.mikephil.charting.charts.PieChart>
+
                 </RelativeLayout>
 
 

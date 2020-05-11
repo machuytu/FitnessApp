@@ -72,6 +72,7 @@ public class Chart extends AppCompatActivity implements View.OnClickListener {
                     int index = (int) value;
                     return (String) listkey.get(index);
                 } catch (Exception e) {
+
                     return "";
                 }
             }
