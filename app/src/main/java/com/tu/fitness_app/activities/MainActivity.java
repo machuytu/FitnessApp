@@ -112,6 +112,8 @@ public class MainActivity extends AppCompatActivity {
     private SensorManager sensorManager;
     private ImageView imgDone;
     private TextView tvDone;
+    private ImageView imgNotDone;
+    private TextView tvNotDone;
     private TextView tvWeightNum;
     private TextView tvHeightNum;
     private TextView tvSex;
@@ -164,6 +166,8 @@ public class MainActivity extends AppCompatActivity {
         btnTrain = findViewById(R.id.btnTrainning);
         imgDone = findViewById(R.id.imgDone);
         tvDone = findViewById(R.id.tvDone);
+        imgNotDone = findViewById(R.id.imgNotDone);
+        tvNotDone = findViewById(R.id.tvNotDone);
         //Line chart
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();

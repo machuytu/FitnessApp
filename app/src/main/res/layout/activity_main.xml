@@ -215,8 +215,6 @@
                         app:layout_constraintHorizontal_bias="0.057"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
-
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
@@ -244,9 +242,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.493"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-
-                    >
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
                         android:layout_width="20dp"
@@ -295,11 +291,7 @@
                         android:layout_marginBottom="0dp">
 
                     </com.github.mikephil.charting.charts.LineChart>
-
-
-
                 </RelativeLayout>
-
 
                 <ImageView
                     android:id="@+id/imageView3"
