@@ -21,6 +21,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.firebase.ui.auth.AuthUI;
@@ -127,7 +128,14 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
 
+        AppBarConfiguration mAppBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,
+                R.id.nav_tools, R.id.nav_share, R.id.nav_send)
+                .setDrawerLayout(drawerLayout)
+                .build();
+
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
         navigationView.bringToFront();

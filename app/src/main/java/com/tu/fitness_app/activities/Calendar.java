@@ -143,6 +143,14 @@ public class Calendar extends AppCompatActivity {
                     intent = new Intent(Calendar.this, HistoryActivity.class);
                     startActivity(intent);
                     break;
+                case R.id.item9:
+                    intent = new Intent(Calendar.this, BarcodeScanner.class);
+                    startActivity(intent);
+                    break;
+                case R.id.item11:
+                    intent = new Intent(Calendar.this, RunMode.class);
+                    startActivity(intent);
+                    break;
             }
             drawerLayout.closeDrawers();
             return false;

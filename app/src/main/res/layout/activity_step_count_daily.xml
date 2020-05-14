@@ -17,76 +17,69 @@
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/activity_main_drawer" />
 
+    <include
+        layout="@layout/app_bar_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".activities.StepCountDaily"
-        android:transitionName="testAnimation">
+        android:transitionName="testAnimation"
+        android:padding="@dimen/activity_horizontal_margin">
 
-        <include
-            layout="@layout/app_bar_main"
+        <TextView
+            android:id="@+id/textPercentage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="40sp"/>
+
+        <TextView
+            android:id="@+id/textRemaining"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textPercentage"
+            android:layout_centerHorizontal="true"
+            android:maxWidth="200dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+        <com.hookedonplay.decoviewlib.DecoView
+            xmlns:custom="http://schemas.android.com/apk/res-auto"
+            custom:dv_lineWidth="22dp"
+            android:id="@+id/dynamicArcView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/imageActivity1"
-            android:layout_below="@+id/toolbar"
-            android:padding="@dimen/activity_horizontal_margin">
+        <ImageView
+            android:id="@+id/imageRun"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/circle_activity1"
+            android:contentDescription="Fit Cycling"
+            android:padding="10dp"
+            android:layout_marginBottom="30dp"
+            android:src="@drawable/ic_activity1"
+            tools:ignore="HardcodedText,RtlHardcoded" />
 
-            <TextView
-                android:id="@+id/textPercentage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textSize="40sp"/>
-
-            <TextView
-                android:id="@+id/textRemaining"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textPercentage"
-                android:layout_centerHorizontal="true"
-                android:maxWidth="200dp"
-                android:textAppearance="?android:attr/textAppearanceSmall"/>
-
-            <com.hookedonplay.decoviewlib.DecoView
-                xmlns:custom="http://schemas.android.com/apk/res-auto"
-                custom:dv_lineWidth="22dp"
-                android:id="@+id/dynamicArcView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <ImageView
-                android:id="@+id/imageRun"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginLeft="20dp"
-                android:background="@drawable/circle_activity1"
-                android:contentDescription="Fit Cycling"
-                android:padding="10dp"
-                android:layout_marginBottom="30dp"
-                android:src="@drawable/ic_activity1"
-                tools:ignore="HardcodedText,RtlHardcoded" />
-
-            <TextView
-                android:id="@+id/textRun"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:paddingStart="4dp"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:layout_alignTop="@+id/imageRun"
-                android:layout_toEndOf="@+id/imageRun"
-                android:textSize="28sp"
-                android:layout_alignParentBottom="true"
-                tools:ignore="RtlSymmetry" />
-        </RelativeLayout>
+        <TextView
+            android:id="@+id/textRun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingStart="4dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_alignTop="@+id/imageRun"
+            android:layout_toEndOf="@+id/imageRun"
+            android:textSize="28sp"
+            android:layout_alignParentBottom="true"
+            tools:ignore="RtlSymmetry" />
     </RelativeLayout>
 </androidx.drawerlayout.widget.DrawerLayout>
