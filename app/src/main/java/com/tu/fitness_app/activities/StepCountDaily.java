@@ -28,6 +28,7 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -76,6 +77,7 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
 
     // Firebase database init
     private DatabaseReference mDatabase;
+    private FirebaseAuth mAuth;
     private String userId;
 
     Date today = new Date();
@@ -101,9 +103,49 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         userId = LoginActivity.USER_ID;
-        mSeriesMax = LoginActivity.mSeries1;
-        createDataSeries();
-        createEvents();
+        Log.i(TAG, "uid" + userId);
+        if (userId.equals(""))
+            mAuth.getCurrentUser().getUid();
+
+        mDatabase.child("Users").child(userId).child("stepgoal").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                mSeriesMax = Integer.parseInt(String.valueOf(dataSnapshot.getValue()));
+                createDataSeries();
+                createEvents();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        getRef().addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                StepCalculate stepCalculate;
+                if (dataSnapshot.exists()) {
+                    stepCalculate = dataSnapshot.getValue(StepCalculate.class);
+                }
+                else {
+                    stepCalculate = new StepCalculate();
+                    getRef().setValue(stepCalculate);
+                }
+                stepInDB = stepCalculate.getTotalsteps();
+                evsteps = stepInDB;
+                mDecoView.addEvent(new DecoEvent.Builder(evsteps)
+                        .setIndex(mSeriesIndex)
+                        .setDuration(1000)
+                        .build());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.w(TAG, "get step in DB Error:", databaseError.toException());
+            }
+        });
+
+
     }
 
     private void createNavBar() {
@@ -198,17 +240,17 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
             }
         });
     }
-
     private void createDataSeries() {
+
         mBackIndex = mDecoView.addSeries(new SeriesItem.Builder(Color.parseColor("#FFE2E2E2"))
-                .setRange(0, mSeriesMax, mSeriesMax)
+                .setRange(0, mSeriesMax, 0)
                 .setInitialVisibility(false)
                 .build());
 
         SeriesItem seriesItem = new SeriesItem.Builder(Color.parseColor("#FFFF8800"))
-            .setRange(0, mSeriesMax, 0)
-            .setInitialVisibility(true)
-            .build();
+                .setRange(0, mSeriesMax, 0)
+                .setInitialVisibility(true)
+                .build();
 
         seriesItem.addArcSeriesItemListener(new SeriesItem.SeriesItemListener() {
             @Override
@@ -256,34 +298,14 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
 
         mDecoView.addEvent(new DecoEvent.Builder(mSeriesMax)
                 .setIndex(mBackIndex)
-//                .setDuration(3000)
-//                .setDelay(30)
+                .setDuration(1000)
                 .build());
 
-        getRef().addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                StepCalculate stepCalculate;
-                if (dataSnapshot.exists()) {
-                    stepCalculate = dataSnapshot.getValue(StepCalculate.class);
-                }
-                else {
-                    stepCalculate = new StepCalculate();
-                    getRef().setValue(stepCalculate);
-                }
-                stepInDB = stepCalculate.getTotalsteps();
-                evsteps = stepInDB;
-                mDecoView.addEvent(new DecoEvent.Builder(evsteps)
-                        .setIndex(mSeriesIndex)
-                        .setDuration(1000)
-                        .build());
-            }
+        mDecoView.addEvent(new DecoEvent.Builder(evsteps)
+                .setIndex(mSeriesIndex)
+                .setDuration(1000)
+                .build());
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.w(TAG, "get step in DB Error:", databaseError.toException());
-            }
-        });
     }
 
     @Override

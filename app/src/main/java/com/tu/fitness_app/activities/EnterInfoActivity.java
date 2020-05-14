@@ -43,7 +43,6 @@ public class EnterInfoActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         final Button next = (Button) findViewById(R.id.nextbutton);
 
-
         final EditText nameET = (EditText) findViewById(R.id.nameInput);
         final EditText phoneET = (EditText)findViewById(R.id.phoneInput);
         final EditText ageET = (EditText) findViewById(R.id.ageInput);
@@ -56,8 +55,6 @@ public class EnterInfoActivity extends AppCompatActivity {
         tvAvg = (TextView) findViewById(R.id.tvAvg);
         tvLow = (TextView) findViewById(R.id.tvLow);
 //        tvWelcome = (TextView) findViewById(R.id.tvWelcome);
-
-
 
         final RadioGroup myRadioGroup = (RadioGroup) findViewById(R.id.genderGroup);
         myRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {
@@ -101,13 +98,15 @@ public class EnterInfoActivity extends AppCompatActivity {
                 totalCarolies = BMR * zLevel;
                 Log.d("totalcalries", String.valueOf(totalCarolies));
                 getUsersRef("caloriegoal").setValue(totalCarolies);
-
-                if (zLevel == 1.2) {
+                if (zLevel == (float) 1.2) {
                     getUsersRef("stepgoal").setValue(8000);
-                } else if (zLevel == 1.55) {
+                    getUsersRef("mode").setValue(0);
+                } else if (zLevel == (float) 1.55) {
                     getUsersRef("stepgoal").setValue(10000);
+                    getUsersRef("mode").setValue(1);
                 } else {
                     getUsersRef("stepgoal").setValue(12000);
+                    getUsersRef("mode").setValue(2);
                 }
             }
         });
@@ -121,7 +120,6 @@ public class EnterInfoActivity extends AppCompatActivity {
                 tvLow.setAlpha((float)0.5);
                 imgHigh.setAlpha((float) 1);
                 tvHigh.setAlpha((float)1);
-
                 zLevel = (float) 1.9;
             }
         });
@@ -134,7 +132,6 @@ public class EnterInfoActivity extends AppCompatActivity {
                 tvLow.setAlpha((float)0.5);
                 imgAvg.setAlpha((float) 1);
                 tvAvg.setAlpha((float) 1);
-
                 zLevel = (float) 1.55;
             }
         });
@@ -147,7 +144,6 @@ public class EnterInfoActivity extends AppCompatActivity {
                 tvHigh.setAlpha((float)0.5);
                 imgLow.setAlpha((float) 1);
                 tvLow.setAlpha((float) 1);
-
                 zLevel = (float) 1.2;
             }
         });

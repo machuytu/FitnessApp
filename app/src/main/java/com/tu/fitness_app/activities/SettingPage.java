@@ -262,7 +262,7 @@ public class SettingPage extends AppCompatActivity {
             setting.SetSetting(2);
         }
         final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        mDatabase.child("Setting").child(userId).setValue(setting);
+        mDatabase.child("Users").child(userId).setValue(setting);
     }
 
     private void setRadioButton(int mode) {

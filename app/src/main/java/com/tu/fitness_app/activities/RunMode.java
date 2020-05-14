@@ -30,6 +30,7 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -69,6 +70,7 @@ public class RunMode extends AppCompatActivity implements SensorEventListener {
     private ArrayList<Long> listTime;
 
     private DatabaseReference mDatabase;
+//    private FirebaseAuth mAuth;
     private String userId;
 
     Date today = new Date();
@@ -183,15 +185,17 @@ public class RunMode extends AppCompatActivity implements SensorEventListener {
         btnStop.setVisibility(View.INVISIBLE);
         btnReset.setVisibility(View.INVISIBLE);
 
-        createNavBar();
-
-        createSpinner();
-
         mSensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
         StepCalculate.mode = 1; // run
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         userId = LoginActivity.USER_ID;
+//        if (userId == null)
+//            mAuth.getCurrentUser().getUid();
+
+        createNavBar();
+
+        createSpinner();
 
         getRef().addValueEventListener(new ValueEventListener() {
             @Override
@@ -259,6 +263,7 @@ public class RunMode extends AppCompatActivity implements SensorEventListener {
         ArrayAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, listString);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerTime.setAdapter(adapter);
+
         spinnerTime.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -268,6 +273,19 @@ public class RunMode extends AppCompatActivity implements SensorEventListener {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        mDatabase.child("Users").child(userId).child("mode").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                int index = Integer.parseInt(String.valueOf(dataSnapshot.getValue()));
+                spinnerTime.setSelection(index + 1);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
