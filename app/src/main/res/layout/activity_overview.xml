@@ -38,7 +38,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="70dp"
             android:background="@drawable/custom_btn"
             >
 
@@ -58,7 +58,7 @@
                     android:text="0"
                     app:progress_color="@color/protein"
                     app:text_color="@color/protein"
-                    tools:ignore="MissingConstraints" />
+                     />
 
             </RelativeLayout>
 

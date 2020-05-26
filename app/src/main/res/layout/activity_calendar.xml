@@ -14,19 +14,23 @@
         android:layout_height="match_parent"
         android:layout_weight="3">
 
-<!--        <include-->
-<!--            layout="@layout/app_bar_main"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent" />-->
+        <include
+            layout="@layout/app_bar_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/shadow"
+
             android:layout_marginTop="60dp">
 
             <com.prolificinteractive.materialcalendarview.MaterialCalendarView
                 android:id="@+id/calendar"
+                app:mcv_arrowColor="@color/blue"
+                app:mcv_calendarMode="month"
+
+                app:mcv_monthLabels="@color/pink"
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -58,13 +62,13 @@
             </LinearLayout>
         </RelativeLayout>    </FrameLayout>
 
-<!--    <com.google.android.material.navigation.NavigationView-->
-<!--        android:id="@+id/nav_view"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:layout_gravity="start"-->
-<!--        app:headerLayout="@layout/nav_header_main"-->
-<!--        app:menu="@menu/activity_main_drawer" />-->
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/nav_header_main"
+        app:menu="@menu/activity_main_drawer" />
 
 </androidx.drawerlayout.widget.DrawerLayout>
 

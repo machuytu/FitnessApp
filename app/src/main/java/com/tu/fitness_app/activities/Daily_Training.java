@@ -1,18 +1,32 @@
 package com.tu.fitness_app.activities;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -33,12 +47,12 @@ public class Daily_Training extends AppCompatActivity {
 
     Button btnStart, btnBack;
     ImageView ex_image;
-    TextView txtGetReady, txtCountdown, txtTimer, ex_name;
+    TextView txtGetReady, txtCountdown, txtTimer, ex_name,tvIntro;
     ProgressBar progressBar;
     LinearLayout layoutGetReady;
-
+    private DrawerLayout drawerLayout;
     int ex_id = 0, limit_time=0;
-
+    private AppBarConfiguration mAppBarConfiguration;
     Fitness fitness;
     Setting setting;
 
@@ -54,12 +68,15 @@ public class Daily_Training extends AppCompatActivity {
 
         initData();
 
+    
+
+        drawerLayout = findViewById(R.id.drawer_layout);
         btnStart = (Button)findViewById(R.id.btnStart);
         btnBack = (Button)findViewById(R.id.btnBack);
 
         ex_image = (ImageView)findViewById((R.id.detail_image));
         ex_name = (TextView)findViewById(R.id.title);
-
+        tvIntro= (TextView)findViewById(R.id.tvIntro);
         txtCountdown = (TextView)findViewById(R.id.txtCountdown);
         txtGetReady = (TextView)findViewById(R.id.txtGetReady);
         txtTimer = (TextView)findViewById(R.id.timer);
@@ -341,6 +358,7 @@ public class Daily_Training extends AppCompatActivity {
     private void setExerciseInformation(int ex_id) {
         ex_image.setImageResource(list.get(ex_id).getImage_id());
         ex_name.setText(list.get(ex_id).getName());
+        tvIntro.setText(list.get(ex_id).getName1());
 
         btnStart.setText("Start");
 
@@ -353,8 +371,19 @@ public class Daily_Training extends AppCompatActivity {
     }
 
     private void initData() {
-        list.add(new com.tu.fitness_app.Model.Exercise(R.drawable.artistic_gymnastics,"Artistic Gymnastics"));
-        list.add(new com.tu.fitness_app.Model.Exercise(R.drawable.buddhist_meditation,"Buddhist Meditation"));
+        list.add(new com.tu.fitness_app.Model.Exercise(R.drawable.flow,"Flow Yoga","Chân khụy gối vuông góc"));
+        list.add(new com.tu.fitness_app.Model.Exercise(R.drawable.squatgif,"Split Squat","Chân khụy gối vuông góc"));
+        list.add(new com.tu.fitness_app.Model.Exercise(R.drawable.plankgif,"Plank","Chân khụy gối vuông góc"));
+        list.add(new com.tu.fitness_app.Model.Exercise(R.drawable.mountaingif,"Mountain Climber","Chân khụy gối vuông góc"));
+        list.add(new com.tu.fitness_app.Model.Exercise(R.drawable.jumpgif,"Jump Ropes","Chân khụy gối vuông góc"));
+        list.add(new com.tu.fitness_app.Model.Exercise(R.drawable.runhighgif,"Run High Knees","Chân khụy gối vuông góc"));
+        list.add(new com.tu.fitness_app.Model.Exercise(R.drawable.lunggif,"Lung Shoulder Press  ","Chân khụy gối vuông góc"));
+        list.add(new com.tu.fitness_app.Model.Exercise(R.drawable.pullgif,"Leg Pull-In","Chân khụy gối vuông góc"));
+        list.add(new com.tu.fitness_app.Model.Exercise(R.drawable.vgif,"V-Up","Chân khụy gối vuông góc"));
+        list.add(new com.tu.fitness_app.Model.Exercise(R.drawable.glutegif,"Glute Kickback","Chân khụy gối vuông góc"));
+        list.add(new com.tu.fitness_app.Model.Exercise(R.drawable.pushgif,"Push Up","Chân khụy gối vuông góc"));
+        list.add(new com.tu.fitness_app.Model.Exercise(R.drawable.jumplungegif,"Jump Lunge","Chân khụy gối vuông góc"));
+        list.add(new com.tu.fitness_app.Model.Exercise(R.drawable.backgif,"Back Extension","Chân khụy gối vuông góc"));
 //        list.add(new com.tu.fitness_app.model.Exercise(R.drawable.exercise_stretching,"Exercise Stretching"));
 //        list.add(new com.tu.fitness_app.model.Exercise(R.drawable.fitness_centre,"Fitness Centre"));
 //        list.add(new com.tu.fitness_app.model.Exercise(R.drawable.jump_ropes_jumping_exercise,"Jump Ropes"));

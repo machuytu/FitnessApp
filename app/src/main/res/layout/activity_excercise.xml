@@ -10,19 +10,19 @@
     tools:openDrawer="start"
     tools:context=".activities.OverviewActivity">
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        app:headerLayout="@layout/nav_header_main"
-        app:menu="@menu/activity_main_drawer" />
-    <include
-        layout="@layout/app_bar_main"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"/>
+<!--    <com.google.android.material.navigation.NavigationView-->
+<!--        android:id="@+id/nav_view"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_gravity="start"-->
+<!--        android:fitsSystemWindows="true"-->
+<!--        app:headerLayout="@layout/nav_header_main"-->
+<!--        app:menu="@menu/activity_main_drawer" />-->
+<!--    <include-->
+<!--        layout="@layout/app_bar_main"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_alignParentTop="true"/>-->
 
  <androidx.core.widget.NestedScrollView
      android:layout_width="match_parent"
@@ -48,7 +48,7 @@
          </RelativeLayout>
 
          <HorizontalScrollView
-             android:layout_width="883dp"
+             android:layout_width="wrap_content"
              android:layout_height="match_parent">
 
              <androidx.constraintlayout.widget.ConstraintLayout
@@ -100,15 +100,16 @@
                      app:layout_constraintTop_toTopOf="@+id/tvFlowYoga"
                      app:srcCompat="@drawable/flowyoga" />
 
-<!--                 <TextView-->
-<!--                     android:layout_width="145dp"-->
-<!--                     android:layout_height="58dp"-->
-<!--                     tools:layout_editor_absoluteX="116dp"-->
-<!--                     tools:layout_editor_absoluteY="71dp">-->
+                 <!--                 <TextView-->
+                 <!--                     android:layout_width="145dp"-->
+                 <!--                     android:layout_height="58dp"-->
+                 <!--                     tools:layout_editor_absoluteX="116dp"-->
+                 <!--                     tools:layout_editor_absoluteY="71dp">-->
 
-<!--                 </TextView>-->
+                 <!--                 </TextView>-->
 
              </androidx.constraintlayout.widget.ConstraintLayout>
+
          </HorizontalScrollView>
 
      </LinearLayout>

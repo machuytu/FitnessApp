@@ -18,13 +18,13 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/activity_main_drawer" />
+
     <include
 
         layout="@layout/app_bar_main"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true" />
-
+        />
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollview"
@@ -34,6 +34,7 @@
         android:layout_marginTop="20dp"
         android:layout_alignParentBottom="true"
         android:fillViewport="true">
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -42,8 +43,8 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/main"
                 android:layout_marginTop="50dp"
+                android:background="@drawable/main"
                 android:paddingTop="100dp">
 
                 <TextView
@@ -62,7 +63,7 @@
                     android:layout_height="218dp"
                     android:background="@drawable/shadow"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.53"
+                    app:layout_constraintHorizontal_bias="0.571"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvCount">
 
@@ -276,14 +277,15 @@
                         android:id="@+id/tvDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
                         android:layout_marginEnd="226dp"
                         android:paddingTop="5dp"
-                     android:layout_centerHorizontal="true"
                         android:text="TextView" />
+
                     <com.github.mikephil.charting.charts.PieChart
                         android:id="@+id/piechart"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" >
+                        android:layout_height="match_parent">
 
 
                     </com.github.mikephil.charting.charts.PieChart>
@@ -328,18 +330,6 @@
                     app:layout_constraintStart_toStartOf="@+id/tvCount"
                     app:layout_constraintTop_toTopOf="@+id/tvCount"
                     app:layout_constraintVertical_bias="0.872" />
-
-                <TextView
-                    android:id="@+id/textView16"
-                    android:layout_width="1dp"
-                    android:layout_height="14dp"
-                    android:layout_marginBottom="12dp"
-                    android:text=""
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/tvCount"
-                    app:layout_constraintEnd_toEndOf="@+id/tvCount"
-                    app:layout_constraintHorizontal_bias="0.748"
-                    app:layout_constraintStart_toEndOf="@+id/tvBurnCalo" />
 
                 <ImageView
                     android:id="@+id/imageView5"
@@ -556,9 +546,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="96dp"
                     android:text="DONE"
-                    android:visibility="invisible"
                     android:textSize="20dp"
                     android:textStyle="bold"
+                    android:visibility="invisible"
                     app:layout_constraintBottom_toBottomOf="@+id/tvTrainning"
                     app:layout_constraintEnd_toEndOf="@+id/tvTrainning"
                     app:layout_constraintStart_toEndOf="@+id/imgDone"
@@ -569,29 +559,28 @@
                     android:id="@+id/imgNotDone"
                     android:layout_width="58dp"
                     android:layout_height="44dp"
+                    android:layout_marginBottom="76dp"
                     android:alpha="0.5"
                     android:visibility="invisible"
                     app:layout_constraintBottom_toBottomOf="@+id/tvTrainning"
                     app:layout_constraintEnd_toEndOf="@+id/tvTrainning"
-                    app:layout_constraintHorizontal_bias="0.439"
+                    app:layout_constraintHorizontal_bias="0.432"
                     app:layout_constraintStart_toStartOf="@+id/tvTrainning"
-                    app:layout_constraintTop_toBottomOf="@+id/imgDone"
-                    app:layout_constraintVertical_bias="0.575"
                     app:srcCompat="@drawable/cancel" />
 
                 <TextView
                     android:id="@+id/tvNotDone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="96dp"
                     android:text="NOT DONE"
-                    android:visibility="invisible"
                     android:textSize="20dp"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/tvTrainning"
+                    android:visibility="invisible"
                     app:layout_constraintEnd_toEndOf="@+id/tvTrainning"
-                    app:layout_constraintHorizontal_bias="0.039"
-                    app:layout_constraintStart_toEndOf="@+id/imgNotDone"
-                    app:layout_constraintTop_toBottomOf="@+id/tvDone" />
+                    app:layout_constraintHorizontal_bias="0.765"
+                    app:layout_constraintStart_toStartOf="@+id/tvTrainning"
+                    app:layout_constraintTop_toTopOf="@+id/tvTrainning" />
 
                 <Button
                     android:id="@+id/btnTrainning"
@@ -627,7 +616,7 @@
                     android:id="@+id/imageView10"
                     android:layout_width="112dp"
                     android:layout_height="99dp"
-                    android:alpha="0.5"
+                    android:alpha="0.8"
                     app:layout_constraintBottom_toTopOf="@+id/tvBurnCalo"
                     app:layout_constraintEnd_toEndOf="@+id/tvCount"
                     app:layout_constraintHorizontal_bias="0.07"
@@ -638,8 +627,9 @@
 
                 <ImageView
                     android:id="@+id/imageView11"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="26dp"
+                    android:layout_height="24dp"
+                    android:alpha="0.5"
                     app:layout_constraintBottom_toBottomOf="@+id/tvCount"
                     app:layout_constraintEnd_toEndOf="@+id/tvCount"
                     app:layout_constraintHorizontal_bias="0.51"
@@ -652,6 +642,7 @@
                     android:id="@+id/imageView12"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:alpha="0.5"
                     app:layout_constraintBottom_toBottomOf="@+id/tvCount"
                     app:layout_constraintEnd_toEndOf="@+id/tvCount"
                     app:layout_constraintHorizontal_bias="0.501"
@@ -664,6 +655,7 @@
                     android:id="@+id/imageView14"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:alpha="0.5"
                     app:layout_constraintBottom_toBottomOf="@+id/tvCount"
                     app:layout_constraintEnd_toEndOf="@+id/tvCount"
                     app:layout_constraintHorizontal_bias="0.51"

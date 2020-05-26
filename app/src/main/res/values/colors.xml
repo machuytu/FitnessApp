@@ -34,4 +34,8 @@
     <color name="yellowXL">#fcbc21</color>
     <color name="yellowS">#fedc89</color>
     <color name="greyXL">#524e4a</color>
+    <color name="md_deep_orange_900">#BF360C</color>
+    <color name="md_deep_orange_50">#FBE9E7</color>
+    <color name="md_deep_orange_500">#FF5722</color>
+    <color name="md_white_1000">#ffffff</color>
 </resources>

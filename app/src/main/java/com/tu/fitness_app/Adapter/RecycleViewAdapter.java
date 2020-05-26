@@ -64,6 +64,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder>
         holder.image.setImageResource(excerciseList.get(position).getImage_id());
         holder.text.setText(excerciseList.get(position).getName());
 
+
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position) {
@@ -72,6 +73,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder>
                 Intent intent = new Intent(context, ViewEx.class);
                 intent.putExtra("image_id", excerciseList.get(position).getImage_id());
                 intent.putExtra("name", excerciseList.get(position).getName());
+                intent.putExtra("intro", excerciseList.get(position).getName1());
                 context.startActivity(intent);
             }
         });

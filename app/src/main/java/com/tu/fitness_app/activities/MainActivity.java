@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     private  TextView burn;
     private Button btnTrain;
     private TextView tvcaloTotal;
-    private Boolean done =false;
+    private Boolean done= true;
 
     private AppBarConfiguration mAppBarConfiguration;
 
@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvDone;
     private ImageView imgNotDone;
     private TextView tvNotDone;
+    private ImageView imgRight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
         tvDone = findViewById(R.id.tvDone);
         imgNotDone = findViewById(R.id.imgNotDone);
         tvNotDone = findViewById(R.id.tvNotDone);
+        imgRight = findViewById(R.id.imageView4);
         //Pie chart
         pieChart = (PieChart) findViewById(R.id.piechart);
         PieDataSet pieDataSet = new PieDataSet(getData(),"Overview");
@@ -174,6 +176,8 @@ public class MainActivity extends AppCompatActivity {
             imgDone.setVisibility(View.VISIBLE);
             tvDone.setVisibility(View.VISIBLE);
             btnTrain.setVisibility(View.INVISIBLE);
+            imgRight.setVisibility(View.INVISIBLE);
+
             //btnTrain.setEnabled(true);
         }else{
             tvNotDone.setVisibility(View.VISIBLE);
@@ -188,9 +192,33 @@ public class MainActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
 
-        toggle =
+//        toggle =
+//                new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_drawer, R.string.close_drawer) {
+//                    @Override
+//                    public void onDrawerClosed(View drawerView) {
+//                        super.onDrawerClosed(drawerView);
+//                    }
+//
+//                    @Override
+//                    public void onDrawerOpened(View drawerView) {
+//                        super.onDrawerOpened(drawerView);
+//                    }
+//                };
+//
+//        drawerLayout.setDrawerListener(toggle);
+//        toggle.syncState();
+
+//        mSeriesMax = SetGoalActivity.mSeries;
+//        Log.d("SetGoal mseries", String.valueOf(SetGoalActivity.mSeries));
+//        if (mSeriesMax == 0) {
+//            mSeriesMax = LoginActivity.mSeries1;
+//        }
+//        final String cap1;
+//        final float[] m = new float[1];
+//        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        ActionBarDrawerToggle actionBarDrawerToggle =
                 new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_drawer, R.string.close_drawer) {
                     @Override
                     public void onDrawerClosed(View drawerView) {
@@ -203,18 +231,14 @@ public class MainActivity extends AppCompatActivity {
                     }
                 };
 
-        drawerLayout.setDrawerListener(toggle);
-        toggle.syncState();
+//        drawerLayout.setDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
 
-        mSeriesMax = SetGoalActivity.mSeries;
-        Log.d("SetGoal mseries", String.valueOf(SetGoalActivity.mSeries));
-        if (mSeriesMax == 0) {
-            mSeriesMax = LoginActivity.mSeries1;
-        }
-        final String cap1;
-        final float[] m = new float[1];
-        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-
+        mAppBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,
+                R.id.nav_tools, R.id.nav_share, R.id.nav_send)
+                .setDrawerLayout(drawerLayout)
+                .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(navigationView, navController);
 

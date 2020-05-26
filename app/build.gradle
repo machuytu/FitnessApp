@@ -13,6 +13,15 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [
+                        "room.schemaLocation"  : "$projectDir/schemas".toString(),
+                        "room.incremental"     : "true",
+                        "room.expandProjection": "true"]
+            }
+        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -24,6 +33,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     packagingOptions {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/LICENSE-FIREBASE.txt'
@@ -41,10 +51,14 @@ android {
     repositories {
         mavenCentral()
         maven { url "https://jitpack.io" }
-
+        maven {
+            url "http://dl.bintray.com/glomadrian/maven"
+        }
+        jcenter()
     }
 }
-
+//repositories {
+//    maven { url "https://jitpack.io" }
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.1.0'
@@ -57,6 +71,13 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'com.daimajia.numberprogressbar:library:1.4@aar'
+    implementation 'com.google.code.gson:gson:2.8.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation "androidx.room:room-runtime:2.2.5"
+    implementation "androidx.room:room-rxjava2:2.2.5"
+    annotationProcessor "androidx.room:room-compiler:2.2.5"
+    implementation 'com.github.glomadrian:MaterialAnimatedSwitch:1.1@aar'
 
     //add library
     implementation "androidx.recyclerview:recyclerview:1.1.0"
@@ -72,7 +93,7 @@ dependencies {
 
     //calendar
     def appcompat_version = "1.1.0"
-    implementation "androidx.appcompat:appcompat:$appcompat_version"
+    implementation "androidx.appcompat:appcompat:1.1.0"
     // For loading and tinting drawables on older versions of the platform
     implementation "androidx.appcompat:appcompat-resources:$appcompat_version"
 
@@ -97,6 +118,7 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-auth:4.1.0'
     implementation 'com.facebook.android:facebook-android-sdk:5.13.0'
     implementation 'com.google.firebase:firebase-messaging:20.1.0'
+    implementation 'com.github.AnyChart:AnyChart-Android:1.1.2'
 
     // AndroidX Capable version
     implementation 'com.github.AppIntro:AppIntro:5.1.0'
@@ -123,11 +145,13 @@ dependencies {
     implementation 'com.google.ar.sceneform.ux:sceneform-ux:1.15.0'
     implementation project(path: ':progressviewslib')
 
-    //Material-Calendar-View
+    // Material-Calendar-View
     implementation 'com.applandeo:material-calendar-view:1.7.0'
 
     //Progress
     implementation 'com.github.lzyzsd:circleprogress:1.2.1'
 
-
+    implementation 'me.dm7.barcodescanner:zxing:1.9.13'
+    //Gif
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.19'
 }
