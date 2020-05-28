@@ -89,8 +89,6 @@ public class LoginActivity extends AppCompatActivity {
                         .build(),
                 RC_SIGN_IN);
     }
-
-
     private void initializeUserInfo() {
         FirebaseUser user = mAuth.getCurrentUser();
         assert user != null;

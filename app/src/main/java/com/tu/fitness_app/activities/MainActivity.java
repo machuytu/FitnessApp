@@ -16,9 +16,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,12 +58,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.tu.fitness_app.Custom.WorkoutDoneDecorator;
 import com.tu.fitness_app.R;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.StringTokenizer;
 
 public class MainActivity extends AppCompatActivity {
@@ -100,8 +109,6 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
 
-//    private int mYear, mMonth, mDay;
-
     private AppBarConfiguration mAppBarConfiguration;
     ImageView btnTraining;
 
@@ -122,6 +129,10 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvRun;
     private TextView tvQuangDuong;
     private TextView tvBurnCalo;
+    private Spinner spinner;
+    private String names[] = {"Run", "Calories"};
+    ArrayAdapter <String> adapter;
+    String record = "";
 //Run
     float dailytotalsteps;
     float runmodetotalsteps;
@@ -137,6 +148,10 @@ public class MainActivity extends AppCompatActivity {
     static float mytotalcarbs;
     float mytotalfat;
     float mytotalprotein;
+    MaterialCalendarView materialCalendarView;
+    Date today = new Date();
+    String todaystring = today.getYear() + 1900 + "-" + (1 + today.getMonth());
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -151,7 +166,12 @@ public class MainActivity extends AppCompatActivity {
         Date date = java.util.Calendar.getInstance().getTime();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String strDate = sdf.format(date);
-        Log.d("strDate", String.valueOf(strDate));
+
+
+        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM");
+
+
+        Log.d("todaychart", "qua");
         //Activity
         tvStep = findViewById(R.id.tvStep);
         tvRun = findViewById(R.id.tvRun);
@@ -169,32 +189,38 @@ public class MainActivity extends AppCompatActivity {
         imgNotDone = findViewById(R.id.imgNotDone);
         tvNotDone = findViewById(R.id.tvNotDone);
         //Line chart
+        spinner = (Spinner)findViewById(R.id.spinner);
+        adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,names);
+
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         txtMonthYear = findViewById(R.id.txtMonthYear);
-        txtMonthYear.setText(stringOfDate);
+        txtMonthYear.setText(todaystring);
         SimpleDateFormat sdfchart = new SimpleDateFormat("yyyyMM");
         stringOfDate = sdfchart.format(new Date());
         btnMonthYear = findViewById(R.id.btnMonthYear);
         lineChart = findViewById(R.id.chart);
         lineChart.setBackgroundColor(Color.WHITE);
+        lineChart.getDescription().setEnabled(false);
         YAxis rightAxis = lineChart.getAxisRight();
         rightAxis.setEnabled(false);
         YAxis leftAxis = lineChart.getAxisLeft();
         leftAxis.setTextSize(15f);
-        leftAxis.setLabelCount(5,true);
-        leftAxis.setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART);
+//        leftAxis.setLabelCount(5,true);
+//        leftAxis.setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART);
         leftAxis.setDrawGridLines(true);
         leftAxis.setAxisMinimum(0);
-        leftAxis.setAxisMaximum(3000);
+        leftAxis.setAxisLineWidth(1.5f);
+//        leftAxis.setAxisMaximum(3000);
 //        lineData.setValueTextSize((float) 0.5);
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setDrawGridLines(false);
-        xAxis.setLabelCount(6);
+        xAxis.setDrawGridLines(true);
+//        xAxis.setLabelCount(6);
+        xAxis.setTextSize(15f);
 //        xAxis.setAxisLineColor(Color.RED);
 //        xAxis.setGranularity(1f);
-//        xAxis.setAxisLineWidth(4f);
+        xAxis.setAxisLineWidth(1.5f);
 //        xAxis.setAvoidFirstLastClipping(true);
         xAxis.setValueFormatter(new IAxisValueFormatter() {
             @Override
@@ -212,39 +238,42 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        retrieveData(stringOfDate);
+        retrieveDataRun(stringOfDate);
+        retrieveDataCalo(stringOfDate);
         btnMonthYear.setOnClickListener(this::onClick);
-
-
-        //----------------------------------------------------Progress bar---------------------------------------------------------
-        //progressBarSteps = (ProgressBar) findViewById(R.id.progressBar2);
-
-        //Steps progress
-
-//        progressBarSteps.setProgress(pStatus);
-//        progressBarSteps.setBottomText("Steps");
-//        ObjectAnimator animation = ObjectAnimator.ofInt(progressBarSteps, "progress", 0, 50); // see this max value coming back here, we animate towards that value
-//        animation.setDuration(5000); // in milliseconds
-//        animation.setInterpolator(new DecelerateInterpolator());
-//        animation.start();
-//        progressBarSteps.clearAnimation();
-
-        //Burn progress
-
-//        progressBarBurns.setProgress((pBurn));
-//        progressBarBurns.setBottomText("Burn");
-//        ObjectAnimator animation2 = ObjectAnimator.ofInt(progressBarBurns, "progress", 0, 50); // see this max value coming back here, we animate towards that value
-//        animation2.setDuration(5000); // in milliseconds
-//        animation2.setInterpolator(new DecelerateInterpolator());
-//        animation2.start();
-//        progressBarBurns.clearAnimation();
+        //set adapter to spinner
+        spinner.setAdapter(adapter);
+        //set spinner method
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (position){
+                    case 0:
+                        record = "Run";
+                        lineChart.invalidate();
+                        lineChart.clear();
+                        retrieveDataRun(todaystring);
+                        txtMonthYear.setText(todaystring);
+                        Log.d("0", String.valueOf(0));
+                        break;
+                    case 1:
+                        record = "Calories";
+                        lineChart.invalidate();
+                        lineChart.clear();
+                        retrieveDataCalo(todaystring);
+                        txtMonthYear.setText(todaystring);
+                        Log.d("1", String.valueOf(1));
+                        break;
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
 
         //Calo progress
-        Log.d("Datamytotalcalories", String.valueOf(mytotalcalories));
         getDataCalories();
         int a = (int) mytotalcalories;
-
-        Log.d("Mytotalcalories", String.valueOf(a));
         progressBarCalo = (ArcProgress) findViewById(R.id.progressCalo);
         progressBarCalo.setProgress(Integer.parseInt(String.valueOf(a)));
         progressBarCalo.setBottomText("Calo");
@@ -297,8 +326,19 @@ public class MainActivity extends AppCompatActivity {
         getDataStep();
         tvBurnCalo.setText(String.valueOf(totalCaloriessum));
         tvQuangDuong.setText(String.valueOf(totaldistancessum));
-        //Set enable and disable training button
 
+        //Set enable and disable training button
+        List<String> workoutDay = LoginActivity.day;
+        Log.d("workouDay", String.valueOf(workoutDay));
+        List listday = new ArrayList();
+        DateFormat simple = new SimpleDateFormat("yyyy-MM-dd");
+        for (String value:workoutDay) {
+            simple.format(Long.parseLong(value));
+            listday.add(simple.format(Long.parseLong(value)));
+            if(simple.format(Long.parseLong(value)).equals(strDate)){
+                done=true;
+            }
+        }
         if (done == true)
         {
             imgDone.setVisibility(View.VISIBLE);
@@ -309,7 +349,6 @@ public class MainActivity extends AppCompatActivity {
             tvNotDone.setVisibility(View.VISIBLE);
             imgNotDone.setVisibility(View.VISIBLE);
             btnTrain.setVisibility(View.VISIBLE);
-
         }
         if(tvDone.getText()=="Done")
         {
@@ -322,7 +361,6 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
-
         toggle =
                 new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_drawer, R.string.close_drawer) {
                     @Override
@@ -425,7 +463,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
-
                     mytotalcalories = Float.parseFloat(String.valueOf(dataSnapshot.child("totalcalories").getValue()));
                     progressBarCalo.setProgress((int) mytotalcalories);
                     ObjectAnimator animation3 = ObjectAnimator.ofInt(progressBarCalo, "progress", 100,(int) mytotalcalories); // see this max value coming back here, we animate towards that value
@@ -553,16 +590,7 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-//    private ArrayList getData(){
-//        ArrayList<PieEntry> entries = new ArrayList<>();
-//        entries.add(new PieEntry(945f, "Running"));
-//        entries.add(new PieEntry(1030f, "Walking"));
-//        entries.add(new PieEntry(1143f, "Trainning"));
-//        entries.add(new PieEntry(1250f, "Calo"));
-//        return entries;
-//    }
     //Line Chart
-
     public void onClick(View view) {
         java.util.Calendar c = java.util.Calendar.getInstance();
         int mYear = c.get(java.util.Calendar.YEAR);
@@ -575,15 +603,14 @@ public class MainActivity extends AppCompatActivity {
                                           int monthOfYear, int dayOfMonth) {
                         txtMonthYear.setText((monthOfYear + 1) + "-" + year);
                         stringOfDate = year + "-" + (monthOfYear + 1);
-                        retrieveData(stringOfDate);
+                        retrieveDataCalo(stringOfDate);
+                        retrieveDataRun(stringOfDate);
                     }
                 }, mYear, mMonth, mDay);
         ((ViewGroup) datePickerDialog.getDatePicker()).findViewById(Resources.getSystem().getIdentifier("day", "id", "android")).setVisibility(View.GONE);
         datePickerDialog.show();
-
     }
-
-    private void retrieveData(String stringOfDate) {
+    private void retrieveDataCalo(String stringOfDate) {
         listkey = new ArrayList<String>();
         listvalue = new ArrayList<String>();
         FirebaseUser user = mAuth.getCurrentUser();
@@ -595,6 +622,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ArrayList<Entry> dataVals = new ArrayList<Entry>();
+                ArrayList<Entry> defaults = new ArrayList<Entry>();
                 Iterable<DataSnapshot> snapshotIterator = dataSnapshot.getChildren();
                 Iterator<DataSnapshot> iterator = snapshotIterator.iterator();
                 dem = 1;
@@ -611,6 +639,7 @@ public class MainActivity extends AppCompatActivity {
                 if (dataVals.isEmpty()) {
                     lineChart.clear();
                     lineChart.invalidate();
+                    showChartDefaults(defaults);
                 }
                 else {
                     lineChart.invalidate();
@@ -625,14 +654,55 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    private void retrieveDataRun(String stringOfDate) {
+        listkey = new ArrayList<String>();
+        listvalue = new ArrayList<String>();
+        FirebaseUser user = mAuth.getCurrentUser();
+        String userId = user.getUid();
+        myref = FirebaseDatabase.getInstance().getReference("RunMode").child(userId);
 
+        Query query = myref.orderByKey().startAt(stringOfDate).endAt(stringOfDate + "\uf8ff");
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ArrayList<Entry> dataVals = new ArrayList<Entry>();
+                ArrayList<Entry> defaults = new ArrayList<Entry>();
+                Iterable<DataSnapshot> snapshotIterator = dataSnapshot.getChildren();
+                Iterator<DataSnapshot> iterator = snapshotIterator.iterator();
+                dem = 1;
+                while (iterator.hasNext()) {
+                    DataSnapshot next = (DataSnapshot) iterator.next();
+                    float y =  Float.parseFloat(String.valueOf(next.child("totalsteps").getValue()));
+                    listkey.add(next.getKey());
+                    listvalue.add(next.child("totalsteps").getValue());
+                    dataVals.add(new Entry(dem,y));
+                    dem++;
+
+                }
+                if (dataVals.isEmpty()) {
+                    lineChart.clear();
+                    lineChart.invalidate();
+                    showChartDefaults(defaults);
+                }
+                else {
+                    lineChart.invalidate();
+                    lineChart.clear();
+                    showChart(dataVals);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.d("err", "err: " + databaseError.toString());
+            }
+        });
+    }
     private void showChart(ArrayList<Entry> dataVals) {
         lineDataSet.clear();
         lineDataSet = new LineDataSet(null, null);
         lineDataSet.setValues(dataVals);
         lineDataSet.setColor(Color.RED);
         lineDataSet.setValueTextSize(8.5f);
-//        lineDataSet.setC
         lineDataSet.setLineWidth(3f);
         iLineDataSets.clear();
         iLineDataSets = new ArrayList<>();
@@ -642,6 +712,23 @@ public class MainActivity extends AppCompatActivity {
         lineChart.setData(lineData);
         lineChart.invalidate();
     }
+    private void showChartDefaults(ArrayList<Entry> defaults){
+        defaults.add(new Entry(1,0));
+        lineDataSet.clear();
+        lineDataSet = new LineDataSet(null, null);
+        lineDataSet.setColor(Color.RED);
+        lineDataSet.setValueTextSize(8.5f);
+        lineDataSet.setLineWidth(3f);
+        lineDataSet.setValues(defaults);
+        iLineDataSets.clear();
+        iLineDataSets = new ArrayList<>();
+        iLineDataSets.add(lineDataSet);
+        lineData = new LineData(iLineDataSets);
+        lineChart.clear();
+        lineChart.setData(lineData);
+        lineChart.invalidate();
+    }
+    //Run
     private DatabaseReference getDailyWork() {
         FirebaseUser user = mAuth.getCurrentUser();
         String userId = user.getUid();

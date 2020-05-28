@@ -255,6 +255,18 @@
 
                     </ImageView>
 
+                    <Spinner
+                        android:id="@+id/spinner"
+                        android:text="Choose"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="87dp"
+                        android:layout_toStartOf="@+id/txtMonthYear">
+
+                    </Spinner>
+
                     <Button
                         android:id="@+id/btnMonthYear"
                         android:layout_width="40dp"
