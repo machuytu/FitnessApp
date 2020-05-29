@@ -39,9 +39,9 @@ public class OverviewActivity extends AppCompatActivity {
     public float food_calories = 0f;
     public static int stepMax = 0;
     public static float caloriesMax = 0f;
-    float food_fat;
-    float food_carbs;
-    float food_protein;
+    TextView food_fat;
+    TextView food_carbs;
+    TextView food_protein;
     float max_fat;
     float max_carbs;
     float max_protein;
@@ -63,6 +63,13 @@ public class OverviewActivity extends AppCompatActivity {
 
         food_calories = LoginActivity.calRef;
 
+        food_fat = findViewById(R.id.fats_progress);
+        food_carbs = findViewById(R.id.carbs_progress);
+        food_protein = findViewById(R.id.protein_progress);
+
+        food_fat.setText(String.valueOf(LoginActivity.user_fat));
+        food_carbs.setText(String.valueOf(LoginActivity.user_carbs));
+        food_protein.setText(String.valueOf(LoginActivity.user_protein));
         // Setting Steps and Calories
         getUsersRef("stepgoal").addValueEventListener(new ValueEventListener() {
             @Override
