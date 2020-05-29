@@ -1,18 +1,31 @@
 package com.tu.fitness_app.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
+
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -46,6 +59,10 @@ public class Daily_Training extends AppCompatActivity {
     private DatabaseReference ref_LisDay;
     List<com.tu.fitness_app.Model.Exercise> list = new ArrayList<>();
     private WorkoutDays workoutDays;
+    private NavigationView navigationView;
+    DrawerLayout drawerLayout;
+    Toolbar toolbar;
+    ActionBarDrawerToggle toggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +70,12 @@ public class Daily_Training extends AppCompatActivity {
         setContentView(R.layout.activity_daily__training);
 
         initData();
+
+        // Navigation Bar
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
 
         btnStart = (Button)findViewById(R.id.btnStart);
         btnBack = (Button)findViewById(R.id.btnBack);
@@ -145,6 +168,84 @@ public class Daily_Training extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Daily_Training.this, MainActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_drawer, R.string.close_drawer) {
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+            }
+        };
+
+        drawerLayout.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavigationUI.setupWithNavController(navigationView, navController);
+
+        navigationView.bringToFront();
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId())
+                {
+                    case R.id.item1:
+                        Intent intent = new Intent(Daily_Training.this, ListExercises.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.item2:
+                        intent = new Intent(Daily_Training.this, Daily_Training.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.item3:
+                        intent = new Intent(Daily_Training.this, com.tu.fitness_app.activities.Calendar.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.item4:
+                        intent = new Intent(Daily_Training.this, SettingPage.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.item5:
+                        intent = new Intent(Daily_Training.this, StepCountDaily.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.item6:
+                        AuthUI.getInstance().signOut(Daily_Training.this).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Toast.makeText(Daily_Training.this, "Signed out successfully", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        Intent myIntent = new Intent(Daily_Training.this, LoginActivity.class);
+                        myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);// clear back stack
+                        startActivity(myIntent);
+                        finish();
+                    default:
+                        break;
+                    case R.id.item7:
+                        intent = new Intent(Daily_Training.this, OverviewActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.item8:
+                        intent = new Intent(Daily_Training.this, HistoryActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.item9:
+                        intent = new Intent(Daily_Training.this, BarcodeScanner.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.item11:
+                        intent = new Intent(Daily_Training.this, RunMode.class);
+                        startActivity(intent);
+                        break;
+                }
+                drawerLayout.closeDrawers();
+                return false;
             }
         });
     }

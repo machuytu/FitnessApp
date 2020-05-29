@@ -98,15 +98,19 @@ public class EnterInfoActivity extends AppCompatActivity {
                 totalCarolies = BMR * zLevel;
                 Log.d("totalcalries", String.valueOf(totalCarolies));
                 getUsersRef("caloriegoal").setValue(totalCarolies);
+                LoginActivity.mSeries2 = totalCarolies;
                 if (zLevel == (float) 1.2) {
                     getUsersRef("stepgoal").setValue(8000);
+                    LoginActivity.mSeries1 = 8000;
                     getUsersRef("mode").setValue(0);
                 } else if (zLevel == (float) 1.55) {
                     getUsersRef("stepgoal").setValue(10000);
                     getUsersRef("mode").setValue(1);
+                    LoginActivity.mSeries1 = 10000;
                 } else {
                     getUsersRef("stepgoal").setValue(12000);
                     getUsersRef("mode").setValue(2);
+                    LoginActivity.mSeries1 = 12000;
                 }
             }
         });

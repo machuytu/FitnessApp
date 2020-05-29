@@ -21,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.tu.fitness_app.Model.History;
 import com.tu.fitness_app.R;
 import com.tu.fitness_app.activities.Food_RecyclerFrag_Main;
+import com.tu.fitness_app.activities.LoginActivity;
 
 import org.json.JSONArray;
 
@@ -141,6 +142,10 @@ public class Food_MyRecycleAdapter extends RecyclerView.Adapter<Food_MyRecycleAd
                 getCaloriesRef("totalfat").setValue(totalFat);
                 getCaloriesRef("totalcarbs").setValue(totalCarbs);
                 getCaloriesRef("totalprotein").setValue(totalProtein);
+                LoginActivity.calRef = caloriesCount;
+                LoginActivity.user_fat = totalFat;
+                LoginActivity.user_carbs = totalCarbs;
+                LoginActivity.user_protein = totalProtein;
 
                 if(count == 1) {
                     String toast1 = count + "item added";

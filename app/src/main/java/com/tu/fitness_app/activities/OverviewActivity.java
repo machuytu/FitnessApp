@@ -3,14 +3,10 @@ package com.tu.fitness_app.activities;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.BounceInterpolator;
 import android.view.animation.TranslateAnimation;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,7 +20,6 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
 import com.firebase.ui.auth.AuthUI;
-import com.github.lzyzsd.circleprogress.DonutProgress;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
@@ -37,7 +32,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.natasa.progressviews.CircleProgressBar;
 import com.natasa.progressviews.utils.OnProgressViewListener;
-import com.tu.fitness_app.Adapter.Food_MyRecycleAdapter;
 import com.tu.fitness_app.R;
 
 public class OverviewActivity extends AppCompatActivity {
@@ -270,6 +264,14 @@ public class OverviewActivity extends AppCompatActivity {
                         intent = new Intent(OverviewActivity.this, HistoryActivity.class);
                         startActivity(intent);
                         break;
+                    case R.id.item9:
+                        intent = new Intent(OverviewActivity.this, BarcodeScanner.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.item11:
+                        intent = new Intent(OverviewActivity.this, RunMode.class);
+                        startActivity(intent);
+                        break;
                 }
                 drawerLayout.closeDrawers();
                 return false;
@@ -291,16 +293,6 @@ public class OverviewActivity extends AppCompatActivity {
         translation_food.setFillAfter(true);
         translation_food.setInterpolator(new BounceInterpolator());
 
-        // Steps Progress Bar
-      //  steps.setProgress(100 * (StepCountDaily.evsteps) / stepMax);
-        //steps.setWidth(280);
-        //steps.setWidthProgressBackground(25);
-        //steps.setWidthProgressBarLine(20);
-        //steps.setText(StepCountDaily.evsteps + "/" + stepMax);
-        //steps.setTextSize(40);
-        //steps.setBackgroundColor(Color.LTGRAY);
-        //steps.setRoundEdgeProgress(true);
-        //steps.startAnimation(translation_steps);
 
         // Food Progress Bar
         if (food_calories > 0) {
