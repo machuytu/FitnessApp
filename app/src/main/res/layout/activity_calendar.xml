@@ -9,19 +9,6 @@
     tools:openDrawer="start"
     tools:context=".activities.Calendar">
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:headerLayout="@layout/nav_header_main"
-        app:menu="@menu/activity_main_drawer" />
-
-    <include
-        layout="@layout/app_bar_main"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -48,9 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:mcv_selectionColor="#00F"
-                app:mcv_showOtherDates="all" >
-
-            </com.prolificinteractive.materialcalendarview.MaterialCalendarView>
+                app:mcv_showOtherDates="all" />
 
             <LinearLayout
                 android:layout_below="@+id/calendar"
@@ -75,7 +60,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
-        </RelativeLayout>
-    </FrameLayout>
+        </RelativeLayout>    </FrameLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/nav_header_main"
+        app:menu="@menu/activity_main_drawer" />
+
 </androidx.drawerlayout.widget.DrawerLayout>
 

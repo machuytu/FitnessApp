@@ -58,16 +58,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
-import com.tu.fitness_app.Custom.WorkoutDoneDecorator;
 import com.tu.fitness_app.R;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -152,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
     Date today = new Date();
     String todaystring = today.getYear() + 1900 + "-" + (1 + today.getMonth());
     private ImageView imgRight;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -299,8 +297,34 @@ public class MainActivity extends AppCompatActivity {
         progressBarCarbs = findViewById(R.id.progressCarbs);
         progressBarCarbs.getProgress();
 
+        // Navigation Bar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View headView = navigationView.getHeaderView(0);
+        TextView name = headView.findViewById(R.id.nameHeaderBar);
+        TextView email = headView.findViewById(R.id.headeremail);
+
+        drawerLayout = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle actionBarDrawerToggle =
+                new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_drawer, R.string.close_drawer) {
+                    @Override
+                    public void onDrawerClosed(View drawerView) {
+                        super.onDrawerClosed(drawerView);
+                    }
+
+                    @Override
+                    public void onDrawerOpened(View drawerView) {
+                        super.onDrawerOpened(drawerView);
+                    }
+                };
+
+//        drawerLayout.setDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+
 // Infor
         FirebaseUser user = mAuth.getCurrentUser();
+//        String
         String userId = user.getUid();
         myref = FirebaseDatabase.getInstance().getReference("Users").child(userId);
         myref.addValueEventListener(new ValueEventListener() {
@@ -314,6 +338,8 @@ public class MainActivity extends AppCompatActivity {
                 tvHeightNum.setText(myheight);
                 String mygender = dataSnapshot.child("gender").getValue().toString();
                 tvSex.setText(mygender);
+                String nameString = LoginActivity.USER_NAME;
+                name.setText(nameString);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -359,26 +385,8 @@ public class MainActivity extends AppCompatActivity {
         }else{
             btnTrain.setEnabled(true);
         }
-        // Navigation Bar
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.nav_view);
-        toggle =
-                new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_drawer, R.string.close_drawer) {
-                    @Override
-                    public void onDrawerClosed(View drawerView) {
-                        super.onDrawerClosed(drawerView);
-                    }
+        Log.d("user name:", LoginActivity.USER_NAME);
 
-                    @Override
-                    public void onDrawerOpened(View drawerView) {
-                        super.onDrawerOpened(drawerView);
-                    }
-                };
-
-//        drawerLayout.setDrawerListener(actionBarDrawerToggle);
-        actionBarDrawerToggle.syncState();
 
         getUsersRef("stepgoal").addValueEventListener(new ValueEventListener() {
             @Override

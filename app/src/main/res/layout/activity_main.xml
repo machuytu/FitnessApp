@@ -287,7 +287,6 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginEnd="226dp"
                         android:paddingTop="5dp"
-                        android:layout_centerHorizontal="true"
                         android:text="YYYY-MM" />
 
                     <com.github.mikephil.charting.charts.LineChart

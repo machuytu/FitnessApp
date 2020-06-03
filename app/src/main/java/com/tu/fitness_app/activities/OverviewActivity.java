@@ -304,7 +304,7 @@ public class OverviewActivity extends AppCompatActivity {
         // Food Progress Bar
         if (food_calories > 0) {
             food.setProgress((100 * (food_calories)) / caloriesMax);
-            food.setText(food_calories + "/ " + caloriesMax);
+            food.setText(food_calories   + "/ " + caloriesMax);
         } else {
             food.setProgress((100 * LoginActivity.calRef / caloriesMax));
             food.setText(LoginActivity.calRef + "/ " + caloriesMax);

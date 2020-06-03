@@ -72,7 +72,6 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
     private int stepInDB;
 
     private TextView tvPercentage;
-    private TextView tvRemaining;
     private TextView tvRun;
 
     // Firebase database init
@@ -92,9 +91,8 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step_count_daily);
         mDecoView = findViewById(R.id.dynamicArcView);
-        tvRemaining = findViewById(R.id.textRemaining);
         tvPercentage = findViewById(R.id.textPercentage);
-        tvRun = findViewById(R.id.textRun);
+//        tvRun = findViewById(R.id.textRun);
 
         createNavBar();
 
@@ -105,8 +103,7 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
         userId = LoginActivity.USER_ID;
         Log.i(TAG, "uid" + userId);
         if (userId.equals(""))
-            mAuth.getCurrentUser().getUid();
-
+            userId = mAuth.getCurrentUser().getUid();
         mDatabase.child("Users").child(userId).child("stepgoal").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -258,7 +255,7 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
                 tvRun.setText(String.format("%d Steps", (int) currentPosition));
 
                 if (seriesItem.getMaxValue() > currentPosition){
-                    tvRemaining.setText(String.format("%d Steps to goal", (int) (seriesItem.getMaxValue() - currentPosition)));
+//                    tvRemaining.setText(String.format("%d Steps to goal", (int) (seriesItem.getMaxValue() - currentPosition)));
 
                     float percentFilled = ((currentPosition - seriesItem.getMinValue())
                             / (seriesItem.getMaxValue() - seriesItem.getMinValue()));
@@ -266,7 +263,7 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
 
                 }
                 else{
-                    tvRemaining.setText("Completed");
+//                    tvRemaining.setText("Completed");
                     tvPercentage.setText("100%");
                 }
             }
