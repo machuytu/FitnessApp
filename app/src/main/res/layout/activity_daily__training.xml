@@ -31,16 +31,34 @@
                 android:gravity="center_vertical|center_horizontal"
                 android:text="@string/name_of_exercise"
                 android:textColor="@android:color/black"
-                android:textSize="24sp" />
+                android:textStyle="bold"
+                android:textSize="28dp" />
 
-            <ImageView
+<!--            <ImageView-->
+<!--                android:id="@+id/detail_image"-->
+<!--                android:src="@drawable/artistic_gymnastics"-->
+<!--                android:layout_centerInParent="true"-->
+<!--                android:layout_width="300dp"-->
+<!--                android:layout_height="200dp"-->
+<!--                tools:ignore="ContentDescription" />-->
+            <pl.droidsonroids.gif.GifImageView
                 android:id="@+id/detail_image"
-                android:src="@drawable/artistic_gymnastics"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_width="300dp"
-                android:layout_height="200dp"
-                tools:ignore="ContentDescription" />
+                android:src="@drawable/flow">
 
+            </pl.droidsonroids.gif.GifImageView>
+            <TextView
+                android:id="@+id/tvIntro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/title"
+                android:layout_marginTop="30dp"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:text="TextView" />
             <LinearLayout
                 android:id="@+id/layout_get_ready"
                 android:visibility="invisible"
@@ -90,19 +108,34 @@
 
             <info.hoang8f.widget.FButton
                 android:id="@+id/btnStart"
-                android:layout_alignParentBottom="true"
-                android:layout_width="393dp"
-                android:layout_height="wrap_content"
+
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="4dp"
                 android:layout_marginBottom="8dp"
                 android:text="@string/start"
-                android:textColor="@android:color/white"
-                app:fButtonColor="@color/colorPrimaryDark"
-                app:cornerRadius="2dp"
-                app:shadowColor="@color/colorPrimaryDark"
+
+
+                android:layout_width="207dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="4dp"
+
+                android:layout_weight="1"
+                android:textAllCaps="true"
+
+
+                android:textColor="@color/colorPrimary"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                app:cornerRadius="40dp"
+                app:fButtonColor="#2980b9"
+                app:shadowColor="#1f4068"
                 app:shadowEnabled="true"
-                app:shadowHeight="2dp" />
+                app:shadowHeight="4dp"
+                />
 
             <TextView
                 android:id="@+id/timer"
@@ -112,7 +145,7 @@
                 android:layout_centerHorizontal="true"
                 android:textStyle="bold"
                 android:text=""
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/red"
                 android:textSize="50sp" />
 
             <me.zhanghai.android.materialprogressbar.MaterialProgressBar

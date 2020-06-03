@@ -151,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
     MaterialCalendarView materialCalendarView;
     Date today = new Date();
     String todaystring = today.getYear() + 1900 + "-" + (1 + today.getMonth());
+    private ImageView imgRight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -344,6 +345,8 @@ public class MainActivity extends AppCompatActivity {
             imgDone.setVisibility(View.VISIBLE);
             tvDone.setVisibility(View.VISIBLE);
             btnTrain.setVisibility(View.INVISIBLE);
+            imgRight.setVisibility(View.INVISIBLE);
+
             //btnTrain.setEnabled(true);
         }else{
             tvNotDone.setVisibility(View.VISIBLE);
@@ -374,8 +377,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                 };
 
-        drawerLayout.setDrawerListener(toggle);
-        toggle.syncState();
+//        drawerLayout.setDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
 
         getUsersRef("stepgoal").addValueEventListener(new ValueEventListener() {
             @Override

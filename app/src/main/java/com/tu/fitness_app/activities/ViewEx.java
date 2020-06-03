@@ -16,9 +16,9 @@ import com.tu.fitness_app.Utils.Common;
 
 public class ViewEx extends AppCompatActivity {
     int image_id;
-    String name;
+    String name, intro;
 
-    TextView timer,title;
+    TextView timer,title,tvIntro;
     ImageView detail_image;
     Button btnStart;
     boolean isRunning = false;
@@ -33,6 +33,7 @@ public class ViewEx extends AppCompatActivity {
 
         timer = (TextView)findViewById(R.id.timer);
         title = (TextView)findViewById(R.id.title);
+        tvIntro=(TextView)findViewById(R.id.tvIntro);
         detail_image = (ImageView)findViewById((R.id.detail_image));
 
         btnStart = (Button)findViewById(R.id.btnStart);
@@ -80,10 +81,12 @@ public class ViewEx extends AppCompatActivity {
 
         if(getIntent() != null) {
             image_id = getIntent().getIntExtra("image_id", -1);
-            name = getIntent().getStringExtra(name);
-
+            name = getIntent().getStringExtra("name");
+            intro =getIntent().getStringExtra("intro");
             detail_image.setImageResource(image_id);
             title.setText(name);
+            tvIntro.setText(intro);
+
 
         }
     }

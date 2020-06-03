@@ -27,14 +27,24 @@
         android:layout_height="match_parent"
         android:layout_weight="3">
 
+        <include
+            layout="@layout/app_bar_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/shadow"
+
             android:layout_marginTop="60dp">
 
             <com.prolificinteractive.materialcalendarview.MaterialCalendarView
                 android:id="@+id/calendar"
+                app:mcv_arrowColor="@color/blue"
+                app:mcv_calendarMode="month"
+
+                app:mcv_monthLabels="@color/pink"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:mcv_selectionColor="#00F"
