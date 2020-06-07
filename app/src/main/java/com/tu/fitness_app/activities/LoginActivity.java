@@ -128,7 +128,7 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
         assert user != null;
         String userId = user.getUid();
-        return mDatabase.child("Users").child(userId).child(ref);
+        return mDatabase.child("Setting").child(userId).child(ref);
     }
 
     private DatabaseReference getWorkoutDaysRef(String ref) {

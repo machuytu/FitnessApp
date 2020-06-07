@@ -183,8 +183,12 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId())
                 {
+                    case R.id.item0:
+                        Intent intent = new Intent(StepCountDaily.this, MainActivity.class);
+                        startActivity(intent);
+                        break;
                     case R.id.item1:
-                        Intent intent = new Intent(StepCountDaily.this, ListExercises.class);
+                        intent = new Intent(StepCountDaily.this, ListExercises.class);
                         startActivity(intent);
                         break;
                     case R.id.item2:

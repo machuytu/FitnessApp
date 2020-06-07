@@ -196,8 +196,12 @@ public class Daily_Training extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId())
                 {
+                    case R.id.item0:
+                        Intent intent = new Intent(Daily_Training.this, MainActivity.class);
+                        startActivity(intent);
+                        break;
                     case R.id.item1:
-                        Intent intent = new Intent(Daily_Training.this, ListExercises.class);
+                        intent = new Intent(Daily_Training.this, ListExercises.class);
                         startActivity(intent);
                         break;
                     case R.id.item2:

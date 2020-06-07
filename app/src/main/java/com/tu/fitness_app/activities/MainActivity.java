@@ -39,13 +39,11 @@ import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.firebase.ui.auth.AuthUI;
 import com.github.lzyzsd.circleprogress.ArcProgress;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -129,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
     private Spinner spinner;
     private String names[] = {"Run", "Calories"};
     ArrayAdapter <String> adapter;
-    String record = "";
+    static String record = "Calories";
 //Run
     float dailytotalsteps;
     float runmodetotalsteps;
@@ -169,8 +167,6 @@ public class MainActivity extends AppCompatActivity {
 
         SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM");
 
-
-        Log.d("todaychart", "qua");
         //Activity
         tvStep = findViewById(R.id.tvStep);
         tvRun = findViewById(R.id.tvRun);
@@ -191,16 +187,19 @@ public class MainActivity extends AppCompatActivity {
         spinner = (Spinner)findViewById(R.id.spinner);
         adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,names);
 
+        listkey = new ArrayList<String>();
+        listvalue = new ArrayList<String>();
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         txtMonthYear = findViewById(R.id.txtMonthYear);
         txtMonthYear.setText(todaystring);
-        SimpleDateFormat sdfchart = new SimpleDateFormat("yyyyMM");
+        SimpleDateFormat sdfchart = new SimpleDateFormat("yyyy-MM");
         stringOfDate = sdfchart.format(new Date());
         btnMonthYear = findViewById(R.id.btnMonthYear);
         lineChart = findViewById(R.id.chart);
         lineChart.setBackgroundColor(Color.WHITE);
         lineChart.getDescription().setEnabled(false);
+
         YAxis rightAxis = lineChart.getAxisRight();
         rightAxis.setEnabled(false);
         YAxis leftAxis = lineChart.getAxisLeft();
@@ -212,6 +211,8 @@ public class MainActivity extends AppCompatActivity {
         leftAxis.setAxisLineWidth(1.5f);
 //        leftAxis.setAxisMaximum(3000);
 //        lineData.setValueTextSize((float) 0.5);
+
+
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(true);
@@ -221,23 +222,20 @@ public class MainActivity extends AppCompatActivity {
 //        xAxis.setGranularity(1f);
         xAxis.setAxisLineWidth(1.5f);
 //        xAxis.setAvoidFirstLastClipping(true);
-        xAxis.setValueFormatter(new IAxisValueFormatter() {
-            @Override
-            public String getFormattedValue(float value, AxisBase axis) {
-                try {
-                    int index = (int) value;
-                    String s1 = (String) listkey.get(index);
-                    StringTokenizer s2 = new StringTokenizer(s1, "-");
-                    String s3 = s2.nextToken();
-                    String s4 = s2.nextToken();
-                    String s5 = s2.nextToken();
-                    return s5;
-                } catch (Exception e) {
-                    return "";
-                }
+        xAxis.setValueFormatter((value, axis) -> {
+            try {
+                int index = (int) value;
+                String s1 = (String) listkey.get(index);
+                StringTokenizer s2 = new StringTokenizer(s1, "-");
+                String s3 = s2.nextToken();
+                String s4 = s2.nextToken();
+                String s5 = s2.nextToken();
+                return s5;
+            } catch (Exception e) {
+                return "";
             }
         });
-        retrieveDataRun(stringOfDate);
+        Log.d("stringOfDate",stringOfDate);
         retrieveDataCalo(stringOfDate);
         btnMonthYear.setOnClickListener(this::onClick);
         //set adapter to spinner
@@ -253,7 +251,7 @@ public class MainActivity extends AppCompatActivity {
                         lineChart.clear();
                         retrieveDataRun(todaystring);
                         txtMonthYear.setText(todaystring);
-                        Log.d("0", String.valueOf(0));
+
                         break;
                     case 1:
                         record = "Calories";
@@ -261,7 +259,7 @@ public class MainActivity extends AppCompatActivity {
                         lineChart.clear();
                         retrieveDataCalo(todaystring);
                         txtMonthYear.setText(todaystring);
-                        Log.d("1", String.valueOf(1));
+
                         break;
                 }
             }
@@ -413,8 +411,12 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId())
                 {
+                    case R.id.item0:
+                        Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        break;
                     case R.id.item1:
-                        Intent intent = new Intent(MainActivity.this, ListExercises.class);
+                        intent = new Intent(MainActivity.this, ListExercises.class);
                         startActivity(intent);
                         break;
                     case R.id.item2:
@@ -499,7 +501,9 @@ public class MainActivity extends AppCompatActivity {
                 else {
                     mytotalcalories = 0f;
                     mytotalcarbs = 0f;
-                    mytotalcaloriessum += mytotalcalories;
+                    mytotalprotein = 0f;
+                    mytotalfat = 0f;
+
                 }
             }
             @Override
@@ -614,8 +618,8 @@ public class MainActivity extends AppCompatActivity {
                                           int monthOfYear, int dayOfMonth) {
                         txtMonthYear.setText((monthOfYear + 1) + "-" + year);
                         stringOfDate = year + "-" + (monthOfYear + 1);
-                        retrieveDataCalo(stringOfDate);
-                        retrieveDataRun(stringOfDate);
+                            retrieveDataRun(stringOfDate);
+                            retrieveDataCalo(stringOfDate);
                     }
                 }, mYear, mMonth, mDay);
         ((ViewGroup) datePickerDialog.getDatePicker()).findViewById(Resources.getSystem().getIdentifier("day", "id", "android")).setVisibility(View.GONE);
@@ -636,7 +640,7 @@ public class MainActivity extends AppCompatActivity {
                 ArrayList<Entry> defaults = new ArrayList<Entry>();
                 Iterable<DataSnapshot> snapshotIterator = dataSnapshot.getChildren();
                 Iterator<DataSnapshot> iterator = snapshotIterator.iterator();
-                dem = 1;
+                dem = 1 ;
                 while (iterator.hasNext()) {
                     DataSnapshot next = (DataSnapshot) iterator.next();
 
@@ -647,6 +651,7 @@ public class MainActivity extends AppCompatActivity {
                     dataVals.add(new Entry(dem,y));
                     dem++;
                 }
+                Log.d("dataVals", String.valueOf(dataVals));
                 if (dataVals.isEmpty()) {
                     lineChart.clear();
                     lineChart.invalidate();
@@ -664,6 +669,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("err", "err: " + databaseError.toString());
             }
         });
+        Log.d("listvalue", String.valueOf(listvalue));
     }
     private void retrieveDataRun(String stringOfDate) {
         listkey = new ArrayList<String>();

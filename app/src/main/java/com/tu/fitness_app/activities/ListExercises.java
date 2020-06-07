@@ -124,11 +124,23 @@ public class ListExercises extends AppCompatActivity {
                         myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);// clear back stack
                         startActivity(myIntent);
                         finish();
+                    default:
+                        break;
                     case R.id.item7:
                         intent = new Intent(ListExercises.this, OverviewActivity.class);
                         startActivity(intent);
                         break;
-                    default:
+                    case R.id.item8:
+                        intent = new Intent(ListExercises.this, HistoryActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.item9:
+                        intent = new Intent(ListExercises.this, BarcodeScanner.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.item11:
+                        intent = new Intent(ListExercises.this, RunMode.class);
+                        startActivity(intent);
                         break;
                 }
                 drawerLayout.closeDrawers();

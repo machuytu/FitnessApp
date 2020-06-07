@@ -55,6 +55,7 @@
                             android:layout_marginBottom="3dp"
                             android:layout_marginLeft="3dp"
                             android:paddingTop="16dp"
+                            android:checkedButton="@+id/rdiEasy"
                             android:paddingBottom="16dp"
                             android:id="@+id/rdiEasy"
                             android:background="@drawable/control_switch_background_selector_middle"

@@ -147,11 +147,15 @@ public class Food_RecyclerView_Main extends Fragment {
 
         final SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
         if (searchView != null) {
+            Log.d("voice 1:", voice_query);
             searchView.setIconifiedByDefault(true);
             searchView.setQuery(voice_query,true);
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
+                    if (voice_query != null) {
+                        query = voice_query;
+                    }
                     String food;
                     food = query;
                     food = food.replace("","");

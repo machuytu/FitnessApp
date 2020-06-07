@@ -1,21 +1,19 @@
 package com.tu.fitness_app.Model;
 
-import android.content.Context;
-
 public class Setting {
-    public int mode;
+    public static int mode;
 
     public Setting() {}
 
     public Setting(int mode) {
-        this.mode = mode;
+        Setting.mode = mode;
     }
 
-    public int GetSetting() {
+    public static int GetSetting() {
         return mode;
     }
 
-    public void SetSetting(int mode) {
-        this.mode = mode;
+    public static void SetSetting(int mode) {
+        Setting.mode = mode;
     }
 }

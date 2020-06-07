@@ -3,10 +3,10 @@ package com.tu.fitness_app.Database;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
+import com.tu.fitness_app.Model.Setting;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +36,7 @@ public class Fitness extends SQLiteAssetHelper {
         qb.setTables(sqlTable);
         Cursor cursor = qb.query(db, sqlSelect,null, null, null, null, null);
         cursor.moveToFirst();
-        return cursor.getInt(cursor.getColumnIndex("Mode"));
+        return Setting.GetSetting();
 
 
     }

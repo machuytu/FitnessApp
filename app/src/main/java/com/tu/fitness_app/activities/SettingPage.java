@@ -17,7 +17,6 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -39,7 +38,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.tu.fitness_app.Database.Fitness;
 import com.tu.fitness_app.Model.Setting;
-import com.tu.fitness_app.Model.User;
 import com.tu.fitness_app.R;
 
 import java.util.Date;
@@ -138,8 +136,12 @@ public class SettingPage extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(menuItem -> {
             switch (menuItem.getItemId())
             {
+                case R.id.item0:
+                    Intent intent = new Intent(SettingPage.this, MainActivity.class);
+                    startActivity(intent);
+                    break;
                 case R.id.item1:
-                    Intent intent = new Intent(SettingPage.this, ListExercises.class);
+                    intent = new Intent(SettingPage.this, ListExercises.class);
                     startActivity(intent);
                     break;
                 case R.id.item2:
@@ -178,6 +180,14 @@ public class SettingPage extends AppCompatActivity {
                     intent = new Intent(SettingPage.this, HistoryActivity.class);
                     startActivity(intent);
                     break;
+                case R.id.item9:
+                    intent = new Intent(SettingPage.this, BarcodeScanner.class);
+                    startActivity(intent);
+                    break;
+                case R.id.item11:
+                    intent = new Intent(SettingPage.this, RunMode.class);
+                    startActivity(intent);
+                    break;
             }
             drawerLayout.closeDrawers();
             return false;
@@ -196,12 +206,13 @@ public class SettingPage extends AppCompatActivity {
             CaloriesHolder = Integer.parseInt(editText1.getText().toString().trim());
             StepHolder = Integer.parseInt(editText2.getText().toString().trim());
 
-            User user = new User();
-            user.SetCalorieGoal(CaloriesHolder);
-            user.SetStepGoal(StepHolder);
+//            User user = new User();
+//            user.SetCalorieGoal(CaloriesHolder);
+//            user.SetStepGoal(StepHolder);
 
             final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-            mDatabase.child("Users").child(userId).setValue(user);
+            mDatabase.child("Users").child(userId).child("stepgoal").setValue(StepHolder);
+            mDatabase.child("Users").child(userId).child("caloriegoal").setValue(CaloriesHolder);
 
             saveAlarm(switchAlarm.isChecked());
             saveWorkoutState();
@@ -253,16 +264,16 @@ public class SettingPage extends AppCompatActivity {
 //        }
 
         int selectID = rdiGroup.getCheckedRadioButtonId();
-        Setting setting = new Setting();
+
         if(selectID == rdiEasy.getId()) {
-            setting.SetSetting(0);
+            Setting.SetSetting(0);
         } else if(selectID == rdiMedium.getId()) {
-            setting.SetSetting(1);
+            Setting.SetSetting(1);
         } else  if(selectID == rdiHard.getId()) {
-            setting.SetSetting(2);
+            Setting.SetSetting(2);
         }
         final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        mDatabase.child("Users").child(userId).setValue(setting);
+        mDatabase.child("Setting").child(userId).setValue(setting);
     }
 
     private void setRadioButton(int mode) {

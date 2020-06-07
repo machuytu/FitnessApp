@@ -81,7 +81,9 @@
             android:label="BasicInfo" />
         <activity android:name=".activities.StepCountDaily" />
         <activity android:name=".activities.Daily_Training" />
-        <activity android:name=".activities.SettingPage" />
+        <activity
+            android:name=".activities.SettingPage"
+            android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".activities.ViewEx" />
         <activity android:name=".activities.ListExercises" />
         <activity android:name=".activities.MainActivity" />
