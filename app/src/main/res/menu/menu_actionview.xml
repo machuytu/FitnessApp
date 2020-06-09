@@ -9,6 +9,7 @@
         android:title="Search"
         android:icon="@drawable/search"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:voiceSearchMode="showVoiceSearchButton|launchRecognizer"
         app:actionViewClass="android.widget.SearchView"/>
 
 </menu>

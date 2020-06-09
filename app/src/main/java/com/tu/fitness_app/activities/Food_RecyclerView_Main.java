@@ -146,6 +146,45 @@ public class Food_RecyclerView_Main extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
 
         final SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        if (searchView == null) {
+            if (voice_query != null) {
+                searchView.setIconifiedByDefault(true);
+                searchView.setQuery(voice_query,true);
+                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        String food;
+                        food = query;
+                        food = food.replace("", "");
+                        String f_url = "https://api.nutritionix.com/v1_1/search/" +
+                                food +
+                                "?results=0%3A20" +
+                                "&cal_min=0" +
+                                "&cal_max=50000" +
+                                "&fields=item_name" +
+                                "%2Cbrand_name" +
+                                "%2Citem_id" +
+                                "%2Cbrand_id" +
+                                "%2Citem_description" +
+                                "%2Cnf_protein" +
+                                "%2Cnf_calories" +
+                                "%2Cnf_total_carbohydrate" +
+                                "%2Cnf_total_fat" +
+                                "&appId=03ec51c4" +
+                                "&appKey=6dd7550cf2d47e287a47bbb7aa34a27e";
+                        MyDownloadJsonAsyncTask downloadJson = new MyDownloadJsonAsyncTask(mRecyclerViewAdapter);
+                        Log.d("Tu:", f_url);
+                        downloadJson.execute(f_url);
+                        return true;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+                        return false;
+                    }
+                });
+            }
+        }
         if (searchView != null) {
             Log.d("voice 1:", voice_query);
             searchView.setIconifiedByDefault(true);
@@ -153,9 +192,6 @@ public class Food_RecyclerView_Main extends Fragment {
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
-                    if (voice_query != null) {
-                        query = voice_query;
-                    }
                     String food;
                     food = query;
                     food = food.replace("","");
