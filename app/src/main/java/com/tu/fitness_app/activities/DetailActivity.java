@@ -236,5 +236,6 @@ public class DetailActivity extends AppCompatActivity  {
         protected void onPostExecute(Bitmap result){
             imageView.setImageBitmap(result);
         }
+        protected void onPreExecute(){imageView.setImageResource(R.drawable.addfood);}
     }
 }

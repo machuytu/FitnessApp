@@ -35,6 +35,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.bumptech.glide.Glide;
 import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.firebase.ui.auth.AuthUI;
 import com.github.lzyzsd.circleprogress.ArcProgress;
@@ -66,6 +67,10 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
+
+import pl.droidsonroids.gif.GifDrawable;
+import pl.droidsonroids.gif.GifImageView;
+import pl.droidsonroids.gif.GifTextView;
 
 public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
@@ -180,8 +185,11 @@ public class MainActivity extends AppCompatActivity {
         //Trainning
         btnTrain = findViewById(R.id.btnTrainning);
         imgDone = findViewById(R.id.imgDone);
+        Glide.with(this).load(R.drawable.donegif).into(imgDone);
+
         tvDone = findViewById(R.id.tvDone);
         imgNotDone = findViewById(R.id.imgNotDone);
+        imgRight = findViewById(R.id.imageView4);
         tvNotDone = findViewById(R.id.tvNotDone);
         //Line chart
         spinner = (Spinner)findViewById(R.id.spinner);
@@ -279,6 +287,8 @@ public class MainActivity extends AppCompatActivity {
         animation3.setInterpolator(new DecelerateInterpolator());
         animation3.start();
         progressBarCalo.clearAnimation();
+        progressBarCalo.setSuffixText("");
+
 
         //Protein progress
         progressBarProtein = (NumberProgressBar) findViewById(R.id.progressProtein);
@@ -367,6 +377,7 @@ public class MainActivity extends AppCompatActivity {
         if (done == true)
         {
             imgDone.setVisibility(View.VISIBLE);
+
             tvDone.setVisibility(View.VISIBLE);
             btnTrain.setVisibility(View.INVISIBLE);
             imgRight.setVisibility(View.INVISIBLE);

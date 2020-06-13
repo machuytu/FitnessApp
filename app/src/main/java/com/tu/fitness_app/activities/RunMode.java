@@ -1,6 +1,7 @@
 package com.tu.fitness_app.activities;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -10,6 +11,8 @@ import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -27,6 +30,8 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+
+//import com.budiyev.android.circularprogressbar.CircularProgressBar;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -36,6 +41,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import com.natasa.progressviews.CircleProgressBar;
 import com.tu.fitness_app.Model.StepCalculate;
 import com.tu.fitness_app.R;
 
@@ -43,13 +50,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+//import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator;
+
 public class RunMode extends AppCompatActivity implements SensorEventListener {
 
     private static final String TAG = "RunCountDown";
-
+//    private CircularProgressBar circleProgress;
     private SensorManager mSensorManager;
     private CountDownTimer timer;
-
+    private CircleProgressBar runprogress;
     private boolean isRunning;
     private long timeStart;
     private long timeLeft;
@@ -181,13 +190,36 @@ public class RunMode extends AppCompatActivity implements SensorEventListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_run_mode);
-        tvStep = findViewById(R.id.tv_step);
-        tvTimer = findViewById(R.id.tv_timer);
-        btnStart = findViewById(R.id.btn_start);
-        btnStop = findViewById(R.id.btn_stop);
-        btnReset = findViewById(R.id.btn_restart);
-        btnStop.setVisibility(View.INVISIBLE);
-        btnReset.setVisibility(View.INVISIBLE);
+//        tvStep = findViewById(R.id.tv_step);
+//        tvTimer = findViewById(R.id.tv_timer);
+//        btnStart = findViewById(R.id.btn_start);
+//        btnStop = findViewById(R.id.btn_stop);
+//        btnReset = findViewById(R.id.btn_restart);
+//        btnStop.setVisibility(View.INVISIBLE);
+//        btnReset.setVisibility(View.INVISIBLE);
+
+
+
+//        circleProgress
+            runprogress = findViewById(R.id.run_progress);
+        runprogress.setWidth(600);
+        runprogress.setRoundEdgeProgress(true);
+        runprogress.setLinearGradientProgress(false);
+
+        runprogress.setStartPositionInDegrees(90);
+        runprogress.setWidthProgressBarLine(40);
+
+
+        runprogress.setBackgroundColor(Color.LTGRAY);
+        runprogress.setRoundEdgeProgress(true);
+
+        TranslateAnimation translation_run;
+        translation_run = new TranslateAnimation(0f, 0F, 0f, 220);
+        translation_run.setStartOffset(100);
+        translation_run.setDuration(2000);
+        translation_run.setFillAfter(true);
+        translation_run.setInterpolator(new BounceInterpolator());
+        runprogress.startAnimation(translation_run);
 
         mSensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
         StepCalculate.mode = 1; // run
@@ -199,7 +231,7 @@ public class RunMode extends AppCompatActivity implements SensorEventListener {
 
         createNavBar();
 
-        createSpinner();
+//        createSpinner();
 
         getRef().addValueEventListener(new ValueEventListener() {
             @Override
@@ -221,29 +253,29 @@ public class RunMode extends AppCompatActivity implements SensorEventListener {
             }
         });
 
-        btnStart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Start();
-                Toast.makeText(RunMode.this, "Start!",Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        btnStop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Stop();
-                Toast.makeText(RunMode.this, "Stop!",Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        btnReset.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Restart();
-                Toast.makeText(RunMode.this, "Restart!",Toast.LENGTH_SHORT).show();
-            }
-        });
+//        btnStart.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Start();
+//                Toast.makeText(RunMode.this, "Start!",Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+//        btnStop.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Stop();
+//                Toast.makeText(RunMode.this, "Stop!",Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+//        btnReset.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Restart();
+//                Toast.makeText(RunMode.this, "Restart!",Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
     private void listAdd(long time) {
@@ -252,7 +284,7 @@ public class RunMode extends AppCompatActivity implements SensorEventListener {
     }
 
     private void createSpinner() {
-        spinnerTime = findViewById(R.id.spinner_time);
+//        spinnerTime = findViewById(R.id.spinner_time);
 
         listString = new ArrayList<>();
         listTime = new ArrayList<>();
@@ -264,22 +296,22 @@ public class RunMode extends AppCompatActivity implements SensorEventListener {
         listAdd(1200000L);
         listAdd(1800000L);
 
-        ArrayAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, listString);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerTime.setAdapter(adapter);
-
-        spinnerTime.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                timeStart = listTime.get(position);
-                Restart();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+//        ArrayAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, listString);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        spinnerTime.setAdapter(adapter);
+//
+//        spinnerTime.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                timeStart = listTime.get(position);
+//                Restart();
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
 
         mDatabase.child("Users").child(userId).child("mode").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

@@ -38,6 +38,7 @@ import com.hookedonplay.decoviewlib.DecoView;
 import com.hookedonplay.decoviewlib.charts.DecoDrawEffect;
 import com.hookedonplay.decoviewlib.charts.SeriesItem;
 import com.hookedonplay.decoviewlib.events.DecoEvent;
+import com.natasa.progressviews.CircleProgressBar;
 import com.tu.fitness_app.Model.StepCalculate;
 import com.tu.fitness_app.R;
 
@@ -47,7 +48,7 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
     /**
      * DecoView animated arc based chart
      */
-    private DecoView mDecoView;
+
 
     /**
      * Maximum value for each data series in the {@link DecoView}. This can be different for each
@@ -70,7 +71,7 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
     public static int evsteps;
     private int stepAtStart;
     private int stepInDB;
-
+    private CircleProgressBar stepprogress;
     private TextView tvPercentage;
     private TextView tvRun;
 
@@ -90,7 +91,8 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step_count_daily);
-        mDecoView = findViewById(R.id.dynamicArcView);
+        stepprogress=findViewById(R.id.step_progress);
+
         tvPercentage = findViewById(R.id.textPercentage);
 //        tvRun = findViewById(R.id.textRun);
 
@@ -130,10 +132,10 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
                 }
                 stepInDB = stepCalculate.getTotalsteps();
                 evsteps = stepInDB;
-                mDecoView.addEvent(new DecoEvent.Builder(evsteps)
-                        .setIndex(mSeriesIndex)
-                        .setDuration(1000)
-                        .build());
+//                mDecoView.addEvent(new DecoEvent.Builder(evsteps)
+//                        .setIndex(mSeriesIndex)
+//                        .setDuration(1000)
+//                        .build());
             }
 
             @Override
@@ -243,10 +245,10 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
     }
     private void createDataSeries() {
 
-        mBackIndex = mDecoView.addSeries(new SeriesItem.Builder(Color.parseColor("#FFE2E2E2"))
-                .setRange(0, mSeriesMax, 0)
-                .setInitialVisibility(false)
-                .build());
+//        mBackIndex = mDecoView.addSeries(new SeriesItem.Builder(Color.parseColor("#FFE2E2E2"))
+//                .setRange(0, mSeriesMax, 0)
+//                .setInitialVisibility(false)
+//                .build());
 
         SeriesItem seriesItem = new SeriesItem.Builder(Color.parseColor("#FFFF8800"))
                 .setRange(0, mSeriesMax, 0)
@@ -276,36 +278,36 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
             public void onSeriesItemDisplayProgress(float percentComplete) { }
         });
 
-        mSeriesIndex = mDecoView.addSeries(seriesItem);
+//        mSeriesIndex = mDecoView.addSeries(seriesItem);
     }
 
     private void createEvents() {
-        mDecoView.executeReset();
-
-        mDecoView.addEvent(new DecoEvent.Builder(DecoDrawEffect.EffectType.EFFECT_SPIRAL_EXPLODE)
-                .setIndex(mSeriesIndex)
-                .setDelay(0)
-                .setDuration(1000)
-                .setDisplayText("")
-                .setListener(new DecoEvent.ExecuteEventListener() {
-                    @Override
-                    public void onEventStart(DecoEvent event) {
-                    }
-
-                    @Override
-                    public void onEventEnd(DecoEvent event) {
-                    }
-                }).build());
-
-        mDecoView.addEvent(new DecoEvent.Builder(mSeriesMax)
-                .setIndex(mBackIndex)
-                .setDuration(1000)
-                .build());
-
-        mDecoView.addEvent(new DecoEvent.Builder(evsteps)
-                .setIndex(mSeriesIndex)
-                .setDuration(1000)
-                .build());
+//        mDecoView.executeReset();
+//
+//        mDecoView.addEvent(new DecoEvent.Builder(DecoDrawEffect.EffectType.EFFECT_SPIRAL_EXPLODE)
+//                .setIndex(mSeriesIndex)
+//                .setDelay(0)
+//                .setDuration(1000)
+//                .setDisplayText("")
+//                .setListener(new DecoEvent.ExecuteEventListener() {
+//                    @Override
+//                    public void onEventStart(DecoEvent event) {
+//                    }
+//
+//                    @Override
+//                    public void onEventEnd(DecoEvent event) {
+//                    }
+//                }).build());
+//
+//        mDecoView.addEvent(new DecoEvent.Builder(mSeriesMax)
+//                .setIndex(mBackIndex)
+//                .setDuration(1000)
+//                .build());
+//
+//        mDecoView.addEvent(new DecoEvent.Builder(evsteps)
+//                .setIndex(mSeriesIndex)
+//                .setDuration(1000)
+//                .build());
 
     }
 
@@ -341,10 +343,10 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
             Log.i(TAG, "total steps = " + evsteps);
 
             // Draw
-            mDecoView.addEvent(new DecoEvent.Builder(evsteps)
-                    .setIndex(mSeriesIndex)
-                    .setDuration(3250)
-                    .build());
+//            mDecoView.addEvent(new DecoEvent.Builder(evsteps)
+//                    .setIndex(mSeriesIndex)
+//                    .setDuration(3250)
+//                    .build());
         }
     }
 

@@ -31,44 +31,63 @@
         tools:context=".activities.OverviewActivity">
 
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="@drawable/custom_btn">
+            >
 
             <include
                 layout="@layout/app_bar_main"
-                android:layout_width="400dp"
-                android:layout_height="55dp" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="349dp"
-                android:gravity="center_horizontal">
+                android:layout_height="350dp"
+
+                android:gravity="center_horizontal"
+
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="42dp"
+
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="5dp"
+                   android:layout_centerHorizontal="true"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="7dp"
+                    android:text="Calories:"
+                    android:textColor="@color/blue"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
 
                 <com.natasa.progressviews.CircleProgressBar
                     android:id="@+id/food_progress"
-                    android:layout_width="300dp"
-                    android:layout_height="300dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="302dp"
 
-                    android:layout_gravity="center_horizontal"
+
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="2dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="0dp"
                     android:text="0"
                     app:progress_color="@color/protein"
-                    app:text_color="@color/protein"
-                     />
+                    app:text_color="@color/protein" />
 
             </RelativeLayout>
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/toolbar"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="50dp"
 
-                android:background="@color/white">
+                >
 
 
                 <!--            <ImageView-->
@@ -127,6 +146,25 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <com.daimajia.numberprogressbar.NumberProgressBar
+                    android:id="@+id/proFat"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="100dp"
+                    android:indeterminateDrawable="@drawable/progressbacarbs"
+                    android:max="100"
+                    android:progress="50"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/progressProtein"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.594"
+                    app:progress_reached_bar_height="10dp"
+                    app:progress_text_visibility="invisible" />
+
                 <TextView
                     android:id="@+id/txvFat2"
                     android:layout_width="107dp"
@@ -138,6 +176,22 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <com.daimajia.numberprogressbar.NumberProgressBar
+                    android:id="@+id/proCarbs"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:indeterminateDrawable="@drawable/progressbarprotein"
+                    android:max="100"
+                    android:progress="50"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.761"
+                    app:progress_reached_bar_height="10dp"
+                    app:progress_text_visibility="invisible" />
+
                 <TextView
                     android:id="@+id/txvCarbs"
                     android:layout_width="107dp"
@@ -148,6 +202,23 @@
                     app:layout_constraintHorizontal_bias="0.943"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <com.daimajia.numberprogressbar.NumberProgressBar
+                    android:id="@+id/proProtein"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:max="100"
+                    android:progress="50"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.464"
+                    app:layout_constraintStart_toEndOf="@+id/progressProtein"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.761"
+                    app:progress_reached_bar_height="10dp"
+                    app:progress_text_visibility="invisible" />
 
                 <TextView
                     android:id="@+id/textView11"
@@ -236,8 +307,8 @@
 
                 <TextView
                     android:id="@+id/addcalories"
-                    android:layout_width="102dp"
-                    android:layout_height="34dp"
+                    android:layout_width="109dp"
+                    android:layout_height="42dp"
                     android:layout_marginTop="12dp"
                     android:background="@drawable/custom_button"
 
@@ -269,10 +340,9 @@
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/addcalories"
                     app:layout_constraintEnd_toEndOf="@+id/addcalories"
-                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toEndOf="@+id/imageView17"
                     app:layout_constraintTop_toTopOf="@+id/addcalories"
-                    app:layout_constraintVertical_bias="0.454" />
+                    app:layout_constraintVertical_bias="0.478" />
 
                 <TextView
                     android:id="@+id/fats_progress"

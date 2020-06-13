@@ -474,18 +474,20 @@
                     app:layout_constraintTop_toTopOf="@+id/tvTrainning"
                     app:srcCompat="@drawable/gym" />
 
+
                 <ImageView
                     android:id="@+id/imgDone"
-                    android:layout_width="58dp"
-                    android:layout_height="44dp"
-                    android:alpha="0.5"
+                    android:layout_width="179dp"
+                    android:layout_height="134dp"
+                    android:scaleType="centerInside"
                     android:visibility="invisible"
                     app:layout_constraintBottom_toBottomOf="@+id/tvTrainning"
                     app:layout_constraintEnd_toEndOf="@+id/tvTrainning"
+                    app:layout_constraintHorizontal_bias="0.524"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/tvTrainning"
-                    app:srcCompat="@drawable/done" />
-
+                    app:layout_constraintVertical_bias="0.657"
+                    />
 
                 <TextView
                     android:id="@+id/textView23"
@@ -564,14 +566,15 @@
                     android:visibility="invisible"
                     app:layout_constraintBottom_toBottomOf="@+id/tvTrainning"
                     app:layout_constraintEnd_toEndOf="@+id/tvTrainning"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toEndOf="@+id/imgDone"
                     app:layout_constraintTop_toTopOf="@+id/tvTrainning"
-                    app:layout_constraintVertical_bias="0.513" />
+                    app:layout_constraintVertical_bias="0.576" />
 
                 <ImageView
                     android:id="@+id/imgNotDone"
-                    android:layout_width="58dp"
-                    android:layout_height="44dp"
+                    android:layout_width="85dp"
+                    android:layout_height="69dp"
                     android:layout_marginBottom="76dp"
                     android:alpha="0.5"
                     android:visibility="invisible"
@@ -585,13 +588,13 @@
                     android:id="@+id/tvNotDone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="96dp"
+                    android:layout_marginTop="80dp"
                     android:text="NOT DONE"
                     android:textSize="20dp"
                     android:textStyle="bold"
                     android:visibility="invisible"
                     app:layout_constraintEnd_toEndOf="@+id/tvTrainning"
-                    app:layout_constraintHorizontal_bias="0.765"
+                    app:layout_constraintHorizontal_bias="0.957"
                     app:layout_constraintStart_toStartOf="@+id/tvTrainning"
                     app:layout_constraintTop_toTopOf="@+id/tvTrainning" />
 

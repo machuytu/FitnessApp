@@ -19,6 +19,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -35,13 +36,16 @@ import com.natasa.progressviews.utils.OnProgressViewListener;
 import com.tu.fitness_app.R;
 
 public class OverviewActivity extends AppCompatActivity {
-
+    private int pcalo = 50;
     public float food_calories = 0f;
     public static int stepMax = 0;
     public static float caloriesMax = 0f;
     TextView food_fat;
     TextView food_carbs;
     TextView food_protein;
+    private NumberProgressBar proCarbs;
+    private NumberProgressBar proProtein;
+    private NumberProgressBar proFat;
     float max_fat;
     float max_carbs;
     float max_protein;
@@ -101,6 +105,16 @@ public class OverviewActivity extends AppCompatActivity {
         if (caloriesMax == 0) {
             caloriesMax = LoginActivity.mSeries2;
         }
+        //Progress
+        //Protein progress
+        proProtein = (NumberProgressBar) findViewById(R.id.proProtein);
+        proProtein.setProgress(pcalo);
+        //Carb progress
+        proCarbs = (NumberProgressBar) findViewById(R.id.proCarbs);
+        proCarbs.setProgress(pcalo);
+        //Fat progress
+        proFat = (NumberProgressBar) findViewById(R.id.proFat);
+        proFat.setProgress(pcalo);
         //Food Sumary
 //        final CircleProgressBar fats = findViewById(R.id.fats_progress);
 //        final CircleProgressBar carbs = findViewById(R.id.carbs_progress);
