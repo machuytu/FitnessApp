@@ -13,7 +13,8 @@ public class Setting {
         return mode;
     }
 
-    public static void SetSetting(int mode) {
+    public static int SetSetting(int mode) {
         Setting.mode = mode;
+        return mode;
     }
 }

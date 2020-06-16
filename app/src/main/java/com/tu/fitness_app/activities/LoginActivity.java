@@ -105,8 +105,9 @@ public class LoginActivity extends AppCompatActivity {
         Calories calories = new Calories(0, 0, 0, 0);
         caloriesRef.child(userId).child(date).setValue(calories);
 
-        Setting setting = new Setting(0);
-        settingRef.child(userId).setValue(setting);
+        Setting setting = new Setting();
+        int intSetting = Setting.SetSetting(0);
+        settingRef.child(userId).setValue(intSetting);
     }
 
     private DatabaseReference getUsersRef(String ref) {

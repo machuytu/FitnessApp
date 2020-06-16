@@ -183,6 +183,7 @@ public class MainActivity extends AppCompatActivity {
         tvDone = findViewById(R.id.tvDone);
         imgNotDone = findViewById(R.id.imgNotDone);
         tvNotDone = findViewById(R.id.tvNotDone);
+        imgRight = findViewById(R.id.imageView4);
         //Line chart
         spinner = (Spinner)findViewById(R.id.spinner);
         adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,names);
@@ -204,7 +205,6 @@ public class MainActivity extends AppCompatActivity {
         rightAxis.setEnabled(false);
         YAxis leftAxis = lineChart.getAxisLeft();
         leftAxis.setTextSize(15f);
-//        leftAxis.setLabelCount(5,true);
 //        leftAxis.setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART);
         leftAxis.setDrawGridLines(true);
         leftAxis.setAxisMinimum(0);
@@ -216,7 +216,7 @@ public class MainActivity extends AppCompatActivity {
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(true);
-//        xAxis.setLabelCount(6);
+        xAxis.setLabelCount(3);
         xAxis.setTextSize(15f);
 //        xAxis.setAxisLineColor(Color.RED);
 //        xAxis.setGranularity(1f);
@@ -227,10 +227,10 @@ public class MainActivity extends AppCompatActivity {
                 int index = (int) value;
                 String s1 = (String) listkey.get(index);
                 StringTokenizer s2 = new StringTokenizer(s1, "-");
-                String s3 = s2.nextToken();
-                String s4 = s2.nextToken();
                 String s5 = s2.nextToken();
+                Log.d("s5", s5);
                 return s5;
+
             } catch (Exception e) {
                 return "";
             }
@@ -364,6 +364,8 @@ public class MainActivity extends AppCompatActivity {
                 done=true;
             }
         }
+
+        Log.d("listday", String.valueOf(listday));
         if (done == true)
         {
             imgDone.setVisibility(View.VISIBLE);
