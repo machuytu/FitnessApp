@@ -289,7 +289,7 @@
                         android:paddingTop="5dp"
                         android:text="YYYY-MM" />
 
-                    <com.github.mikephil.charting.charts.LineChart
+                    <com.github.mikephil.charting.charts.BarChart
                         android:id="@+id/chart"
                         android:layout_width="match_parent"
                         android:layout_height="208dp"
@@ -302,7 +302,7 @@
                         android:layout_marginEnd="0dp"
                         android:layout_marginBottom="0dp">
 
-                    </com.github.mikephil.charting.charts.LineChart>
+                    </com.github.mikephil.charting.charts.BarChart>
                 </RelativeLayout>
 
                 <ImageView

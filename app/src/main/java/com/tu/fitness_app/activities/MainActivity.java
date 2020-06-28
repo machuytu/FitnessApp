@@ -38,13 +38,15 @@ import androidx.navigation.ui.NavigationUI;
 import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.firebase.ui.auth.AuthUI;
 import com.github.lzyzsd.circleprogress.ArcProgress;
-import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
@@ -72,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     ActionBarDrawerToggle toggle;
-    private LineChart lineChart;
+    private BarChart barChart;
     private DatabaseReference myref;
     private ArcProgress progressBarSteps;
     private ArcProgress progressBarBurns;
@@ -92,9 +94,9 @@ public class MainActivity extends AppCompatActivity {
     private Button btnTrain;
     private TextView tvcaloTotal;
     private Boolean done =false;
-    LineDataSet lineDataSet = new LineDataSet(null, null);
-    ArrayList<ILineDataSet> iLineDataSets = new ArrayList<>();
-    LineData lineData;
+    BarDataSet barDataSet;
+    ArrayList<IBarDataSet> iBarDataSets = new ArrayList<>();
+    BarData barData;
     Button btnMonthYear;
     TextView txtMonthYear;
     String stringOfDate;
@@ -143,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
     static float mytotalcarbs;
     float mytotalfat;
     float mytotalprotein;
+    XAxis xAxis;
     MaterialCalendarView materialCalendarView;
     Date today = new Date();
     String todaystring = today.getYear() + 1900 + "-" + (1 + today.getMonth());
@@ -197,44 +200,51 @@ public class MainActivity extends AppCompatActivity {
         SimpleDateFormat sdfchart = new SimpleDateFormat("yyyy-MM");
         stringOfDate = sdfchart.format(new Date());
         btnMonthYear = findViewById(R.id.btnMonthYear);
-        lineChart = findViewById(R.id.chart);
-        lineChart.setBackgroundColor(Color.WHITE);
-        lineChart.getDescription().setEnabled(false);
+        barChart = findViewById(R.id.chart);
+        barChart.setBackgroundColor(Color.WHITE);
+        barChart.getDescription().setEnabled(false);
 
-        YAxis rightAxis = lineChart.getAxisRight();
+        YAxis rightAxis = barChart.getAxisRight();
         rightAxis.setEnabled(false);
-        YAxis leftAxis = lineChart.getAxisLeft();
+        YAxis leftAxis = barChart.getAxisLeft();
         leftAxis.setTextSize(15f);
 //        leftAxis.setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART);
         leftAxis.setDrawGridLines(true);
         leftAxis.setAxisMinimum(0);
         leftAxis.setAxisLineWidth(1.5f);
 //        leftAxis.setAxisMaximum(3000);
-//        lineData.setValueTextSize((float) 0.5);
+//        barData.setValueTextSize((float) 0.5);
 
 
-        XAxis xAxis = lineChart.getXAxis();
+        xAxis = barChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(true);
-        xAxis.setLabelCount(3);
+
         xAxis.setTextSize(15f);
 //        xAxis.setAxisLineColor(Color.RED);
 //        xAxis.setGranularity(1f);
         xAxis.setAxisLineWidth(1.5f);
 //        xAxis.setAvoidFirstLastClipping(true);
-        xAxis.setValueFormatter((value, axis) -> {
-            try {
-                int index = (int) value;
-                String s1 = (String) listkey.get(index);
-                StringTokenizer s2 = new StringTokenizer(s1, "-");
-                String s5 = s2.nextToken();
-                Log.d("s5", s5);
-                return s5;
 
-            } catch (Exception e) {
-                return "";
+        xAxis.setValueFormatter(new IAxisValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, AxisBase axis) {
+                try {
+                    int index = (int) value;
+                    String s1 = (String) listkey.get(index);
+                    StringTokenizer s2 = new StringTokenizer(s1, "-");
+                    String s3 = s2.nextToken();
+                    String s4 = s2.nextToken();
+                    String s5 = s2.nextToken();
+                    Log.d("s5",s5);
+                    return s5;
+                } catch (Exception e) {
+                    return "";
+                }
             }
         });
+
+
         Log.d("stringOfDate",stringOfDate);
         retrieveDataCalo(stringOfDate);
         btnMonthYear.setOnClickListener(this::onClick);
@@ -245,18 +255,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position){
-                    case 0:
+                    case 1:
                         record = "Run";
-                        lineChart.invalidate();
-                        lineChart.clear();
+                        barChart.invalidate();
+                        barChart.clear();
                         retrieveDataRun(todaystring);
                         txtMonthYear.setText(todaystring);
 
                         break;
-                    case 1:
+                    case 0:
                         record = "Calories";
-                        lineChart.invalidate();
-                        lineChart.clear();
+                        barChart.invalidate();
+                        barChart.clear();
                         retrieveDataCalo(todaystring);
                         txtMonthYear.setText(todaystring);
 
@@ -486,10 +496,9 @@ public class MainActivity extends AppCompatActivity {
                     animation3.start();
                     progressBarCalo.clearAnimation();
                     //Carb progress
-                    mytotalcarbs = Float.parseFloat(String.valueOf(dataSnapshot.child("totalcarbs").getValue()));
-                    progressBarCarbs = (NumberProgressBar) findViewById(R.id.progressCarbs);
-                    progressBarCarbs.setProgress((int) mytotalcarbs);
-                    progressBarCarbs.getMax();
+//                    mytotalcarbs = Float.parseFloat(String.valueOf(dataSnapshot.child("totalcarbs").getValue()));
+//                    progressBarCarbs = (NumberProgressBar) findViewById(R.id.progressCarbs);
+//                    progressBarCarbs.setProgress((int) mytotalcarbs);
                     //Protein
                     mytotalprotein = Float.parseFloat(String.valueOf(dataSnapshot.child("totalprotein").getValue()));
                     progressBarProtein = (NumberProgressBar) findViewById(R.id.progressProtein);
@@ -638,30 +647,37 @@ public class MainActivity extends AppCompatActivity {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ArrayList<Entry> dataVals = new ArrayList<Entry>();
-                ArrayList<Entry> defaults = new ArrayList<Entry>();
+                ArrayList<BarEntry> dataVals = new ArrayList<BarEntry>();
+                ArrayList<BarEntry> defaults = new ArrayList<BarEntry>();
                 Iterable<DataSnapshot> snapshotIterator = dataSnapshot.getChildren();
                 Iterator<DataSnapshot> iterator = snapshotIterator.iterator();
-                dem = 1 ;
+                dem = 0 ;
                 while (iterator.hasNext()) {
                     DataSnapshot next = (DataSnapshot) iterator.next();
 
                     float y =  Float.parseFloat(String.valueOf(next.child("totalcalories").getValue()));
+//                    String temp = next.getKey();
+//                    StringTokenizer separated = new StringTokenizer(temp, "-");
+//
+//                    String year = separated.nextToken();
+//                    String month = separated.nextToken();
+//                    String day = separated.nextToken();
+//                    Log.d("temp1", separated.nextToken());
                     listkey.add(next.getKey());
 
                     listvalue.add(next.child("totalcalories").getValue());
-                    dataVals.add(new Entry(dem,y));
+                    dataVals.add(new BarEntry(dem,y));
                     dem++;
                 }
                 Log.d("dataVals", String.valueOf(dataVals));
                 if (dataVals.isEmpty()) {
-                    lineChart.clear();
-                    lineChart.invalidate();
+                    barChart.clear();
+                    barChart.invalidate();
                     showChartDefaults(defaults);
                 }
                 else {
-                    lineChart.invalidate();
-                    lineChart.clear();
+                    barChart.invalidate();
+                    barChart.clear();
                     showChart(dataVals);
                 }
             }
@@ -684,28 +700,28 @@ public class MainActivity extends AppCompatActivity {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ArrayList<Entry> dataVals = new ArrayList<Entry>();
-                ArrayList<Entry> defaults = new ArrayList<Entry>();
+                ArrayList<BarEntry> dataVals = new ArrayList<BarEntry>();
+                ArrayList<BarEntry> defaults = new ArrayList<BarEntry>();
                 Iterable<DataSnapshot> snapshotIterator = dataSnapshot.getChildren();
                 Iterator<DataSnapshot> iterator = snapshotIterator.iterator();
-                dem = 1;
+                dem = 0;
                 while (iterator.hasNext()) {
                     DataSnapshot next = (DataSnapshot) iterator.next();
                     float y =  Float.parseFloat(String.valueOf(next.child("totalsteps").getValue()));
                     listkey.add(next.getKey());
                     listvalue.add(next.child("totalsteps").getValue());
-                    dataVals.add(new Entry(dem,y));
+                    dataVals.add(new BarEntry(dem,y));
                     dem++;
 
                 }
                 if (dataVals.isEmpty()) {
-                    lineChart.clear();
-                    lineChart.invalidate();
+                    barChart.clear();
+                    barChart.invalidate();
                     showChartDefaults(defaults);
                 }
                 else {
-                    lineChart.invalidate();
-                    lineChart.clear();
+                    barChart.invalidate();
+                    barChart.clear();
                     showChart(dataVals);
                 }
             }
@@ -716,36 +732,40 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    private void showChart(ArrayList<Entry> dataVals) {
-        lineDataSet.clear();
-        lineDataSet = new LineDataSet(null, null);
-        lineDataSet.setValues(dataVals);
-        lineDataSet.setColor(Color.RED);
-        lineDataSet.setValueTextSize(8.5f);
-        lineDataSet.setLineWidth(3f);
-        iLineDataSets.clear();
-        iLineDataSets = new ArrayList<>();
-        iLineDataSets.add(lineDataSet);
-        lineData = new LineData(iLineDataSets);
-        lineChart.clear();
-        lineChart.setData(lineData);
-        lineChart.invalidate();
+    private void showChart(ArrayList<BarEntry> dataVals) {
+        barDataSet.clear();
+        barDataSet = new BarDataSet(dataVals, null);
+//        barDataSet.setValues(dataVals);
+        barDataSet.setColor(Color.RED);
+        barDataSet.setValueTextSize(8.5f);
+        
+        iBarDataSets.clear();
+        iBarDataSets = new ArrayList<>();
+        iBarDataSets.add(barDataSet);
+        barData = new BarData(iBarDataSets);
+        xAxis.setLabelCount(listkey.size());
+        barChart.clear();
+        barChart.setData(barData);
+        barChart.invalidate();
     }
-    private void showChartDefaults(ArrayList<Entry> defaults){
-        defaults.add(new Entry(1,0));
-        lineDataSet.clear();
-        lineDataSet = new LineDataSet(null, null);
-        lineDataSet.setColor(Color.RED);
-        lineDataSet.setValueTextSize(8.5f);
-        lineDataSet.setLineWidth(3f);
-        lineDataSet.setValues(defaults);
-        iLineDataSets.clear();
-        iLineDataSets = new ArrayList<>();
-        iLineDataSets.add(lineDataSet);
-        lineData = new LineData(iLineDataSets);
-        lineChart.clear();
-        lineChart.setData(lineData);
-        lineChart.invalidate();
+    private void showChartDefaults(ArrayList<BarEntry> defaults){
+        defaults.add(new BarEntry(1,0));
+        if (barDataSet != null) {
+            barDataSet.clear();
+        }
+
+        barDataSet = new BarDataSet( defaults, null);
+        barDataSet.setColor(Color.RED);
+        barDataSet.setValueTextSize(8.5f);
+
+
+        iBarDataSets.clear();
+        iBarDataSets = new ArrayList<>();
+        iBarDataSets.add(barDataSet);
+        barData = new BarData(iBarDataSets);
+        barChart.clear();
+        barChart.setData(barData);
+        barChart.invalidate();
     }
     //Run
     private DatabaseReference getDailyWork() {
