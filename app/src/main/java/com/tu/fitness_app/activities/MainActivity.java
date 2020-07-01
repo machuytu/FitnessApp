@@ -35,6 +35,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.bumptech.glide.Glide;
 import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.firebase.ui.auth.AuthUI;
 import com.github.lzyzsd.circleprogress.ArcProgress;
@@ -68,6 +69,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
+
+import pl.droidsonroids.gif.GifImageView;
 
 public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
@@ -115,9 +118,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView textView;
     private SensorManager msensorManager;
     private SensorManager sensorManager;
-    private ImageView imgDone;
+    private GifImageView imgDone;
     private TextView tvDone;
-    private ImageView imgNotDone;
+    private GifImageView imgNotDone;
     private TextView tvNotDone;
     private TextView tvWeightNum;
     private TextView tvHeightNum;
@@ -191,10 +194,13 @@ public class MainActivity extends AppCompatActivity {
         //Trainning
         btnTrain = findViewById(R.id.btnTrainning);
         imgDone = findViewById(R.id.imgDone);
+        Glide.with(this).load(R.drawable.donegg).into(imgDone);
         tvDone = findViewById(R.id.tvDone);
+
         imgNotDone = findViewById(R.id.imgNotDone);
         tvNotDone = findViewById(R.id.tvNotDone);
-        imgRight = findViewById(R.id.imageView4);
+        Glide.with(this).load(R.drawable.xgif).into(imgNotDone);
+//        imgRight = findViewById(R.id.imageView4);
         //Line chart
 //        spinner = (Spinner)findViewById(R.id.spinner);
 //        adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,names);
@@ -374,6 +380,13 @@ public class MainActivity extends AppCompatActivity {
         tvQuangDuong.setText(String.valueOf(totaldistancessum));
 
         //Set enable and disable training button
+        btnTrain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ListExercises.class);
+                startActivity(intent);
+            }
+        });
         List<String> workoutDay = LoginActivity.day;
         Log.d("workouDay", String.valueOf(workoutDay));
         List listday = new ArrayList();
@@ -392,7 +405,7 @@ public class MainActivity extends AppCompatActivity {
             imgDone.setVisibility(View.VISIBLE);
             tvDone.setVisibility(View.VISIBLE);
             btnTrain.setVisibility(View.INVISIBLE);
-            imgRight.setVisibility(View.INVISIBLE);
+//            imgRight.setVisibility(View.INVISIBLE);
 
             //btnTrain.setEnabled(true);
         }else{
@@ -526,10 +539,10 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("fat", String.valueOf(mytotalfat));
                 }
                 else {
-                    mytotalcalories = 2f;
-                    mytotalcarbs = 2f;
-                    mytotalprotein = 2f;
-                    mytotalfat = 2f;
+                    mytotalcalories = 0f;
+                    mytotalcarbs = 0f;
+                    mytotalprotein = 0f;
+                    mytotalfat = 0f;
 
                 }
             }

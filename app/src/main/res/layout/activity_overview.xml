@@ -237,14 +237,14 @@
 
                 <TextView
                     android:id="@+id/addcalories"
-                    android:layout_width="102dp"
-                    android:layout_height="34dp"
-                    android:layout_marginTop="12dp"
+                    android:layout_width="113dp"
+                    android:layout_height="36dp"
+                    android:layout_marginTop="16dp"
                     android:background="@drawable/custom_button"
 
                     android:shadowRadius="40"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.919"
+                    app:layout_constraintHorizontal_bias="0.857"
                     app:layout_constraintStart_toEndOf="@+id/textView11"
                     app:layout_constraintTop_toTopOf="parent" />
 

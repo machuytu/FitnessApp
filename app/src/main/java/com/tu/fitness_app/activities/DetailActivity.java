@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -202,6 +203,7 @@ public class DetailActivity extends AppCompatActivity  {
                         carbohydrates.setText("Carbs: " + nutriment.getCarbohydrates() + " g");
                         productName.setText(name);
                         new DownLoadImageTask(picture).execute(url);
+                        button.setVisibility(View.VISIBLE);
                     } else {
                         Toast.makeText(DetailActivity.this, "NOT FOUND FOOD", Toast.LENGTH_SHORT).show();
                     }
@@ -236,5 +238,13 @@ public class DetailActivity extends AppCompatActivity  {
         protected void onPostExecute(Bitmap result){
             imageView.setImageBitmap(result);
         }
+    }
+    public void onBackPressed()
+    {
+        // code here to show dialog
+        super.onBackPressed();  // optional depending on your needs
+        Intent intent = new Intent(DetailActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }
