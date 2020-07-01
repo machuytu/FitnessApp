@@ -27,15 +27,16 @@
                 android:id="@+id/tvWelcome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/caveat_brush_regular"
                 android:gravity="left"
-                android:text="Welcome"
+                android:text="Hello!!!"
                 android:textSize="40dp"
                 android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_marginBottom="10dp"
-            android:background="@drawable/border"
+            android:background="@drawable/btnage"
             android:gravity="center"
             android:orientation="horizontal"
             android:layout_weight="2"
@@ -45,9 +46,9 @@
             <ImageView
                 android:layout_margin="10dp"
                 android:paddingLeft="10dp"
-                android:alpha="0.75"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:alpha="0.5"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:background="@drawable/user" />
 
             <EditText
@@ -65,7 +66,7 @@
 
         <LinearLayout
             android:layout_marginBottom="10dp"
-            android:background="@drawable/border"
+            android:background="@drawable/btnage"
             android:gravity="center"
             android:orientation="horizontal"
             android:layout_weight="2"
@@ -74,9 +75,9 @@
             android:layout_height="wrap_content">
             <ImageView
                 android:background="@drawable/phone"
-                android:layout_width="31dp"
-                android:layout_height="26dp"
-                android:alpha="0.75"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:alpha="0.5"
                 android:layout_margin="10dp"
                 android:paddingLeft="10dp"/>
             <EditText
@@ -95,7 +96,7 @@
 
         <LinearLayout
             android:layout_marginBottom="10dp"
-            android:background="@drawable/border"
+            android:background="@drawable/btnage"
             android:gravity="center"
             android:orientation="horizontal"
             android:layout_marginTop="2dp"
@@ -104,40 +105,42 @@
             android:layout_height="wrap_content">
             <ImageView
                 android:background="@drawable/age"
-                android:layout_width="wrap_content"
-                android:alpha="0.75"
-                android:layout_height="wrap_content"
+                android:layout_width="20dp"
+                android:alpha="0.5"
+                android:layout_height="20dp"
                 android:layout_margin="10dp"
                 android:paddingLeft="10dp"/>
+
             <EditText
                 android:id="@+id/ageInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:hint="@string/ageInputHint"
                 android:background="@android:color/transparent"
-                android:layout_marginLeft="5dp"
+                android:hint="@string/ageInputHint"
                 android:inputType="text"
                 android:paddingLeft="20dp"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
         </LinearLayout>
         <LinearLayout
             android:layout_marginBottom="10dp"
-            android:background="@drawable/border"
+            android:background="@drawable/bgweight"
             android:gravity="center"
             android:orientation="horizontal"
             android:layout_weight="2"
             android:layout_marginTop="2dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <ImageView
-                android:background="@drawable/weight"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:alpha="0.75"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_margin="10dp"
-                android:paddingLeft="10dp"/>
+                android:alpha="0.5"
+                android:background="@drawable/weight"
+                android:paddingLeft="10dp" />
             <EditText
                 android:id="@+id/weightInput"
                 android:layout_width="match_parent"
@@ -153,31 +156,33 @@
         </LinearLayout>
         <LinearLayout
             android:layout_marginBottom="10dp"
-            android:background="@drawable/border"
+            android:background="@drawable/bgheight"
             android:gravity="center"
             android:orientation="horizontal"
             android:layout_weight="2"
             android:layout_marginTop="2dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            >
+
             <ImageView
-                android:background="@drawable/height"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:alpha="0.75"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
                 android:layout_margin="10dp"
-                android:paddingLeft="10dp"/>
+                android:alpha="0.5"
+                android:background="@drawable/height"
+                android:paddingLeft="10dp" />
 
             <EditText
                 android:id="@+id/heightInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
+                android:background="@android:color/transparent"
                 android:hint="@string/heightInputHint"
                 android:inputType="phone"
-                android:background="@android:color/transparent"
-                android:layout_marginLeft="5dp"
                 android:paddingLeft="20dp"
                 android:textSize="18sp" />
         </LinearLayout>

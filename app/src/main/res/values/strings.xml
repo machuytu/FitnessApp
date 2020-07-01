@@ -34,8 +34,8 @@
     <string name="nameInputHint">Name</string>
     <string name="phoneInputHint">Phone</string>
     <string name="ageInputHint">Age</string>
-    <string name="heightInputHint">Height (cm)</string>
-    <string name="weightInputHint">Weight (kg)</string>
+    <string name="heightInputHint">Height</string>
+    <string name="weightInputHint">Weight</string>
     <string name="title_activity_overview_activity">overview_activity</string>
 
     // Login / SignUp

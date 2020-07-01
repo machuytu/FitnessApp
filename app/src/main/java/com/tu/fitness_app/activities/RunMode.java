@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,9 +62,9 @@ public class RunMode extends AppCompatActivity implements SensorEventListener {
 
     private TextView tvStep;
     private TextView tvTimer;
-    private Button btnStart;
-    private Button btnStop;
-    private Button btnReset;
+    private ImageView btnStart;
+    private ImageView btnStop;
+    private ImageView btnReset;
     private Spinner spinnerTime;
 
     private ArrayList<String> listString;
@@ -181,8 +182,7 @@ public class RunMode extends AppCompatActivity implements SensorEventListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_run_mode);
-        tvStep = findViewById(R.id.tv_step);
-        tvTimer = findViewById(R.id.tv_timer);
+
         btnStart = findViewById(R.id.btn_start);
         btnStop = findViewById(R.id.btn_stop);
         btnReset = findViewById(R.id.btn_restart);
@@ -199,7 +199,7 @@ public class RunMode extends AppCompatActivity implements SensorEventListener {
 
         createNavBar();
 
-        createSpinner();
+//        createSpinner();
 
         getRef().addValueEventListener(new ValueEventListener() {
             @Override
@@ -251,49 +251,49 @@ public class RunMode extends AppCompatActivity implements SensorEventListener {
         listTime.add(time);
     }
 
-    private void createSpinner() {
-        spinnerTime = findViewById(R.id.spinner_time);
-
-        listString = new ArrayList<>();
-        listTime = new ArrayList<>();
-
-        listAdd(60000L); // for test fast!!!
-        listAdd(300000L);
-        listAdd(600000L);
-        listAdd(900000L);
-        listAdd(1200000L);
-        listAdd(1800000L);
-
-        ArrayAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, listString);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerTime.setAdapter(adapter);
-
-        spinnerTime.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                timeStart = listTime.get(position);
-                Restart();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        mDatabase.child("Users").child(userId).child("mode").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                int index = Integer.parseInt(String.valueOf(dataSnapshot.getValue()));
-                spinnerTime.setSelection(index + 1);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
+//    private void createSpinner() {
+//        spinnerTime = findViewById(R.id.spinner_time);
+//
+//        listString = new ArrayList<>();
+//        listTime = new ArrayList<>();
+//
+//        listAdd(60000L); // for test fast!!!
+//        listAdd(300000L);
+//        listAdd(600000L);
+//        listAdd(900000L);
+//        listAdd(1200000L);
+//        listAdd(1800000L);
+//
+//        ArrayAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, listString);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        spinnerTime.setAdapter(adapter);
+//
+//        spinnerTime.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                timeStart = listTime.get(position);
+//                Restart();
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
+//
+//        mDatabase.child("Users").child(userId).child("mode").addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                int index = Integer.parseInt(String.valueOf(dataSnapshot.getValue()));
+//                spinnerTime.setSelection(index + 1);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
+//    }
 
     private void Start() {
         isRunning = true;

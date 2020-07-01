@@ -460,19 +460,19 @@ public class Daily_Training extends AppCompatActivity {
     }
 
     private void initData() {
-        list.add(new com.tu.fitness_app.Model.Exercise(R.drawable.flow,"Flow Yoga","Chân khụy gối vuông góc"));
-        list.add(new com.tu.fitness_app.Model.Exercise(R.drawable.squatgif,"Split Squat","Chân khụy gối vuông góc"));
-        list.add(new com.tu.fitness_app.Model.Exercise(R.drawable.plankgif,"Plank","Chân khụy gối vuông góc"));
-        list.add(new com.tu.fitness_app.Model.Exercise(R.drawable.mountaingif,"Mountain Climber","Chân khụy gối vuông góc"));
-        list.add(new com.tu.fitness_app.Model.Exercise(R.drawable.jumpgif,"Jump Ropes","Chân khụy gối vuông góc"));
-        list.add(new com.tu.fitness_app.Model.Exercise(R.drawable.runhighgif,"Run High Knees","Chân khụy gối vuông góc"));
-        list.add(new com.tu.fitness_app.Model.Exercise(R.drawable.lunggif,"Lung Shoulder Press  ","Chân khụy gối vuông góc"));
-        list.add(new com.tu.fitness_app.Model.Exercise(R.drawable.pullgif,"Leg Pull-In","Chân khụy gối vuông góc"));
-        list.add(new com.tu.fitness_app.Model.Exercise(R.drawable.vgif,"V-Up","Chân khụy gối vuông góc"));
-        list.add(new com.tu.fitness_app.Model.Exercise(R.drawable.glutegif,"Glute Kickback","Chân khụy gối vuông góc"));
-        list.add(new com.tu.fitness_app.Model.Exercise(R.drawable.pushgif,"Push Up","Chân khụy gối vuông góc"));
-        list.add(new com.tu.fitness_app.Model.Exercise(R.drawable.jumplungegif,"Jump Lunge","Chân khụy gối vuông góc"));
-        list.add(new com.tu.fitness_app.Model.Exercise(R.drawable.backgif,"Back Extension","Chân khụy gối vuông góc"));
+        list.add(new com.tu.fitness_app.Model.Exercise(R.drawable.flow,"Flow Yoga","Chân trước khụy gối,chân sau duỗi thẳng,tay dơ lên nghiêng sang trái và ngược lại"));
+        list.add(new com.tu.fitness_app.Model.Exercise(R.drawable.squatgif,"Split Squat","Chân dang rộng bằng vai, khụy xuống và thẳng lưng "));
+        list.add(new com.tu.fitness_app.Model.Exercise(R.drawable.plankgif,"Plank","Nằm chống đẩy, đi chuyển mỗi tay vuông góc với mặt đất"));
+        list.add(new com.tu.fitness_app.Model.Exercise(R.drawable.mountaingif,"Mountain Climber","Tay chống thẳng, chân co duỗi san kẻ"));
+        list.add(new com.tu.fitness_app.Model.Exercise(R.drawable.jumpgif,"Jump Ropes","Chân đan chéo dang ra san kẻ"));
+        list.add(new com.tu.fitness_app.Model.Exercise(R.drawable.runhighgif,"Run High Knees","Chạy bộ nâng cao đùi"));
+        list.add(new com.tu.fitness_app.Model.Exercise(R.drawable.lunggif,"Lung Shoulder Press  ","Chân khụy gối tay nâng tạ lên và ngược lại"));
+        list.add(new com.tu.fitness_app.Model.Exercise(R.drawable.pullgif,"Leg Pull-In","Tay chống sau lưng chân đưa lên cao và ngược lại"));
+        list.add(new com.tu.fitness_app.Model.Exercise(R.drawable.vgif,"V-Up","Nằm thẳng lưng, tay và chân đụng nhau"));
+        list.add(new com.tu.fitness_app.Model.Exercise(R.drawable.glutegif,"Glute Kickback","Tay chống chân dơ cao"));
+        list.add(new com.tu.fitness_app.Model.Exercise(R.drawable.pushgif,"Push Up","Tay chống đẩy, chân duỗi thẳng"));
+        list.add(new com.tu.fitness_app.Model.Exercise(R.drawable.jumplungegif,"Jump Lunge","Chân vuông góc xen kẻ và nhảy"));
+        list.add(new com.tu.fitness_app.Model.Exercise(R.drawable.backgif,"Back Extension","Nằm xấp, lưng thẳng đầu ngẩng lên"));
 //        list.add(new com.tu.fitness_app.model.Exercise(R.drawable.exercise_stretching,"Exercise Stretching"));
 //        list.add(new com.tu.fitness_app.model.Exercise(R.drawable.fitness_centre,"Fitness Centre"));
 //        list.add(new com.tu.fitness_app.model.Exercise(R.drawable.jump_ropes_jumping_exercise,"Jump Ropes"));

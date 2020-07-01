@@ -151,19 +151,19 @@ public class ListExercises extends AppCompatActivity {
     }
 
     private void initData() {
-        exerciseList.add(new Exercise(R.drawable.flow,"Flow Yoga","Chân khụy gối vuông góc"));
-        exerciseList.add(new Exercise(R.drawable.squatgif,"Split Squat","Chân khụy gối vuông góc"));
-        exerciseList.add(new Exercise(R.drawable.plankgif,"Plank","Chân khụy gối vuông góc"));
-        exerciseList.add(new Exercise(R.drawable.mountaingif,"Mountain Climber","Chân khụy gối vuông góc"));
-        exerciseList.add(new Exercise(R.drawable.jumpgif,"Jump Ropes","Chân khụy gối vuông góc"));
-        exerciseList.add(new Exercise(R.drawable.runhighgif,"Run High Knees","Chân khụy gối vuông góc"));
-        exerciseList.add(new Exercise(R.drawable.lunggif,"Lung Shoulder Press  ","Chân khụy gối vuông góc"));
-        exerciseList.add(new Exercise(R.drawable.pullgif,"Leg Pull-In","Chân khụy gối vuông góc"));
-        exerciseList.add(new Exercise(R.drawable.vgif,"V-Up","Chân khụy gối vuông góc"));
-        exerciseList.add(new Exercise(R.drawable.glutegif,"Glute Kickback","Chân khụy gối vuông góc"));
-        exerciseList.add(new Exercise(R.drawable.pushgif,"Push Up","Chân khụy gối vuông góc"));
-        exerciseList.add(new Exercise(R.drawable.jumplungegif,"Jump Lunge","Chân khụy gối vuông góc"));
-        exerciseList.add(new Exercise(R.drawable.backgif,"Back Extension","Chân khụy gối vuông góc"));
+        exerciseList.add(new Exercise(R.drawable.flow,"Flow Yoga","Chân trước khụy gối,chân sau duỗi thẳng,tay dơ lên nghiêng sang trái và ngược lại"));
+        exerciseList.add(new Exercise(R.drawable.squatgif,"Split Squat","Chân dang rộng bằng vai, khụy xuống và thẳng lưng"));
+        exerciseList.add(new Exercise(R.drawable.plankgif,"Plank","Nằm chống đẩy, đi chuyển mỗi tay vuông góc với mặt đất"));
+        exerciseList.add(new Exercise(R.drawable.mountaingif,"Mountain Climber","Tay chống thẳng, chân co duỗi san kẻ"));
+        exerciseList.add(new Exercise(R.drawable.jumpgif,"Jump Ropes","Chân đan chéo dang ra san kẻ"));
+        exerciseList.add(new Exercise(R.drawable.runhighgif,"Run High Knees","Chạy bộ nâng cao đùi"));
+        exerciseList.add(new Exercise(R.drawable.lunggif,"Lung Shoulder Press  ","Chân khụy gối tay nâng tạ lên và ngược lại"));
+        exerciseList.add(new Exercise(R.drawable.pullgif,"Leg Pull-In","Tay chống sau lưng chân đưa lên cao và ngược lại"));
+        exerciseList.add(new Exercise(R.drawable.vgif,"V-Up","Nằm thẳng lưng, tay và chân đụng nhau"));
+        exerciseList.add(new Exercise(R.drawable.glutegif,"Glute Kickback","Tay chống chân dơ cao"));
+        exerciseList.add(new Exercise(R.drawable.pushgif,"Push Up","Tay chống đẩy, chân duỗi thẳng"));
+        exerciseList.add(new Exercise(R.drawable.jumplungegif,"Jump Lunge","Chân vuông góc xen kẻ và nhảy"));
+        exerciseList.add(new Exercise(R.drawable.backgif,"Back Extension","Nằm xấp, lưng thẳng đầu ngẩng lên"));
     }
 
     @Override

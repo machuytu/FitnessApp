@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     ImageView btnTraining;
 
-    public static float mSeriesMax = 0f;
+    public static float mSeriesMax = 2f;
     // Sensor data
     private TextView textView;
     private SensorManager msensorManager;
@@ -154,11 +154,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //default
-        mytotalcalories = 0f;
-        dailytotalcalories = 0f;
-        runmodetotalcalories = 0f;
-        dailytotaldistances = 0f;
-        runmodetotaldistances = 0f;
+        mytotalcalories = 2f;
+        dailytotalcalories = 2f;
+        runmodetotalcalories = 2f;
+        dailytotaldistances = 2f;
+        runmodetotaldistances = 2f;
         //getDay format
         Date date = java.util.Calendar.getInstance().getTime();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -486,10 +486,10 @@ public class MainActivity extends AppCompatActivity {
                     animation3.start();
                     progressBarCalo.clearAnimation();
                     //Carb progress
-                    mytotalcarbs = Float.parseFloat(String.valueOf(dataSnapshot.child("totalcarbs").getValue()));
-                    progressBarCarbs = (NumberProgressBar) findViewById(R.id.progressCarbs);
-                    progressBarCarbs.setProgress((int) mytotalcarbs);
-                    progressBarCarbs.getMax();
+//                    mytotalcarbs = Float.parseFloat(String.valueOf(dataSnapshot.child("totalcarbs").getValue()));
+//                    progressBarCarbs = (NumberProgressBar) findViewById(R.id.progressCarbs);
+//                    progressBarCarbs.setProgress((int) mytotalcarbs);
+//                    progressBarCarbs.getMax();
                     //Protein
                     mytotalprotein = Float.parseFloat(String.valueOf(dataSnapshot.child("totalprotein").getValue()));
                     progressBarProtein = (NumberProgressBar) findViewById(R.id.progressProtein);
@@ -501,10 +501,10 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("fat", String.valueOf(mytotalfat));
                 }
                 else {
-                    mytotalcalories = 0f;
-                    mytotalcarbs = 0f;
-                    mytotalprotein = 0f;
-                    mytotalfat = 0f;
+                    mytotalcalories = 2f;
+                    mytotalcarbs = 2f;
+                    mytotalprotein = 2f;
+                    mytotalfat = 2f;
 
                 }
             }
@@ -535,13 +535,13 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("test",String.valueOf(totaldistancessum));
                 }
                 else {
-                    dailytotalsteps = 0f;
+                    dailytotalsteps = 2f;
                     tvStep.setText(String.valueOf(dailytotalsteps));
 
-                    dailytotalcalories = 0f;
+                    dailytotalcalories = 2f;
                     totalCaloriessum += dailytotalcalories;
 
-                    dailytotaldistances = 0f;
+                    dailytotaldistances = 2f;
                     totaldistancessum += dailytotaldistances;
                 }
             }
@@ -568,13 +568,13 @@ public class MainActivity extends AppCompatActivity {
                     tvQuangDuong.setText(String.valueOf(totaldistancessum));
                 }
                 else {
-                    runmodetotalsteps = 0f;
+                    runmodetotalsteps = 2f;
                     tvRun.setText(String.valueOf(runmodetotalsteps));
 
-                    runmodetotalcalories = 0f;
+                    runmodetotalcalories = 2f;
                     totalCaloriessum += runmodetotalcalories;
 
-                    runmodetotaldistances = 0f;
+                    runmodetotaldistances = 2f;
                     totaldistancessum += runmodetotaldistances;
                 }
             }

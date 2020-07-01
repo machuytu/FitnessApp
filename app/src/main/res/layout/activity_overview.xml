@@ -34,17 +34,18 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="@drawable/custom_btn">
+           >
 
             <include
                 layout="@layout/app_bar_main"
-                android:layout_width="400dp"
+                android:layout_width="match_parent"
                 android:layout_height="55dp" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="349dp"
-                android:gravity="center_horizontal">
+                android:gravity="center_horizontal"
+                android:background="@drawable/custom_btn">
 
                 <com.natasa.progressviews.CircleProgressBar
                     android:id="@+id/food_progress"

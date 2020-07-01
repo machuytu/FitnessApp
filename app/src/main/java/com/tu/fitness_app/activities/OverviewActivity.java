@@ -36,7 +36,7 @@ import com.tu.fitness_app.R;
 
 public class OverviewActivity extends AppCompatActivity {
 
-    public float food_calories = 0f;
+    public float food_calories = 2f;
     public static int stepMax = 0;
     public static float caloriesMax = 0f;
     TextView food_fat;
@@ -67,9 +67,9 @@ public class OverviewActivity extends AppCompatActivity {
         food_carbs = findViewById(R.id.carbs_progress);
         food_protein = findViewById(R.id.protein_progress);
 
-        food_fat.setText(String.valueOf(LoginActivity.user_fat));
-        food_carbs.setText(String.valueOf(LoginActivity.user_carbs));
-        food_protein.setText(String.valueOf(LoginActivity.user_protein));
+        food_fat.setText(String.format("%.2f",LoginActivity.user_fat));
+        food_carbs.setText(String.format("%.2f",LoginActivity.user_carbs));
+        food_protein.setText(String.format("%.2f",LoginActivity.user_protein));
         // Setting Steps and Calories
         getUsersRef("stepgoal").addValueEventListener(new ValueEventListener() {
             @Override
@@ -308,7 +308,9 @@ public class OverviewActivity extends AppCompatActivity {
         // Food Progress Bar
         if (food_calories > 0) {
             food.setProgress((100 * (food_calories)) / caloriesMax);
-            food.setText(food_calories   + "/ " + caloriesMax);
+            food.setText(food_calories   + "/ "+ caloriesMax);
+//            food.setText(sample.replaceAll("\\\\n", "\n"));
+
         } else {
             food.setProgress((100 * LoginActivity.calRef / caloriesMax));
             food.setText(LoginActivity.calRef + "/ " + caloriesMax);

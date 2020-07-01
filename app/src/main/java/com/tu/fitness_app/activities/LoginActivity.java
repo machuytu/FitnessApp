@@ -41,10 +41,10 @@ public class LoginActivity extends AppCompatActivity {
     public static String USER_NAME = "";
     public static int mSeries1 = 0;
     public static float mSeries2 = 0;
-    public static float calRef = 0f;
-    public static float user_fat = 0f;
-    public static float user_carbs = 0f;
-    public static float user_protein = 0f;
+    public static float calRef = 2f;
+    public static float user_fat = 2f;
+    public static float user_carbs = 2f;
+    public static float user_protein = 2f;
     public static float mode = 0f;
     public static List<String> day = new ArrayList<>();
     Date today = new Date();
