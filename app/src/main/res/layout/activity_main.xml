@@ -256,17 +256,17 @@
 
                     </ImageView>
 
-<!--                    <Spinner-->
-<!--                        android:id="@+id/spinner"-->
-<!--                        android:text="Choose"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_alignParentStart="true"-->
-<!--                        android:layout_marginStart="16dp"-->
-<!--                        android:layout_marginEnd="87dp"-->
-<!--                        android:layout_toStartOf="@+id/txtMonthYear">-->
+                    <!--                    <Spinner-->
+                    <!--                        android:id="@+id/spinner"-->
+                    <!--                        android:text="Choose"-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_alignParentStart="true"-->
+                    <!--                        android:layout_marginStart="16dp"-->
+                    <!--                        android:layout_marginEnd="87dp"-->
+                    <!--                        android:layout_toStartOf="@+id/txtMonthYear">-->
 
-<!--                    </Spinner>-->
+                    <!--                    </Spinner>-->
 
                     <Button
                         android:id="@+id/btnMonthYear"
@@ -374,8 +374,8 @@
 
                 <ImageView
                     android:id="@+id/imageView6"
-                    android:layout_width="42dp"
-                    android:layout_height="35dp"
+                    android:layout_width="47dp"
+                    android:layout_height="32dp"
                     android:alpha="0.5"
                     app:layout_constraintBottom_toBottomOf="@+id/tvInfo"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -392,15 +392,15 @@
                     android:text="Height"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/tvInfo"
-                    app:layout_constraintHorizontal_bias="0.277"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toEndOf="@+id/imageView6"
                     app:layout_constraintTop_toTopOf="@+id/tvInfo"
-                    app:layout_constraintVertical_bias="0.062" />
+                    app:layout_constraintVertical_bias="0.058" />
 
                 <ImageView
                     android:id="@+id/imageView7"
-                    android:layout_width="45dp"
-                    android:layout_height="33dp"
+                    android:layout_width="47dp"
+                    android:layout_height="32dp"
                     android:alpha="0.5"
                     app:layout_constraintBottom_toBottomOf="@+id/tvInfo"
                     app:layout_constraintEnd_toEndOf="@+id/tvInfo"
@@ -423,8 +423,8 @@
 
                 <ImageView
                     android:id="@+id/imageView8"
-                    android:layout_width="35dp"
-                    android:layout_height="40dp"
+                    android:layout_width="47dp"
+                    android:layout_height="32dp"
                     android:layout_marginStart="32dp"
                     android:alpha="0.5"
                     app:layout_constraintBottom_toBottomOf="@+id/tvInfo"
@@ -443,10 +443,10 @@
                     android:text="Age"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/tvInfo"
-                    app:layout_constraintHorizontal_bias="0.145"
+                    app:layout_constraintHorizontal_bias="0.096"
                     app:layout_constraintStart_toEndOf="@+id/imageView8"
                     app:layout_constraintTop_toBottomOf="@+id/textView18"
-                    app:layout_constraintVertical_bias="0.203" />
+                    app:layout_constraintVertical_bias="0.224" />
 
                 <TextView
                     android:id="@+id/tvTrainning"
@@ -472,22 +472,23 @@
                     android:alpha="0.5"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/tvTrainning"
-                    app:layout_constraintHorizontal_bias="0.041"
+                    app:layout_constraintHorizontal_bias="0.036"
                     app:layout_constraintStart_toStartOf="@+id/tvTrainning"
                     app:layout_constraintTop_toTopOf="@+id/tvTrainning"
+                    app:layout_constraintVertical_bias="0.073"
                     app:srcCompat="@drawable/gym" />
 
-                <ImageView
+                <pl.droidsonroids.gif.GifImageView
                     android:id="@+id/imgDone"
-                    android:layout_width="58dp"
-                    android:layout_height="44dp"
+                    android:layout_width="61dp"
+                    android:layout_height="40dp"
                     android:alpha="0.5"
                     android:visibility="invisible"
                     app:layout_constraintBottom_toBottomOf="@+id/tvTrainning"
                     app:layout_constraintEnd_toEndOf="@+id/tvTrainning"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/tvTrainning"
-                    app:srcCompat="@drawable/doneg" />
+                    app:srcCompat="@drawable/donegg" />
 
 
                 <TextView
@@ -503,8 +504,8 @@
 
                 <TextView
                     android:id="@+id/tvWeightNum"
-                    android:layout_width="80dp"
-                    android:layout_height="45dp"
+                    android:layout_width="67dp"
+                    android:layout_height="55dp"
                     android:layout_marginStart="28dp"
                     android:alpha="0.8"
                     android:fontFamily="@font/andika"
@@ -551,22 +552,24 @@
                     android:id="@+id/tvAge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:alpha="0.8"
                     android:text="20"
                     android:textSize="30dp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/tvInfo"
                     app:layout_constraintEnd_toEndOf="@+id/tvInfo"
-                    app:layout_constraintHorizontal_bias="0.736"
+                    app:layout_constraintHorizontal_bias="0.699"
                     app:layout_constraintStart_toEndOf="@+id/tvSex"
                     app:layout_constraintTop_toBottomOf="@+id/imageView8"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:layout_constraintVertical_bias="0.27" />
 
                 <TextView
                     android:id="@+id/tvDone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="96dp"
-                    android:text="DONE"
+                    android:fontFamily="@font/andika"
+                    android:text="Done"
                     android:textSize="20dp"
                     android:textStyle="bold"
                     android:visibility="invisible"
@@ -576,62 +579,64 @@
                     app:layout_constraintTop_toTopOf="@+id/tvTrainning"
                     app:layout_constraintVertical_bias="0.513" />
 
-                <ImageView
+                <!--                <ImageView-->
+                <!--                    android:id="@+id/imageView4"-->
+                <!--                    android:layout_width="30dp"-->
+                <!--                    android:layout_height="34dp"-->
+                <!--                    android:alpha="0.5"-->
+                <!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+                <!--                    app:layout_constraintEnd_toStartOf="@+id/btnTrainning"-->
+                <!--                    app:layout_constraintHorizontal_bias="0.955"-->
+                <!--                    app:layout_constraintStart_toEndOf="@+id/textView23"-->
+                <!--                    app:layout_constraintTop_toTopOf="@+id/tvTrainning"-->
+                <!--                    app:layout_constraintVertical_bias="0.0"-->
+                <!--                    app:srcCompat="@drawable/right" />-->
+
+                <pl.droidsonroids.gif.GifImageView
                     android:id="@+id/imgNotDone"
                     android:layout_width="58dp"
                     android:layout_height="44dp"
-                    android:layout_marginBottom="76dp"
                     android:alpha="0.5"
                     android:visibility="invisible"
                     app:layout_constraintBottom_toBottomOf="@+id/tvTrainning"
-                    app:layout_constraintEnd_toEndOf="@+id/tvTrainning"
-                    app:layout_constraintHorizontal_bias="0.432"
+                    app:layout_constraintEnd_toStartOf="@+id/tvNotDone"
+                    app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="@+id/tvTrainning"
-                    app:srcCompat="@drawable/doneg" />
+                    app:layout_constraintTop_toTopOf="@+id/tvTrainning"
+                    app:layout_constraintVertical_bias="0.6"
+                    app:srcCompat="@drawable/xgif" />
 
                 <TextView
                     android:id="@+id/tvNotDone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="96dp"
-                    android:text="NOT DONE"
+                    android:fontFamily="@font/andika"
+                    android:text="Not Done !"
                     android:textSize="20dp"
                     android:textStyle="bold"
                     android:visibility="invisible"
                     app:layout_constraintEnd_toEndOf="@+id/tvTrainning"
-                    app:layout_constraintHorizontal_bias="0.765"
+                    app:layout_constraintHorizontal_bias="0.782"
                     app:layout_constraintStart_toStartOf="@+id/tvTrainning"
                     app:layout_constraintTop_toTopOf="@+id/tvTrainning" />
 
                 <Button
                     android:id="@+id/btnTrainning"
-                    android:layout_width="65dp"
-                    android:layout_height="29dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginRight="5dp"
                     android:alpha="0.5"
-                    android:background="@drawable/btn"
+                    android:background="@drawable/right"
                     android:gravity="left"
-                    android:text="Trainning"
+
                     android:textAllCaps="false"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/tvTrainning"
-                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintHorizontal_bias="0.873"
                     app:layout_constraintStart_toEndOf="@+id/textView23"
                     app:layout_constraintTop_toTopOf="@+id/tvTrainning"
-                    app:layout_constraintVertical_bias="0.017" />
-
-                <ImageView
-                    android:id="@+id/imageView4"
-                    android:layout_width="30dp"
-                    android:layout_height="34dp"
-                    android:alpha="0.5"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/btnTrainning"
-                    app:layout_constraintHorizontal_bias="0.955"
-                    app:layout_constraintStart_toEndOf="@+id/textView23"
-                    app:layout_constraintTop_toTopOf="@+id/tvTrainning"
-                    app:layout_constraintVertical_bias="0.0"
-                    app:srcCompat="@drawable/right" />
+                    app:layout_constraintVertical_bias="0.0" />
 
                 <ImageView
                     android:id="@+id/imageView10"
@@ -725,12 +730,11 @@
                     android:id="@+id/textView5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
+                    android:layout_marginStart="80dp"
+                    android:layout_marginTop="72dp"
                     android:text="(kg)"
-                    app:layout_constraintBottom_toBottomOf="@+id/tvInfo"
-                    app:layout_constraintStart_toEndOf="@+id/tvWeightNum"
-                    app:layout_constraintTop_toTopOf="@+id/tvInfo"
-                    app:layout_constraintVertical_bias="0.313" />
+                    app:layout_constraintStart_toStartOf="@+id/tvInfo"
+                    app:layout_constraintTop_toTopOf="@+id/tvInfo" />
 
                 <TextView
                     android:id="@+id/textView21"

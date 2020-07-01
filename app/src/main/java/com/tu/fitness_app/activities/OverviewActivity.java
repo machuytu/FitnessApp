@@ -321,7 +321,7 @@ public class OverviewActivity extends AppCompatActivity {
         // Food Progress Bar
         if (food_calories > 0) {
             food.setProgress((100 * (food_calories)) / caloriesMax);
-            food.setText(food_calories   + "/ "+ caloriesMax);
+            food.setText(food_calories   + "/ "+ String.format("%.2f",caloriesMax));
 //            food.setText(sample.replaceAll("\\\\n", "\n"));
 
         } else {

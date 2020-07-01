@@ -287,6 +287,7 @@ public class Daily_Training extends AppCompatActivity {
         ex_image.setVisibility(View.INVISIBLE);
         btnStart.setVisibility(View.INVISIBLE);
         btnBack.setVisibility(View.VISIBLE);
+        tvIntro.setVisibility(View.VISIBLE);
 
         txtTimer.setVisibility(View.INVISIBLE);
         layoutGetReady.setVisibility(View.VISIBLE);
