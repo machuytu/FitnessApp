@@ -102,7 +102,8 @@ public class MainActivity extends AppCompatActivity {
     String stringOfDate;
     ArrayList listkey;
     ArrayList listvalue;
-    int dem;
+    int demcalo;
+//    int demrun;
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
 
@@ -126,10 +127,13 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvRun;
     private TextView tvQuangDuong;
     private TextView tvBurnCalo;
-    private Spinner spinner;
-    private String names[] = {"Run", "Calories"};
-    ArrayAdapter <String> adapter;
-    static String record = "Calories";
+    private TextView tCarbs;
+    private TextView tFat;
+    private TextView tProtein;
+//    private Spinner spinner;
+//    private String names[] = {"Calories", "Run"};
+//    ArrayAdapter <String> adapter;
+//    static String record = "";
 //Run
     float dailytotalsteps;
     float runmodetotalsteps;
@@ -156,12 +160,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //Calo
+        tCarbs = findViewById(R.id.tCarbs);
+        tProtein = findViewById(R.id.tProtein);
+        tFat = findViewById(R.id.tFat);
         //default
         mytotalcalories = 0f;
         dailytotalcalories = 0f;
         runmodetotalcalories = 0f;
         dailytotaldistances = 0f;
         runmodetotaldistances = 0f;
+
         //getDay format
         Date date = java.util.Calendar.getInstance().getTime();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -188,8 +197,8 @@ public class MainActivity extends AppCompatActivity {
         tvNotDone = findViewById(R.id.tvNotDone);
         imgRight = findViewById(R.id.imageView4);
         //Line chart
-        spinner = (Spinner)findViewById(R.id.spinner);
-        adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,names);
+//        spinner = (Spinner)findViewById(R.id.spinner);
+//        adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,names);
 
         listkey = new ArrayList<String>();
         listvalue = new ArrayList<String>();
@@ -236,7 +245,6 @@ public class MainActivity extends AppCompatActivity {
                     String s3 = s2.nextToken();
                     String s4 = s2.nextToken();
                     String s5 = s2.nextToken();
-                    Log.d("s5",s5);
                     return s5;
                 } catch (Exception e) {
                     return "";
@@ -249,34 +257,34 @@ public class MainActivity extends AppCompatActivity {
         retrieveDataCalo(stringOfDate);
         btnMonthYear.setOnClickListener(this::onClick);
         //set adapter to spinner
-        spinner.setAdapter(adapter);
-        //set spinner method
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                switch (position){
-                    case 1:
-                        record = "Run";
-                        barChart.invalidate();
-                        barChart.clear();
-                        retrieveDataRun(todaystring);
-                        txtMonthYear.setText(todaystring);
-
-                        break;
-                    case 0:
-                        record = "Calories";
-                        barChart.invalidate();
-                        barChart.clear();
-                        retrieveDataCalo(todaystring);
-                        txtMonthYear.setText(todaystring);
-
-                        break;
-                }
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
+//        spinner.setAdapter(adapter);
+//        //set spinner method
+//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                switch (position){
+//                    case 0:
+//                        record = "Calories";
+//                        barChart.invalidate();
+//                        barChart.clear();
+//                        retrieveDataCalo(todaystring);
+//                        txtMonthYear.setText(todaystring);
+//
+//                        break;
+//                    case 1:
+//                        record = "Run";
+//                        barChart.invalidate();
+//                        barChart.clear();
+//                        retrieveDataRun(todaystring);
+//                        txtMonthYear.setText(todaystring);
+//
+//                        break;
+//                }
+//            }
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//            }
+//        });
 
         //Calo progress
         getDataCalories();
@@ -292,13 +300,13 @@ public class MainActivity extends AppCompatActivity {
 
         //Protein progress
         progressBarProtein = (NumberProgressBar) findViewById(R.id.progressProtein);
-        progressBarProtein.setProgress(pcalo);
+        progressBarProtein.setProgress((int) LoginActivity.user_protein);
         //Carb progress
         progressBarCarbs = (NumberProgressBar) findViewById(R.id.progressCarbs);
-        progressBarCarbs.setProgress(pcalo);
+        progressBarCarbs.setProgress((int) LoginActivity.user_carbs);
         //Fat progress
         progressBarFat = (NumberProgressBar) findViewById(R.id.progressFat);
-        progressBarFat.setProgress(pcalo);
+        progressBarFat.setProgress((int) LoginActivity.user_fat);
         progressBarCalo = findViewById(R.id.progressCalo);
         tvcaloTotal = findViewById(R.id.tvCaloTotal);
 //        progressBarCalo.setProgress(pCalo);
@@ -332,6 +340,9 @@ public class MainActivity extends AppCompatActivity {
 
 // Infor
         FirebaseUser user = mAuth.getCurrentUser();
+        String userEmail = user.getEmail();
+        Log.d("user email", userEmail);
+        email.setText(userEmail);
 //        String
         String userId = user.getUid();
         myref = FirebaseDatabase.getInstance().getReference("Users").child(userId);
@@ -357,6 +368,7 @@ public class MainActivity extends AppCompatActivity {
                 tvSex.setText("Error found");
             }
         });
+//        Log.d("name header user", String.valueOf(name));
         //Run
         getDataStep();
         tvBurnCalo.setText(String.valueOf(totalCaloriessum));
@@ -483,13 +495,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
     private void getDataCalories() {
         getCalories().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
+
                     mytotalcalories = Float.parseFloat(String.valueOf(dataSnapshot.child("totalcalories").getValue()));
-                    progressBarCalo.setProgress((int) mytotalcalories);
+                    progressBarCalo.setProgress((int) (LoginActivity.user_carbs + LoginActivity.user_fat + LoginActivity.user_protein));
                     ObjectAnimator animation3 = ObjectAnimator.ofInt(progressBarCalo, "progress", 100,(int) mytotalcalories); // see this max value coming back here, we animate towards that value
                     animation3.setDuration(5000); // in milliseconds
                     animation3.setInterpolator(new DecelerateInterpolator());
@@ -497,16 +511,19 @@ public class MainActivity extends AppCompatActivity {
                     progressBarCalo.clearAnimation();
                     //Carb progress
 //                    mytotalcarbs = Float.parseFloat(String.valueOf(dataSnapshot.child("totalcarbs").getValue()));
-//                    progressBarCarbs = (NumberProgressBar) findViewById(R.id.progressCarbs);
-//                    progressBarCarbs.setProgress((int) mytotalcarbs);
+                    progressBarCarbs = (NumberProgressBar) findViewById(R.id.progressCarbs);
+                    progressBarCarbs.setProgress((int) LoginActivity.user_carbs);
+                    tCarbs.setText((String.valueOf(LoginActivity.user_carbs)));
                     //Protein
-                    mytotalprotein = Float.parseFloat(String.valueOf(dataSnapshot.child("totalprotein").getValue()));
+//                    mytotalprotein = Float.parseFloat(String.valueOf(dataSnapshot.child("totalprotein").getValue()));
                     progressBarProtein = (NumberProgressBar) findViewById(R.id.progressProtein);
-                    progressBarProtein.setProgress((int) mytotalprotein);
+                    progressBarProtein.setProgress((int) LoginActivity.user_protein);
+                    tProtein.setText(String.valueOf(LoginActivity.user_protein));
                     //fat
-                    mytotalfat = Float.parseFloat(String.valueOf(dataSnapshot.child("totalfat").getValue()));
+//                    mytotalfat = Float.parseFloat(String.valueOf(dataSnapshot.child("totalfat").getValue()));
                     progressBarFat = (NumberProgressBar) findViewById(R.id.progressFat);
-                    progressBarFat.setProgress((int) mytotalfat);
+                    progressBarFat.setProgress((int) LoginActivity.user_fat);
+                    tFat.setText(String.valueOf(LoginActivity.user_fat));
                     Log.d("fat", String.valueOf(mytotalfat));
                 }
                 else {
@@ -514,7 +531,7 @@ public class MainActivity extends AppCompatActivity {
                     mytotalcarbs = 0f;
                     mytotalprotein = 0f;
                     mytotalfat = 0f;
-
+                    mytotalcaloriessum += mytotalcalories;
                 }
             }
             @Override
@@ -616,7 +633,7 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-    //Line Chart
+    //Bar Chart
     public void onClick(View view) {
         java.util.Calendar c = java.util.Calendar.getInstance();
         int mYear = c.get(java.util.Calendar.YEAR);
@@ -629,7 +646,7 @@ public class MainActivity extends AppCompatActivity {
                                           int monthOfYear, int dayOfMonth) {
                         txtMonthYear.setText((monthOfYear + 1) + "-" + year);
                         stringOfDate = year + "-" + (monthOfYear + 1);
-                            retrieveDataRun(stringOfDate);
+//                            retrieveDataRun(stringOfDate);
                             retrieveDataCalo(stringOfDate);
                     }
                 }, mYear, mMonth, mDay);
@@ -651,34 +668,28 @@ public class MainActivity extends AppCompatActivity {
                 ArrayList<BarEntry> defaults = new ArrayList<BarEntry>();
                 Iterable<DataSnapshot> snapshotIterator = dataSnapshot.getChildren();
                 Iterator<DataSnapshot> iterator = snapshotIterator.iterator();
-                dem = 0 ;
+                demcalo = 0 ;
                 while (iterator.hasNext()) {
                     DataSnapshot next = (DataSnapshot) iterator.next();
 
                     float y =  Float.parseFloat(String.valueOf(next.child("totalcalories").getValue()));
-//                    String temp = next.getKey();
-//                    StringTokenizer separated = new StringTokenizer(temp, "-");
-//
-//                    String year = separated.nextToken();
-//                    String month = separated.nextToken();
-//                    String day = separated.nextToken();
-//                    Log.d("temp1", separated.nextToken());
                     listkey.add(next.getKey());
 
+                    Log.d("Calo", String.valueOf(y));
                     listvalue.add(next.child("totalcalories").getValue());
-                    dataVals.add(new BarEntry(dem,y));
-                    dem++;
+                    dataVals.add(new BarEntry(demcalo,y));
+                    demcalo++;
                 }
                 Log.d("dataVals", String.valueOf(dataVals));
                 if (dataVals.isEmpty()) {
                     barChart.clear();
                     barChart.invalidate();
-                    showChartDefaults(defaults);
+                    showChartDefaultsCalo(defaults);
                 }
                 else {
                     barChart.invalidate();
                     barChart.clear();
-                    showChart(dataVals);
+                    showChartCalo(dataVals);
                 }
             }
 
@@ -689,56 +700,31 @@ public class MainActivity extends AppCompatActivity {
         });
         Log.d("listvalue", String.valueOf(listvalue));
     }
-    private void retrieveDataRun(String stringOfDate) {
-        listkey = new ArrayList<String>();
-        listvalue = new ArrayList<String>();
-        FirebaseUser user = mAuth.getCurrentUser();
-        String userId = user.getUid();
-        myref = FirebaseDatabase.getInstance().getReference("RunMode").child(userId);
+    private void showChartDefaultsCalo(ArrayList<BarEntry> defaults){
+        defaults.add(new BarEntry(1,0));
+        if (barDataSet != null) {
+            barDataSet.clear();
+        }
 
-        Query query = myref.orderByKey().startAt(stringOfDate).endAt(stringOfDate + "\uf8ff");
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ArrayList<BarEntry> dataVals = new ArrayList<BarEntry>();
-                ArrayList<BarEntry> defaults = new ArrayList<BarEntry>();
-                Iterable<DataSnapshot> snapshotIterator = dataSnapshot.getChildren();
-                Iterator<DataSnapshot> iterator = snapshotIterator.iterator();
-                dem = 0;
-                while (iterator.hasNext()) {
-                    DataSnapshot next = (DataSnapshot) iterator.next();
-                    float y =  Float.parseFloat(String.valueOf(next.child("totalsteps").getValue()));
-                    listkey.add(next.getKey());
-                    listvalue.add(next.child("totalsteps").getValue());
-                    dataVals.add(new BarEntry(dem,y));
-                    dem++;
-
-                }
-                if (dataVals.isEmpty()) {
-                    barChart.clear();
-                    barChart.invalidate();
-                    showChartDefaults(defaults);
-                }
-                else {
-                    barChart.invalidate();
-                    barChart.clear();
-                    showChart(dataVals);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.d("err", "err: " + databaseError.toString());
-            }
-        });
-    }
-    private void showChart(ArrayList<BarEntry> dataVals) {
-        barDataSet.clear();
-        barDataSet = new BarDataSet(dataVals, null);
-//        barDataSet.setValues(dataVals);
-        barDataSet.setColor(Color.RED);
+        barDataSet = new BarDataSet( defaults, "Calories");
+        barDataSet.setColor(Color.parseColor("#3F51B5"));
         barDataSet.setValueTextSize(8.5f);
-        
+
+
+        iBarDataSets.clear();
+        iBarDataSets = new ArrayList<>();
+        iBarDataSets.add(barDataSet);
+        barData = new BarData(iBarDataSets);
+        barChart.clear();
+        barChart.setData(barData);
+        barChart.invalidate();
+    }
+    private void showChartCalo(ArrayList<BarEntry> dataVals) {
+        barDataSet.clear();
+        barDataSet = new BarDataSet(dataVals, "Calories");
+        barDataSet.setColor(Color.parseColor("#3F51B5"));
+        barDataSet.setValueTextSize(8.5f);
+
         iBarDataSets.clear();
         iBarDataSets = new ArrayList<>();
         iBarDataSets.add(barDataSet);
@@ -748,25 +734,85 @@ public class MainActivity extends AppCompatActivity {
         barChart.setData(barData);
         barChart.invalidate();
     }
-    private void showChartDefaults(ArrayList<BarEntry> defaults){
-        defaults.add(new BarEntry(1,0));
-        if (barDataSet != null) {
-            barDataSet.clear();
-        }
+//    private void retrieveDataRun(String stringOfDate) {
+//        listkey = new ArrayList<String>();
+//        listvalue = new ArrayList<String>();
+//        FirebaseUser user = mAuth.getCurrentUser();
+//        String userId = user.getUid();
+//        myref = FirebaseDatabase.getInstance().getReference("RunMode").child(userId);
+//
+//        Query query = myref.orderByKey().startAt(stringOfDate).endAt(stringOfDate + "\uf8ff");
+//        query.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                ArrayList<BarEntry> dataValsRun = new ArrayList<>();
+//                ArrayList<BarEntry> defaultsRun = new ArrayList<>();
+//                Iterable<DataSnapshot> snapshotIterator = dataSnapshot.getChildren();
+//                Iterator<DataSnapshot> iterator = snapshotIterator.iterator();
+//                demrun = 0;
+//                while (iterator.hasNext()) {
+//                    DataSnapshot next = (DataSnapshot) iterator.next();
+//                    float run =  Float.parseFloat(String.valueOf(next.child("totalsteps").getValue()));
+//                    Log.d("Run", String.valueOf(run));
+//                    listkey.add(next.getKey());
+//                    listvalue.add(next.child("totalsteps").getValue());
+//                    dataValsRun.add(new BarEntry(demrun,run));
+//                    demrun++;
+//
+//                }
+//                Log.d("dataValsRun", String.valueOf(dataValsRun));
+//                if (dataValsRun.isEmpty()) {
+//                    barChart.clear();
+//                    barChart.invalidate();
+//                    showChartDefaultsRun(defaultsRun);
+//                }
+//                else {
+//                    barChart.invalidate();
+//                    barChart.clear();
+//                    showChartRun(dataValsRun);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//                Log.d("err", "err: " + databaseError.toString());
+//            }
+//        });
+//    }
+//    private void showChartDefaultsRun(ArrayList<BarEntry> defaultsRun){
+//        defaultsRun.add(new BarEntry(1,0));
+//        if (barDataSet != null) {
+//            barDataSet.clear();
+//        }
+//
+//        barDataSet = new BarDataSet(defaultsRun, "Run");
+//        barDataSet.setColor(Color.RED);
+//        barDataSet.setValueTextSize(8.5f);
+//
+//        iBarDataSets.clear();
+//        iBarDataSets = new ArrayList<>();
+//        iBarDataSets.add(barDataSet);
+//        barData = new BarData(iBarDataSets);
+//        barChart.clear();
+//        barChart.setData(barData);
+//        barChart.invalidate();
+//    }
+//    private void showChartRun(ArrayList<BarEntry> dataValsRun) {
+//        barDataSet.clear();
+//        barDataSet = new BarDataSet(dataValsRun, "Run");
+//        barDataSet.setColor(Color.RED);
+//        barDataSet.setValueTextSize(8.5f);
+//
+//        iBarDataSets.clear();
+//        iBarDataSets = new ArrayList<>();
+//        iBarDataSets.add(barDataSet);
+//        barData = new BarData(iBarDataSets);
+//        xAxis.setLabelCount(listkey.size());
+//        barChart.clear();
+//        barChart.setData(barData);
+//        barChart.invalidate();
+//    }
 
-        barDataSet = new BarDataSet( defaults, null);
-        barDataSet.setColor(Color.RED);
-        barDataSet.setValueTextSize(8.5f);
-
-
-        iBarDataSets.clear();
-        iBarDataSets = new ArrayList<>();
-        iBarDataSets.add(barDataSet);
-        barData = new BarData(iBarDataSets);
-        barChart.clear();
-        barChart.setData(barData);
-        barChart.invalidate();
-    }
     //Run
     private DatabaseReference getDailyWork() {
         FirebaseUser user = mAuth.getCurrentUser();

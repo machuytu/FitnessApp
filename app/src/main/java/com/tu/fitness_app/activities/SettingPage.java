@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -34,6 +35,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.tu.fitness_app.Database.Fitness;
@@ -73,6 +75,7 @@ public class SettingPage extends AppCompatActivity {
         setContentView(R.layout.activity_setting_page);
 
 
+        mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         btnSave = findViewById(R.id.btnSave);
@@ -106,6 +109,19 @@ public class SettingPage extends AppCompatActivity {
         toolbar.setTitleTextColor(Color.BLACK);
         setSupportActionBar(toolbar);
         NavigationView navigationView = findViewById(R.id.nav_view);
+
+        //nav_header
+        View headView = navigationView.getHeaderView(0);
+        TextView name = headView.findViewById(R.id.nameHeaderBar);
+        TextView email = headView.findViewById(R.id.headeremail);
+        // nav_header
+        FirebaseUser user = mAuth.getCurrentUser();
+        String userEmail = user.getEmail();
+        Log.d("user email", userEmail);
+        email.setText(userEmail);
+        String nameString = LoginActivity.USER_NAME;
+        name.setText(nameString);
+
 
         drawerLayout = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle actionBarDrawerToggle =

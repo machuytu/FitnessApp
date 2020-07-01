@@ -3,6 +3,7 @@ package com.tu.fitness_app.activities;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.BounceInterpolator;
@@ -205,6 +206,18 @@ public class OverviewActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
+
+        //nav_header
+        View headView = navigationView.getHeaderView(0);
+        TextView name = headView.findViewById(R.id.nameHeaderBar);
+        TextView email = headView.findViewById(R.id.headeremail);
+        // nav_header
+        FirebaseUser user = mAuth.getCurrentUser();
+        String userEmail = user.getEmail();
+        Log.d("user email", userEmail);
+        email.setText(userEmail);
+        String nameString = LoginActivity.USER_NAME;
+        name.setText(nameString);
 
         toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_drawer, R.string.close_drawer) {
             @Override

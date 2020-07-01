@@ -31,6 +31,8 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -70,7 +72,7 @@ public class RunMode extends AppCompatActivity implements SensorEventListener {
     private ArrayList<Long> listTime;
 
     private DatabaseReference mDatabase;
-//    private FirebaseAuth mAuth;
+    private FirebaseAuth mAuth;
     private String userId;
 
     Date today = new Date();
@@ -86,6 +88,19 @@ public class RunMode extends AppCompatActivity implements SensorEventListener {
         setSupportActionBar(toolbar);
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+
+        //nav_header
+        View headView = navigationView.getHeaderView(0);
+        TextView name = headView.findViewById(R.id.nameHeaderBar);
+        TextView email = headView.findViewById(R.id.headeremail);
+        // nav_header
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        String userEmail = user.getEmail();
+        Log.d("user email", userEmail);
+        email.setText(userEmail);
+        String nameString = LoginActivity.USER_NAME;
+        name.setText(nameString);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_drawer, R.string.close_drawer) {
             @Override
@@ -192,6 +207,7 @@ public class RunMode extends AppCompatActivity implements SensorEventListener {
         mSensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
         StepCalculate.mode = 1; // run
 
+        mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         userId = LoginActivity.USER_ID;
 //        if (userId == null)

@@ -28,6 +28,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.tu.fitness_app.Database.Fitness;
@@ -64,12 +65,13 @@ public class Daily_Training extends AppCompatActivity {
 
     Toolbar toolbar;
     ActionBarDrawerToggle toggle;
-
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daily__training);
-
+        mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         initData();
 
         // Navigation Bar
@@ -77,6 +79,19 @@ public class Daily_Training extends AppCompatActivity {
         setSupportActionBar(toolbar);
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
+
+        //nav_header
+        View headView = navigationView.getHeaderView(0);
+        TextView name = headView.findViewById(R.id.nameHeaderBar);
+        TextView email = headView.findViewById(R.id.headeremail);
+        // nav_header
+        FirebaseUser user = mAuth.getCurrentUser();
+        String userEmail = user.getEmail();
+        Log.d("user email", userEmail);
+        email.setText(userEmail);
+        String nameString = LoginActivity.USER_NAME;
+        name.setText(nameString);
+
 
         btnStart = (Button)findViewById(R.id.btnStart);
         btnBack = (Button)findViewById(R.id.btnBack);

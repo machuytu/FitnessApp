@@ -188,7 +188,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="172dp"
-                        android:text="50"
+                        android:text="0"
                         app:layout_constraintEnd_toStartOf="@+id/progressFat"
                         app:layout_constraintHorizontal_bias="0.502"
                         app:layout_constraintStart_toEndOf="@+id/tCarbs"
@@ -199,7 +199,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="172dp"
-                        android:text="50"
+                        android:text="0"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.4"
                         app:layout_constraintStart_toEndOf="@+id/tvProtein"
@@ -210,7 +210,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="172dp"
-                        android:text="50"
+                        android:text="0"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.057"
                         app:layout_constraintStart_toStartOf="parent"
@@ -255,17 +255,17 @@
 
                     </ImageView>
 
-                    <Spinner
-                        android:id="@+id/spinner"
-                        android:text="Choose"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="87dp"
-                        android:layout_toStartOf="@+id/txtMonthYear">
+<!--                    <Spinner-->
+<!--                        android:id="@+id/spinner"-->
+<!--                        android:text="Choose"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_alignParentStart="true"-->
+<!--                        android:layout_marginStart="16dp"-->
+<!--                        android:layout_marginEnd="87dp"-->
+<!--                        android:layout_toStartOf="@+id/txtMonthYear">-->
 
-                    </Spinner>
+<!--                    </Spinner>-->
 
                     <Button
                         android:id="@+id/btnMonthYear"
