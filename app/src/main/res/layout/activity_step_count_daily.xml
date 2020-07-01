@@ -20,10 +20,10 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="586dp"
+        android:layout_height="match_parent"
         android:layout_above="@+id/imageActivity1"
         android:layout_below="@+id/toolbar"
-        android:layout_marginBottom="115dp">
+        android:layout_marginBottom="10dp">
 
 <!--                    <ImageView-->
 <!--                        android:id="@+id/bgstep"-->
@@ -46,7 +46,7 @@
                         android:layout_alignParentTop="true"
                         android:layout_alignParentEnd="true"
                         android:layout_marginStart="18dp"
-                        android:layout_marginTop="229dp"
+                        android:layout_marginTop="150dp"
                         android:layout_marginEnd="29dp"
                         app:dv_lineWidth="18dp">
                     </com.hookedonplay.decoviewlib.DecoView>
@@ -66,69 +66,36 @@
 <!--                        app:icon_press="@drawable/walkswitch"-->
 <!--                        app:icon_release="@drawable/runswitch" />-->
 
-        <TextView
-            android:id="@+id/textPercentage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignBottom="@+id/textStep"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="123dp"
-            android:layout_marginTop="382dp"
-            android:layout_marginEnd="157dp"
-            android:gravity="center"
-            android:text="50"
-            android:textSize="40dp" />
-
         <ImageView
             android:id="@+id/image1"
-            android:layout_width="wrap_content"
-            android:layout_height="113dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="142dp"
-            android:layout_marginTop="300dp"
-            android:layout_marginEnd="138dp"
-            android:background="@drawable/swalk"
-            android:alpha="0.8"
-            />
-
-        <TextView
-            android:id="@+id/textStep"
-            android:layout_width="wrap_content"
-            android:layout_height="58dp"
+            android:layout_width="103dp"
+            android:layout_height="110dp"
+            android:layout_alignStart="@+id/dynamicArcView"
+            android:layout_alignEnd="@+id/dynamicArcView"
             android:layout_alignBottom="@+id/dynamicArcView"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="145dp"
-            android:layout_marginTop="258dp"
-            android:layout_marginEnd="135dp"
-            android:gravity="center"
-            android:maxWidth="200dp"
-            android:text="1000"
-            android:textSize="40dp"
-            android:textStyle="bold" />
+            android:layout_marginStart="129dp"
+            android:layout_marginEnd="133dp"
+            android:layout_marginBottom="190dp"
+            android:alpha="0.8"
+            android:background="@drawable/swalk" />
 
-        <TextView
-            android:id="@+id/textRemaining"
-            android:layout_width="147dp"
-            android:layout_height="43dp"
-            android:layout_alignBottom="@+id/textStep"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="145dp"
-            android:layout_marginTop="600dp"
-            android:layout_marginEnd="135dp"
-            android:gravity="center"
-            android:maxWidth="200dp"
-            android:text="Remaining"
-            android:textSize="20dp" />
+        <!--        <TextView-->
+<!--            -->
+<!--            android:layout_width="147dp"-->
+<!--            android:layout_height="100dp"-->
+<!--            android:layout_alignBottom="@+id/textStep"-->
+<!--            android:layout_alignParentStart="true"-->
+<!--            android:layout_alignParentTop="true"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:layout_marginStart="145dp"-->
+<!--            android:layout_marginTop="600dp"-->
+<!--            android:layout_marginEnd="135dp"-->
+<!--            android:gravity="center"-->
+<!--            android:maxWidth="200dp"-->
+<!--            android:text="Remaining"-->
+<!--            android:textSize="20dp" />-->
 
-<!--        <com.natasa.progressviews.CircleProgressBar-->
+        <!--        <com.natasa.progressviews.CircleProgressBar-->
 <!--            android:id="@+id/step_progress"-->
 <!--            android:layout_width="397dp"-->
 <!--            android:layout_height="396dp"-->
@@ -143,10 +110,62 @@
 <!--            app:progress_color="@color/protein"-->
 <!--            app:text_color="@color/protein" />-->
 
+        <TextView
+            android:id="@+id/textStep"
+            android:layout_width="wrap_content"
+            android:layout_height="47dp"
+            android:layout_alignTop="@+id/dynamicArcView"
+            android:layout_alignBottom="@+id/dynamicArcView"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="140dp"
+            android:layout_marginTop="166dp"
+            android:layout_marginEnd="140dp"
+            android:layout_marginBottom="115dp"
+            android:gravity="center"
+            android:maxWidth="200dp"
+            android:text="1000"
+            android:textSize="40dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textRemaining"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dynamicArcView"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="78dp"
+            android:layout_marginTop="79dp"
+            android:layout_marginEnd="56dp"
+            android:layout_marginBottom="38dp"
+            android:gravity="center"
+            android:text="AGSHGKD"
+            android:textSize="40dp" />
+
+        <TextView
+            android:id="@+id/textPercentage"
+            android:layout_width="wrap_content"
+            android:layout_height="51dp"
+            android:layout_alignStart="@+id/dynamicArcView"
+            android:layout_alignTop="@+id/dynamicArcView"
+            android:layout_alignEnd="@+id/dynamicArcView"
+            android:layout_alignBottom="@+id/dynamicArcView"
+            android:layout_marginStart="147dp"
+            android:layout_marginTop="238dp"
+            android:layout_marginEnd="133dp"
+            android:layout_marginBottom="39dp"
+            android:gravity="center"
+            android:text="50%"
+            android:textSize="40dp" />
+
         <include
             layout="@layout/app_bar_main"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
     </RelativeLayout>
+
+
 </androidx.drawerlayout.widget.DrawerLayout>

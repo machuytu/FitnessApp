@@ -278,15 +278,12 @@ public class RunMode extends AppCompatActivity implements SensorEventListener {
                 switch (i){
                     case R.id.rdiEasy:
                         timeStart = 1200000;
-                        Toast.makeText(RunMode.this,"easy",Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.rdiMedium:
                         timeStart = 2700000;
-                        Toast.makeText(RunMode.this,"medium",Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.rdiHard:
                         timeStart = 3600000;
-                        Toast.makeText(RunMode.this,"hard",Toast.LENGTH_SHORT).show();
                         break;
                 }
                 timeLeft = timeStart;
