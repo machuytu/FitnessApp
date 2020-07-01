@@ -72,8 +72,10 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
     private int stepAtStart;
     private int stepInDB;
 
+
     private TextView tvPercentage;
-    private TextView tvRun;
+    private TextView tvStep;
+    private TextView tvRemaining;
 
     // Firebase database init
     private DatabaseReference mDatabase;
@@ -93,9 +95,10 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
         setContentView(R.layout.activity_step_count_daily);
         mDecoView = findViewById(R.id.dynamicArcView);
         tvPercentage = findViewById(R.id.textPercentage);
-//        tvRun = findViewById(R.id.textRun);
+        tvRemaining = findViewById(R.id.textRemaining);
+        tvStep = findViewById(R.id.textStep);
 
-        createNavBar();
+
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         StepCalculate.mode = 0; //walk
@@ -103,6 +106,7 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         userId = LoginActivity.USER_ID;
+        createNavBar();
         Log.i(TAG, "uid" + userId);
         if (userId.equals(""))
             userId = mAuth.getCurrentUser().getUid();
@@ -110,6 +114,7 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 mSeriesMax = Integer.parseInt(String.valueOf(dataSnapshot.getValue()));
+//                Log.d(TAG, "mSeriesMax: " + mSeriesMax);
                 createDataSeries();
                 createEvents();
             }
@@ -159,28 +164,29 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
         TextView name = headView.findViewById(R.id.nameHeaderBar);
         TextView email = headView.findViewById(R.id.headeremail);
         // nav_header
+//
+
+        ActionBarDrawerToggle actionBarDrawerToggle =
+                new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_drawer, R.string.close_drawer) {
+                    @Override
+                    public void onDrawerClosed(View drawerView) {
+                        super.onDrawerClosed(drawerView);
+                    }
+
+                    @Override
+                    public void onDrawerOpened(View drawerView) {
+                        super.onDrawerOpened(drawerView);
+                    }
+                };
+
+//        drawerLayout.setDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
         FirebaseUser user = mAuth.getCurrentUser();
         String userEmail = user.getEmail();
         Log.d("user email", userEmail);
         email.setText(userEmail);
         String nameString = LoginActivity.USER_NAME;
         name.setText(nameString);
-
-
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_drawer, R.string.close_drawer) {
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                super.onDrawerClosed(drawerView);
-            }
-
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-            }
-        };
-
-        drawerLayout.setDrawerListener(toggle);
-        toggle.syncState();
 
         AppBarConfiguration mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,
@@ -257,7 +263,7 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
         });
     }
     private void createDataSeries() {
-
+        Log.d(TAG, "mSeriesMax1: " + mSeriesMax);
         mBackIndex = mDecoView.addSeries(new SeriesItem.Builder(Color.parseColor("#FFE2E2E2"))
                 .setRange(0, mSeriesMax, 0)
                 .setInitialVisibility(false)
@@ -271,10 +277,10 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
         seriesItem.addArcSeriesItemListener(new SeriesItem.SeriesItemListener() {
             @Override
             public void onSeriesItemAnimationProgress(float percentComplete, float currentPosition) {
-                tvRun.setText(String.format("%d Steps", (int) currentPosition));
+                tvStep.setText(String.format("%d Steps", (int) currentPosition));
 
                 if (seriesItem.getMaxValue() > currentPosition){
-//                    tvRemaining.setText(String.format("%d Steps to goal", (int) (seriesItem.getMaxValue() - currentPosition)));
+                    tvRemaining.setText(String.format("%d Steps to goal", (int) (seriesItem.getMaxValue() - currentPosition)));
 
                     float percentFilled = ((currentPosition - seriesItem.getMinValue())
                             / (seriesItem.getMaxValue() - seriesItem.getMinValue()));
@@ -282,7 +288,7 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
 
                 }
                 else{
-//                    tvRemaining.setText("Completed");
+                    tvRemaining.setText("Completed");
                     tvPercentage.setText("100%");
                 }
             }

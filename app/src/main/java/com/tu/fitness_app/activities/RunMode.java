@@ -14,6 +14,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -64,13 +66,13 @@ public class RunMode extends AppCompatActivity implements SensorEventListener {
 
     private TextView tvStep;
     private TextView tvTimer;
-    private ImageView btnStart;
-    private ImageView btnStop;
-    private ImageView btnReset;
-    private Spinner spinnerTime;
-
-    private ArrayList<String> listString;
-    private ArrayList<Long> listTime;
+    private Button btnStart;
+    private Button btnStop;
+    private Button btnReset;
+    private RadioGroup rdiGroup;
+    private RadioButton rdiEasy;
+    private RadioButton rdiMedium;
+    private RadioButton rdiHard;
 
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
@@ -198,6 +200,9 @@ public class RunMode extends AppCompatActivity implements SensorEventListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_run_mode);
 
+        tvStep = findViewById(R.id.textStep);
+        tvTimer = findViewById(R.id.textTime);
+
         btnStart = findViewById(R.id.btn_start);
         btnStop = findViewById(R.id.btn_stop);
         btnReset = findViewById(R.id.btn_restart);
@@ -214,8 +219,7 @@ public class RunMode extends AppCompatActivity implements SensorEventListener {
 //            mAuth.getCurrentUser().getUid();
 
         createNavBar();
-
-//        createSpinner();
+        createRadio();
 
         getRef().addValueEventListener(new ValueEventListener() {
             @Override
@@ -262,58 +266,71 @@ public class RunMode extends AppCompatActivity implements SensorEventListener {
         });
     }
 
-    private void listAdd(long time) {
-        listString.add(getStringTime(time));
-        listTime.add(time);
+    private void createRadio() {
+        rdiGroup = findViewById(R.id.rdiGroup);
+        rdiEasy = findViewById(R.id.rdiEasy);
+        rdiMedium = findViewById(R.id.rdiMedium);
+        rdiHard = findViewById(R.id.rdiHard);
+
+        rdiGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                switch (i){
+                    case R.id.rdiEasy:
+                        timeStart = 1200000;
+                        Toast.makeText(RunMode.this,"easy",Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.rdiMedium:
+                        timeStart = 2700000;
+                        Toast.makeText(RunMode.this,"medium",Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.rdiHard:
+                        timeStart = 3600000;
+                        Toast.makeText(RunMode.this,"hard",Toast.LENGTH_SHORT).show();
+                        break;
+                }
+                timeLeft = timeStart;
+                tvTimer.setText(getStringTime(timeLeft));
+            }
+        });
+
+        mDatabase.child("Users").child(userId).child("mode").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()) {
+                    int index = Integer.parseInt(String.valueOf(dataSnapshot.getValue()));
+                    switch (index)
+                    {
+                        case 0:
+                            rdiEasy.setChecked(true);
+                            break;
+                        case 1:
+                            rdiMedium.setChecked(true);
+                            break;
+                        case 2:
+                            rdiHard.setChecked(true);
+                            break;
+                    }
+                }
+                else {
+                    rdiEasy.setChecked(true);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
-//    private void createSpinner() {
-//        spinnerTime = findViewById(R.id.spinner_time);
-//
-//        listString = new ArrayList<>();
-//        listTime = new ArrayList<>();
-//
-//        listAdd(60000L); // for test fast!!!
-//        listAdd(300000L);
-//        listAdd(600000L);
-//        listAdd(900000L);
-//        listAdd(1200000L);
-//        listAdd(1800000L);
-//
-//        ArrayAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, listString);
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        spinnerTime.setAdapter(adapter);
-//
-//        spinnerTime.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                timeStart = listTime.get(position);
-//                Restart();
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
-//
-//        mDatabase.child("Users").child(userId).child("mode").addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                int index = Integer.parseInt(String.valueOf(dataSnapshot.getValue()));
-//                spinnerTime.setSelection(index + 1);
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
-//    }
 
     private void Start() {
         isRunning = true;
-        spinnerTime.setEnabled(false);
+        rdiEasy.setEnabled(false);
+        rdiMedium.setEnabled(false);
+        rdiHard.setEnabled(false);
+
         btnStart.setVisibility(View.INVISIBLE);
         btnStop.setVisibility(View.VISIBLE);
         btnReset.setVisibility(View.INVISIBLE);
@@ -340,7 +357,9 @@ public class RunMode extends AppCompatActivity implements SensorEventListener {
         btnStop.setVisibility(View.INVISIBLE);
         btnReset.setVisibility(View.VISIBLE);
         isRunning = false;
-        spinnerTime.setEnabled(true);
+        rdiEasy.setEnabled(true);
+        rdiMedium.setEnabled(true);
+        rdiHard.setEnabled(true);
         timer.cancel();
 
         stepOnPause = step;

@@ -18,6 +18,11 @@
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/activity_main_drawer" />
 
+    <include
+        layout="@layout/app_bar_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -31,17 +36,6 @@
             android:layout_above="@+id/imageActivity1"
             android:layout_below="@+id/toolbar"
             android:layout_marginBottom="110dp">
-
-            <TextView
-                android:id="@+id/textPercentage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textSize="40sp"
-                android:textColor="@color/white"/>
-
             <!--            <ImageView-->
             <!--                android:id="@+id/bgstep"-->
             <!--                android:layout_width="407dp"-->
@@ -68,7 +62,7 @@
             <!--                app:dv_lineWidth="18dp">-->
 
             <ImageView
-                android:id="@+id/textPercentage1"
+                android:id="@+id/image1"
                 android:layout_width="130dp"
                 android:layout_height="104dp"
                 android:layout_alignParentStart="true"
@@ -84,44 +78,54 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/dynamicArcView"
-
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginStart="147dp"
-                android:layout_marginTop="403dp"
-                android:layout_marginEnd="133dp"
-                android:maxWidth="200dp"
-                android:text="0 steps"
-
-
+                android:layout_marginStart="150dp"
+                android:layout_marginTop="400dp"
+                android:layout_marginEnd="130dp"
+                android:text="0"
                 android:textSize="20dp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textRemaining1"
-                android:layout_width="147dp"
-                android:layout_height="43dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="150dp"
+                android:layout_marginTop="420dp"
+                android:layout_marginEnd="130dp"
+                android:maxWidth="200dp"
+                android:text="steps"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/dynamicArcView"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginStart="147dp"
-                android:layout_marginTop="349dp"
-                android:layout_marginEnd="133dp"
-                android:maxWidth="200dp"
-                android:text="00:24:08"
+                android:layout_marginStart="170dp"
+                android:layout_marginTop="350dp"
+                android:layout_marginEnd="130dp"
+                android:text="00:00"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-
                 android:textSize="30dp"
                 android:textStyle="bold" />
 
             <com.natasa.progressviews.CircleProgressBar
                 android:id="@+id/run_progress"
                 android:layout_width="wrap_content"
-                android:layout_height="302dp"
+                android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
@@ -129,33 +133,13 @@
                 android:layout_marginTop="178dp"
                 android:layout_marginEnd="-15dp"
                 android:layout_marginBottom="0dp"
-                android:text="0"
                 app:progress_color="@color/protein"
                 app:text_color="@color/protein" />
-
-            <include
-                layout="@layout/app_bar_main"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <TextView
-                android:id="@+id/textView9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-
-                android:layout_marginStart="38dp"
-                android:layout_marginTop="111dp"
-                android:layout_marginEnd="316dp"
-                android:text="Time:"
-                android:textSize="20dp" />
 
 
             <RadioGroup
                 android:id="@+id/rdiGroup"
-                android:layout_width="307dp"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
@@ -171,7 +155,7 @@
                 android:orientation="horizontal">
 
                 <RadioButton
-                    android:id="@+id/rdi20"
+                    android:id="@+id/rdiEasy"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="2dp"
@@ -194,14 +178,12 @@
                     android:layout_marginTop="3dp"
                     android:layout_marginBottom="3dp"
                     android:layout_weight="1"
-
                     android:background="@drawable/control_switch_background_selector_middle"
                     android:button="@null"
                     android:fontFamily="sans-serif-medium"
                     android:gravity="center"
                     android:paddingTop="16dp"
                     android:paddingBottom="16dp"
-
                     android:text="45 mins"
                     android:textColor="@color/control_switch_color_selector" />
 
@@ -213,14 +195,12 @@
                     android:layout_marginRight="3dp"
                     android:layout_marginBottom="3dp"
                     android:layout_weight="1"
-
                     android:background="@drawable/control_switch_background_selector"
                     android:button="@null"
                     android:fontFamily="sans-serif-medium"
                     android:gravity="center"
                     android:paddingTop="16dp"
                     android:paddingBottom="16dp"
-
                     android:text="60 mins"
                     android:textColor="@color/control_switch_color_selector" />
             </RadioGroup>
@@ -232,7 +212,6 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
-
                 android:layout_marginStart="-10dp"
                 android:layout_marginTop="109dp"
                 android:layout_marginEnd="362dp"
@@ -256,8 +235,7 @@
             android:visibility="invisible"
             tools:ignore="HardcodedText,RtlHardcoded" />
 
-        <ImageView
-            android:id="@+id/btn_start"
+        <Button android:id="@+id/btn_start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -266,10 +244,9 @@
             android:layout_marginStart="167dp"
             android:layout_marginLeft="167dp"
             android:layout_marginBottom="67dp"
-            android:background="@drawable/btnstart" />
+            android:background="@drawable/btnstart"/>
 
-        <ImageView
-            android:id="@+id/btn_stop"
+        <Button android:id="@+id/btn_stop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -278,10 +255,9 @@
             android:layout_marginStart="28dp"
             android:layout_marginLeft="28dp"
             android:layout_marginBottom="67dp"
-            android:background="@drawable/btnpause" />
+            android:background="@drawable/btnstop" />
 
-        <ImageView
-            android:id="@+id/btn_restart"
+        <Button android:id="@+id/btn_restart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -290,7 +266,7 @@
             android:layout_marginStart="296dp"
             android:layout_marginLeft="296dp"
             android:layout_marginBottom="68dp"
-            android:background="@drawable/btnstop" />
+            android:background="@drawable/btnpause" />
 
         <TextView
             android:id="@+id/textActivity1"
