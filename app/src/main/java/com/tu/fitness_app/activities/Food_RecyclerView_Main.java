@@ -175,6 +175,7 @@ public class Food_RecyclerView_Main extends Fragment {
                         MyDownloadJsonAsyncTask downloadJson = new MyDownloadJsonAsyncTask(mRecyclerViewAdapter);
                         Log.d("Tu:", f_url);
                         downloadJson.execute(f_url);
+                        searchView.clearFocus();
                         return true;
                     }
 
@@ -214,6 +215,7 @@ public class Food_RecyclerView_Main extends Fragment {
                     MyDownloadJsonAsyncTask downloadJson = new MyDownloadJsonAsyncTask(mRecyclerViewAdapter);
                     Log.d("Tu:", f_url);
                     downloadJson.execute(f_url);
+                    searchView.clearFocus();
                     return true;
                 }
 

@@ -54,6 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/title"
+                android:alpha="0.8"
                 android:layout_marginTop="30dp"
                 android:layout_centerHorizontal="true"
                 android:textColor="@color/black"
@@ -109,21 +110,21 @@
             <info.hoang8f.widget.FButton
                 android:id="@+id/btnStart"
 
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="4dp"
-                android:layout_marginBottom="8dp"
-                android:text="@string/start"
-
-
                 android:layout_width="207dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
 
+
+                android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
+                android:layout_marginEnd="4dp"
                 android:layout_marginRight="4dp"
 
+                android:layout_marginBottom="32dp"
                 android:layout_weight="1"
+
+                android:text="@string/start"
                 android:textAllCaps="true"
 
 
@@ -134,19 +135,19 @@
                 app:fButtonColor="#2980b9"
                 app:shadowColor="#1f4068"
                 app:shadowEnabled="true"
-                app:shadowHeight="4dp"
-                />
+                app:shadowHeight="4dp" />
 
             <TextView
                 android:id="@+id/timer"
-                android:layout_above="@+id/btnStart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_above="@+id/btnStart"
                 android:layout_centerHorizontal="true"
-                android:textStyle="bold"
+                android:layout_marginBottom="20dp"
                 android:text=""
                 android:textColor="@color/red"
-                android:textSize="50sp" />
+                android:textSize="50sp"
+                android:textStyle="bold" />
 
             <me.zhanghai.android.materialprogressbar.MaterialProgressBar
                 android:id="@+id/progressBar"

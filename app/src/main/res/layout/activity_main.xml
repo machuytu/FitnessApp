@@ -40,6 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -52,7 +53,7 @@
                     android:layout_height="252dp"
                     android:background="@drawable/shadow"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.49"
+                    app:layout_constraintHorizontal_bias="0.547"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvCalo" />
 
@@ -74,7 +75,7 @@
                         android:layout_height="100dp"
                         android:indeterminateDrawable="@drawable/progressbar"
                         app:arc_bottom_text_size="20dp"
-                        app:arc_suffix_text=""
+                        app:arc_suffix_text=" "
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -334,8 +335,10 @@
                     android:id="@+id/tvBurnCalo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:alpha="0.8"
+                    android:fontFamily="@font/andika"
                     android:text="100cals"
-                    android:textSize="30dp"
+                    android:textSize="25dp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/tvCount"
                     app:layout_constraintEnd_toEndOf="@+id/tvCount"
@@ -411,12 +414,12 @@
                     android:id="@+id/textView19"
                     android:layout_width="38dp"
                     android:layout_height="24dp"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginStart="4dp"
                     android:text="Sex"
                     app:layout_constraintBottom_toBottomOf="@+id/tvInfo"
                     app:layout_constraintStart_toEndOf="@+id/imageView7"
                     app:layout_constraintTop_toBottomOf="@+id/textView17"
-                    app:layout_constraintVertical_bias="0.451" />
+                    app:layout_constraintVertical_bias="0.508" />
 
                 <ImageView
                     android:id="@+id/imageView8"
@@ -431,7 +434,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/imageView6"
                     app:layout_constraintVertical_bias="0.476"
 
-                    app:srcCompat="@drawable/candle" />
+                    app:srcCompat="@drawable/birthday" />
 
                 <TextView
                     android:id="@+id/textView20"
@@ -484,7 +487,7 @@
                     app:layout_constraintEnd_toEndOf="@+id/tvTrainning"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/tvTrainning"
-                    app:srcCompat="@drawable/done" />
+                    app:srcCompat="@drawable/doneg" />
 
 
                 <TextView
@@ -500,37 +503,42 @@
 
                 <TextView
                     android:id="@+id/tvWeightNum"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:layout_width="80dp"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="28dp"
+                    android:alpha="0.8"
+                    android:fontFamily="@font/andika"
                     android:text="53.5"
                     android:textSize="30dp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toTopOf="@+id/imageView7"
                     app:layout_constraintStart_toStartOf="@+id/tvInfo"
                     app:layout_constraintTop_toBottomOf="@+id/imageView5"
-                    app:layout_constraintVertical_bias="0.485" />
+                    app:layout_constraintVertical_bias="0.0" />
 
                 <TextView
                     android:id="@+id/tvHeightNum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="116dp"
+                    android:alpha="0.8"
                     android:text="156"
                     android:textSize="30dp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toTopOf="@+id/imageView8"
                     app:layout_constraintEnd_toEndOf="@+id/tvInfo"
-                    app:layout_constraintHorizontal_bias="0.443"
+                    app:layout_constraintHorizontal_bias="0.349"
                     app:layout_constraintStart_toEndOf="@+id/tvWeightNum"
                     app:layout_constraintTop_toBottomOf="@+id/imageView6"
-                    app:layout_constraintVertical_bias="0.361" />
+                    app:layout_constraintVertical_bias="0.085" />
 
                 <TextView
                     android:id="@+id/tvSex"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="28dp"
+                    android:alpha="0.8"
+                    android:fontFamily="@font/andika"
                     android:text="Male"
                     android:textSize="30dp"
                     android:textStyle="bold"
@@ -548,7 +556,7 @@
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/tvInfo"
                     app:layout_constraintEnd_toEndOf="@+id/tvInfo"
-                    app:layout_constraintHorizontal_bias="0.825"
+                    app:layout_constraintHorizontal_bias="0.736"
                     app:layout_constraintStart_toEndOf="@+id/tvSex"
                     app:layout_constraintTop_toBottomOf="@+id/imageView8"
                     app:layout_constraintVertical_bias="0.0" />
@@ -579,7 +587,7 @@
                     app:layout_constraintEnd_toEndOf="@+id/tvTrainning"
                     app:layout_constraintHorizontal_bias="0.432"
                     app:layout_constraintStart_toStartOf="@+id/tvTrainning"
-                    app:srcCompat="@drawable/cancel" />
+                    app:srcCompat="@drawable/doneg" />
 
                 <TextView
                     android:id="@+id/tvNotDone"
@@ -717,22 +725,23 @@
                     android:id="@+id/textView5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="84dp"
+                    android:layout_marginStart="4dp"
                     android:text="(kg)"
-                    app:layout_constraintEnd_toStartOf="@+id/tvHeightNum"
-                    app:layout_constraintHorizontal_bias="0.039"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvInfo"
                     app:layout_constraintStart_toEndOf="@+id/tvWeightNum"
-                    app:layout_constraintTop_toTopOf="@+id/tvInfo" />
+                    app:layout_constraintTop_toTopOf="@+id/tvInfo"
+                    app:layout_constraintVertical_bias="0.313" />
 
                 <TextView
                     android:id="@+id/textView21"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="192dp"
-                    android:layout_marginTop="36dp"
+                    android:layout_marginTop="72dp"
                     android:text="(cm)"
-                    app:layout_constraintStart_toEndOf="@+id/textView5"
-                    app:layout_constraintTop_toBottomOf="@+id/textView18" />
+                    app:layout_constraintEnd_toEndOf="@+id/tvInfo"
+                    app:layout_constraintHorizontal_bias="0.458"
+                    app:layout_constraintStart_toEndOf="@+id/tvHeightNum"
+                    app:layout_constraintTop_toTopOf="@+id/tvInfo" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>

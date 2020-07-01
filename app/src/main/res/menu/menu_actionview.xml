@@ -8,6 +8,7 @@
         app:showAsAction="always"
         android:title="Search"
         android:icon="@drawable/search"
+        android:singleLine="true"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:voiceSearchMode="showVoiceSearchButton|launchRecognizer"
         app:actionViewClass="android.widget.SearchView"/>
