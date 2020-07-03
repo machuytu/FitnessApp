@@ -3,24 +3,36 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="horizontal"
+    android:gravity="center"
+    android:backgroundTint="@android:color/transparent"
+    android:background="@drawable/custom_button"
+    android:layout_gravity="center_horizontal"
+
+    >
 
 
     <Button
         android:id="@+id/dialog_delete"
         android:layout_margin="10dp"
-        android:layout_width="match_parent"
-        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:textColor="#900c3f"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:text="DELETE"/>
+        android:backgroundTint="#ffcac2"
+        android:fontFamily="@font/andika"
+        android:textStyle="bold"
+        android:background="@drawable/custom_button"
+        android:text="Delete"/>
 
     <Button
         android:id="@+id/dialog_cancel"
         android:layout_margin="10dp"
-        android:layout_width="match_parent"
-        android:textColor="@color/white"
-        android:background="@color/colorPrimary"
+        android:layout_width="wrap_content"
+        android:textColor="#cae8d5"
+        android:textStyle="bold"
+        android:fontFamily="@font/andika"
+        android:backgroundTint="#3b6978"
+        android:background="@drawable/custom_button"
         android:layout_height="wrap_content"
         android:text="CANCEL"/>
 

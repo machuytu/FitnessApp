@@ -133,6 +133,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/dynamicArcView"
+            android:fontFamily="@font/andika"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
@@ -141,8 +142,8 @@
             android:layout_marginEnd="56dp"
             android:layout_marginBottom="38dp"
             android:gravity="center"
-            android:text="AGSHGKD"
-            android:textSize="40dp" />
+            android:text="10000 Steps to goal"
+            android:textSize="30dp" />
 
         <TextView
             android:id="@+id/textPercentage"

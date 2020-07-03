@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+
 <androidx.drawerlayout.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -127,21 +127,20 @@
                 android:textSize="30dp"
                 android:textStyle="bold" />
 
-            <com.natasa.progressviews.CircleProgressBar
+
+            <ImageView
                 android:id="@+id/run_progress"
-                android:layout_width="326dp"
-                android:layout_height="301dp"
+                android:layout_width="433dp"
+                android:layout_height="311dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginStart="52dp"
-                android:layout_marginTop="160dp"
-                android:layout_marginEnd="33dp"
+                android:layout_marginStart="53dp"
+                android:layout_marginTop="152dp"
+                android:layout_marginEnd="48dp"
                 android:layout_marginBottom="0dp"
-                app:progress_color="@color/protein"
-                app:text_color="@color/protein" />
-
+                android:background="@drawable/custom_circle" />
 
             <RadioGroup
                 android:id="@+id/rdiGroup"
@@ -243,37 +242,37 @@
             tools:ignore="HardcodedText,RtlHardcoded" />
 
         <Button android:id="@+id/btn_start"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="167dp"
             android:layout_marginLeft="167dp"
             android:layout_marginBottom="67dp"
-            android:background="@drawable/btnstart"/>
+            android:background="@drawable/btnplay"/>
 
         <Button android:id="@+id/btn_stop"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="28dp"
             android:layout_marginLeft="28dp"
             android:layout_marginBottom="67dp"
-            android:background="@drawable/btnstop" />
+            android:background="@drawable/btnstopp" />
 
         <Button android:id="@+id/btn_restart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="296dp"
             android:layout_marginLeft="296dp"
             android:layout_marginBottom="68dp"
-            android:background="@drawable/btnpause1" />
+            android:background="@drawable/btnpauseee" />
 
         <TextView
             android:id="@+id/textActivity1"

@@ -245,17 +245,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="2dp"
-                        android:layout_toLeftOf="@+id/btnMonthYear"
-                        android:alpha="0.5"
-                        app:srcCompat="@drawable/downarrow">
-
-                    </ImageView>
-
                     <!--                    <Spinner-->
                     <!--                        android:id="@+id/spinner"-->
                     <!--                        android:text="Choose"-->
@@ -268,13 +257,24 @@
 
                     <!--                    </Spinner>-->
 
+                    <ImageView
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="7dp"
+                        android:layout_toLeftOf="@+id/btnMonthYear"
+                        android:alpha="0.5"
+                        app:srcCompat="@drawable/downarrow">
+
+                    </ImageView>
+
                     <Button
                         android:id="@+id/btnMonthYear"
-                        android:layout_width="40dp"
+                        android:layout_width="45dp"
                         android:layout_height="20dp"
                         android:layout_alignParentRight="true"
                         android:layout_marginTop="10dp"
-                        android:layout_marginRight="20dp"
+                        android:layout_marginRight="32dp"
                         android:alpha="0.5"
                         android:background="@drawable/btn"
                         android:gravity="left"
@@ -337,15 +337,15 @@
                     android:layout_height="wrap_content"
                     android:alpha="0.8"
                     android:fontFamily="@font/andika"
-                    android:text="100cals"
+                    android:text="100"
                     android:textSize="25dp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/tvCount"
                     app:layout_constraintEnd_toEndOf="@+id/tvCount"
-                    app:layout_constraintHorizontal_bias="0.119"
+                    app:layout_constraintHorizontal_bias="0.193"
                     app:layout_constraintStart_toStartOf="@+id/tvCount"
                     app:layout_constraintTop_toTopOf="@+id/tvCount"
-                    app:layout_constraintVertical_bias="0.872" />
+                    app:layout_constraintVertical_bias="0.902" />
 
                 <ImageView
                     android:id="@+id/imageView5"
@@ -480,8 +480,8 @@
 
                 <pl.droidsonroids.gif.GifImageView
                     android:id="@+id/imgDone"
-                    android:layout_width="61dp"
-                    android:layout_height="40dp"
+                    android:layout_width="81dp"
+                    android:layout_height="60dp"
                     android:alpha="0.5"
                     android:visibility="invisible"
                     app:layout_constraintBottom_toBottomOf="@+id/tvTrainning"
@@ -490,17 +490,27 @@
                     app:layout_constraintTop_toTopOf="@+id/tvTrainning"
                     app:srcCompat="@drawable/donegg" />
 
+                <pl.droidsonroids.gif.GifImageView
+                    android:id="@+id/imgNotDone"
+                    android:layout_width="81dp"
+                    android:layout_height="60dp"
+                    android:alpha="0.5"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvTrainning"
+                    app:layout_constraintEnd_toEndOf="@+id/tvTrainning"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tvTrainning"
+                    app:srcCompat="@drawable/xgif" />
 
                 <TextView
                     android:id="@+id/textView23"
                     android:layout_width="71dp"
                     android:layout_height="24dp"
-                    android:layout_marginStart="8dp"
                     android:text="Trainning"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/imageView9"
                     app:layout_constraintTop_toTopOf="@+id/tvTrainning"
-                    app:layout_constraintVertical_bias="0.111" />
+                    app:layout_constraintVertical_bias="0.099" />
 
                 <TextView
                     android:id="@+id/tvWeightNum"
@@ -579,6 +589,22 @@
                     app:layout_constraintTop_toTopOf="@+id/tvTrainning"
                     app:layout_constraintVertical_bias="0.513" />
 
+                <TextView
+                    android:id="@+id/tvNotDone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="96dp"
+                    android:fontFamily="@font/andika"
+                    android:text="Not Done!"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvTrainning"
+                    app:layout_constraintEnd_toEndOf="@+id/tvTrainning"
+                    app:layout_constraintStart_toEndOf="@+id/imgDone"
+                    app:layout_constraintTop_toTopOf="@+id/tvTrainning"
+                    app:layout_constraintVertical_bias="0.513" />
+
                 <!--                <ImageView-->
                 <!--                    android:id="@+id/imageView4"-->
                 <!--                    android:layout_width="30dp"-->
@@ -592,34 +618,34 @@
                 <!--                    app:layout_constraintVertical_bias="0.0"-->
                 <!--                    app:srcCompat="@drawable/right" />-->
 
-                <pl.droidsonroids.gif.GifImageView
-                    android:id="@+id/imgNotDone"
-                    android:layout_width="58dp"
-                    android:layout_height="44dp"
-                    android:alpha="0.5"
-                    android:visibility="invisible"
-                    app:layout_constraintBottom_toBottomOf="@+id/tvTrainning"
-                    app:layout_constraintEnd_toStartOf="@+id/tvNotDone"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="@+id/tvTrainning"
-                    app:layout_constraintTop_toTopOf="@+id/tvTrainning"
-                    app:layout_constraintVertical_bias="0.6"
-                    app:srcCompat="@drawable/xgif" />
+<!--                <pl.droidsonroids.gif.GifImageView-->
+<!--                    android:id="@+id/imgNotDone"-->
+<!--                    android:layout_width="58dp"-->
+<!--                    android:layout_height="44dp"-->
+<!--                    android:alpha="0.5"-->
+<!--                    android:visibility="invisible"-->
+<!--                    app:layout_constraintBottom_toBottomOf="@+id/tvTrainning"-->
+<!--                    app:layout_constraintEnd_toStartOf="@+id/tvNotDone"-->
+<!--                    app:layout_constraintHorizontal_bias="1.0"-->
+<!--                    app:layout_constraintStart_toStartOf="@+id/tvTrainning"-->
+<!--                    app:layout_constraintTop_toTopOf="@+id/tvTrainning"-->
+<!--                    app:layout_constraintVertical_bias="0.6"-->
+<!--                    app:srcCompat="@drawable/xgif" />-->
 
-                <TextView
-                    android:id="@+id/tvNotDone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="96dp"
-                    android:fontFamily="@font/andika"
-                    android:text="Not Done !"
-                    android:textSize="20dp"
-                    android:textStyle="bold"
-                    android:visibility="invisible"
-                    app:layout_constraintEnd_toEndOf="@+id/tvTrainning"
-                    app:layout_constraintHorizontal_bias="0.782"
-                    app:layout_constraintStart_toStartOf="@+id/tvTrainning"
-                    app:layout_constraintTop_toTopOf="@+id/tvTrainning" />
+<!--                <TextView-->
+<!--                    android:id="@+id/tvNotDone"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="96dp"-->
+<!--                    android:fontFamily="@font/andika"-->
+<!--                    android:text="Not Done !"-->
+<!--                    android:textSize="20dp"-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:visibility="invisible"-->
+<!--                    app:layout_constraintEnd_toEndOf="@+id/tvTrainning"-->
+<!--                    app:layout_constraintHorizontal_bias="0.782"-->
+<!--                    app:layout_constraintStart_toStartOf="@+id/tvTrainning"-->
+<!--                    app:layout_constraintTop_toTopOf="@+id/tvTrainning" />-->
 
                 <Button
                     android:id="@+id/btnTrainning"
@@ -640,8 +666,8 @@
 
                 <ImageView
                     android:id="@+id/imageView10"
-                    android:layout_width="112dp"
-                    android:layout_height="99dp"
+                    android:layout_width="150dp"
+                    android:layout_height="100dp"
                     android:alpha="0.8"
                     app:layout_constraintBottom_toTopOf="@+id/tvBurnCalo"
                     app:layout_constraintEnd_toEndOf="@+id/tvCount"
@@ -649,12 +675,12 @@
                     app:layout_constraintStart_toStartOf="@+id/tvCount"
                     app:layout_constraintTop_toTopOf="@+id/tvCount"
                     app:layout_constraintVertical_bias="1.0"
-                    app:srcCompat="@drawable/burncalo" />
+                    app:srcCompat="@drawable/burncalo1" />
 
                 <ImageView
                     android:id="@+id/imageView11"
-                    android:layout_width="26dp"
-                    android:layout_height="24dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:alpha="0.5"
                     app:layout_constraintBottom_toBottomOf="@+id/tvCount"
                     app:layout_constraintEnd_toEndOf="@+id/tvCount"

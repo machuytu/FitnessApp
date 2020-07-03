@@ -287,7 +287,7 @@ public class Daily_Training extends AppCompatActivity {
         ex_image.setVisibility(View.INVISIBLE);
         btnStart.setVisibility(View.INVISIBLE);
         btnBack.setVisibility(View.VISIBLE);
-        tvIntro.setVisibility(View.VISIBLE);
+        tvIntro.setVisibility(View.INVISIBLE);
 
         txtTimer.setVisibility(View.INVISIBLE);
         layoutGetReady.setVisibility(View.VISIBLE);
@@ -477,7 +477,7 @@ public class Daily_Training extends AppCompatActivity {
 
     private void initData() {
         list.add(new com.tu.fitness_app.Model.Exercise(R.drawable.flow,"Flow Yoga","Chân trước khụy gối,chân sau duỗi thẳng,tay dơ lên nghiêng sang trái và ngược lại"));
-        list.add(new com.tu.fitness_app.Model.Exercise(R.drawable.squatgif,"Split Squat","Chân dang rộng bằng vai, khụy xuống và thẳng lưng "));
+        list.add(new com.tu.fitness_app.Model.Exercise(R.drawable.squatgif,"Split Squat","Chân rộng bằng vai, khụy xuống và thẳng lưng "));
         list.add(new com.tu.fitness_app.Model.Exercise(R.drawable.plankgif,"Plank","Nằm chống đẩy, đi chuyển mỗi tay vuông góc với mặt đất"));
         list.add(new com.tu.fitness_app.Model.Exercise(R.drawable.mountaingif,"Mountain Climber","Tay chống thẳng, chân co duỗi san kẻ"));
         list.add(new com.tu.fitness_app.Model.Exercise(R.drawable.jumpgif,"Jump Ropes","Chân đan chéo dang ra san kẻ"));

@@ -125,11 +125,13 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
                             android:layout_marginTop="15dp"
+                            android:fontFamily="@font/andika"
                             android:padding="5dp"
+                            android:layout_marginLeft="10dp"
                             android:drawableLeft="@drawable/calo"
                             android:text="@string/text9"
                             android:textStyle="bold"
-                            android:textColor="@color/black"
+
                             android:textSize="15sp" />
 
                         <EditText
@@ -138,6 +140,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="100dp"
                             android:layout_toEndOf="@id/textView6"
+                            android:textStyle="bold"
                             android:backgroundTint="@color/black"
                             android:textSize="15sp" />
 
@@ -148,10 +151,11 @@
                             android:layout_below="@id/textView6"
                             android:layout_marginStart="20dp"
                             android:layout_marginTop="18dp"
+                            android:layout_marginLeft="10dp"
                             android:drawableLeft="@drawable/foot"
                             android:padding="5dp"
                             android:text="@string/text10"
-                            android:textColor="@color/black"
+                            android:fontFamily="@font/andika"
                             android:textSize="15sp"
                             android:textStyle="bold" />
 

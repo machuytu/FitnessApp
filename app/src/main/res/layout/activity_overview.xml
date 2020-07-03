@@ -51,14 +51,13 @@
                     android:id="@+id/food_progress"
                     android:layout_width="300dp"
                     android:layout_height="300dp"
-
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="2dp"
                     android:layout_marginEnd="10dp"
+
                     android:text="0"
-                    app:progress_color="@color/protein"
-                    app:text_color="@color/protein"
-                     />
+                    app:progress_color="#e84a5f"
+                    app:text_color="#900c3f" />
 
             </RelativeLayout>
 
@@ -303,7 +302,7 @@
                     android:layout_marginTop="80dp"
                     android:text="0"
                     app:layout_constraintEnd_toEndOf="@+id/txvCarbs"
-                    app:layout_constraintHorizontal_bias="0.64"
+                    app:layout_constraintHorizontal_bias="0.525"
                     app:layout_constraintStart_toStartOf="@+id/txvCarbs"
                     app:layout_constraintTop_toTopOf="@+id/txvCarbs" />
 

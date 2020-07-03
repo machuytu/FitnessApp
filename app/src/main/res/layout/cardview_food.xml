@@ -14,23 +14,24 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+
             <TextView
+                android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
-                android:id="@+id/title"
-                android:textSize="17sp"
-                android:text="@string/fdxf"
-                android:textAllCaps="true"
-                android:textStyle="bold"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="12dp"
+                android:fontFamily="@font/andika"
+                android:text="@string/fdxf"
+                android:textAllCaps="true"
                 android:textColor="#00688B"
-                />
+                android:textSize="15sp"
+                android:textStyle="bold" />
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginTop="38dp"
-                android:src="@drawable/foodcard"
+                android:src="@drawable/food2"
                 android:layout_marginStart="10dp"
                 android:id="@+id/food"/>
             <TextView
@@ -38,6 +39,7 @@
                 android:layout_height="20dp"
                 android:textSize="15sp"
                 android:id="@+id/type"
+                android:textStyle="bold"
                 android:layout_toEndOf="@+id/food"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="45dp"
@@ -50,13 +52,14 @@
                 android:layout_height="30dp"
                 android:layout_marginTop="78dp"
                 android:paddingBottom="5dp"
-                android:src="@drawable/calories"
+                android:src="@drawable/calories1"
                 android:layout_marginStart="10dp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:id="@+id/calories"
+                android:textStyle="bold"
                 android:paddingBottom="5dp"
                 android:layout_toEndOf="@+id/food"
                 android:layout_marginStart="5dp"
@@ -73,22 +76,25 @@
                 android:paddingBottom="5dp"
                 android:layout_toEndOf="@+id/calories"
                 android:text="@string/calories"
-                android:textColor="@color/red"
+                android:textColor="@color/black"
                 android:textSize="15sp" />
 
             <Button
+                android:id="@+id/addFood"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:text="@string/add"
-                android:id="@+id/addFood"
-                android:background="@drawable/custom_button"
-                android:textColor="#00688B"
 
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
+                android:layout_alignBottom="@+id/type"
+                android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginEnd="10dp"/>
+                android:layout_marginStart="299dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="-28dp"
+                android:background="@drawable/custom_button"
+                android:text="@string/add"
+                android:textColor="#00688B"
+                android:textStyle="bold" />
 
         </RelativeLayout>
     </LinearLayout>

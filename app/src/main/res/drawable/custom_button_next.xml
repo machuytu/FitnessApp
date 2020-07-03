@@ -13,10 +13,23 @@
         android:bottomRightRadius="30dp"
         android:topLeftRadius="30dp"
         />
+<!--    <gradient-->
+<!--        android:angle="45"-->
+<!--        android:startColor="#00BFFF"-->
+<!--        android:endColor="#0000BB"-->
+
+        />
     <gradient
-        android:angle="45"
-        android:startColor="#00BFFF"
-        android:endColor="#0000BB"
+    android:angle="45"
+    android:startColor="#40bad5"
+    android:endColor="#035aa6"
+
+    />
+
+<!--    <gradient-->
+<!--        android:angle="45"-->
+<!--        android:startColor="#b2ebf2"-->
+<!--        android:endColor="#005082"-->
 
         />
 

@@ -28,11 +28,12 @@
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:fontFamily="@font/andika"
                 android:gravity="center_vertical|center_horizontal"
                 android:text="@string/name_of_exercise"
                 android:textColor="@android:color/black"
-                android:textStyle="bold"
-                android:textSize="28dp" />
+                android:textSize="28dp"
+                android:textStyle="bold" />
 
 <!--            <ImageView-->
 <!--                android:id="@+id/detail_image"-->
@@ -49,17 +50,19 @@
                 android:src="@drawable/flow">
 
             </pl.droidsonroids.gif.GifImageView>
+
             <TextView
                 android:id="@+id/tvIntro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/title"
-                android:alpha="0.8"
-                android:layout_marginTop="30dp"
                 android:layout_centerHorizontal="true"
+                android:layout_marginTop="50dp"
+                android:alpha="0.8"
+                android:layout_margin="5dp"
+                android:text="TextView"
                 android:textColor="@color/black"
-                android:textSize="20dp"
-                android:text="TextView" />
+                android:textSize="20dp" />
             <LinearLayout
                 android:id="@+id/layout_get_ready"
                 android:visibility="invisible"
@@ -93,33 +96,28 @@
                 android:id="@+id/btnBack"
 
                 android:layout_width="207dp"
-                android:layout_height="500dp"
+                android:layout_height="wrap_content"
 
-                android:layout_below="@+id/detail_image"
+
+                android:layout_alignTop="@+id/timer"
 
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="-32dp"
-                android:layout_marginEnd="4dp"
-                android:layout_marginRight="4dp"
-                android:layout_marginBottom="56dp"
-                android:layout_weight="1"
-                android:text="@string/back"
+                android:layout_marginTop="38dp"
+                android:layout_marginBottom="81dp"
 
+                android:text="@string/back"
                 android:textAllCaps="true"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/white"
                 android:textSize="15dp"
+
+
                 android:textStyle="bold"
                 app:cornerRadius="40dp"
-                app:fButtonColor="#2980b9"
-                app:shadowColor="#1f4068"
+                app:fButtonColor="#fb7b6b"
+                app:shadowColor="#e84a5f"
                 app:shadowEnabled="true"
-                app:shadowHeight="4dp"
-
-
-                />
+                app:shadowHeight="4dp" />
 
             <info.hoang8f.widget.FButton
                 android:id="@+id/btnStart"
@@ -136,11 +134,12 @@
                 android:layout_weight="1"
                 android:text="@string/start"
                 android:textAllCaps="true"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/white"
                 android:textSize="15dp"
                 android:textStyle="bold"
                 app:cornerRadius="40dp"
-                app:fButtonColor="#2980b9"
+
+                app:fButtonColor="#00a8cc"
                 app:shadowColor="#1f4068"
                 app:shadowEnabled="true"
                 app:shadowHeight="4dp" />
@@ -153,7 +152,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="20dp"
                 android:text=""
-                android:textColor="@color/red"
+                android:textColor="#e58a8a"
                 android:textSize="50sp"
                 android:textStyle="bold" />
 
