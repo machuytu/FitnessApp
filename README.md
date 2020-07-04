@@ -1,5 +1,5 @@
 # Fitness App
-Mạc Huy Tú, MSSV: 17521196 <br/>
+Mạc Huy Tú - 17521196 <br/>
 Trần Quang Phúc – 17520912 <br/>
 Hoàng Thụy Trinh – 17521162 <br/>
 Nguyễn Bích Trâm – 17521147 <br/>
