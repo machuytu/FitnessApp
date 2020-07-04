@@ -106,6 +106,7 @@ public class SettingPage extends AppCompatActivity {
         progressBar = (MaterialProgressBar)findViewById(R.id.progressBar);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("Setting");
         toolbar.setTitleTextColor(Color.BLACK);
         setSupportActionBar(toolbar);
         NavigationView navigationView = findViewById(R.id.nav_view);

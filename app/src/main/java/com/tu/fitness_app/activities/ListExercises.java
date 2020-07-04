@@ -63,6 +63,7 @@ public class ListExercises extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("List Excercise");
         setSupportActionBar(toolbar);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
     //nav_header

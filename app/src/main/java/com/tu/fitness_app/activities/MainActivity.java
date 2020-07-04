@@ -16,12 +16,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -113,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     ImageView btnTraining;
 
-    public static float mSeriesMax = 2f;
+    public static float mSeriesMax = 0f;
     // Sensor data
     private TextView textView;
     private SensorManager msensorManager;
@@ -168,11 +165,11 @@ public class MainActivity extends AppCompatActivity {
         tProtein = findViewById(R.id.tProtein);
         tFat = findViewById(R.id.tFat);
         //default
-        mytotalcalories = 2f;
-        dailytotalcalories = 2f;
-        runmodetotalcalories = 2f;
-        dailytotaldistances = 2f;
-        runmodetotaldistances = 2f;
+        mytotalcalories = 0f;
+        dailytotalcalories = 0f;
+        runmodetotalcalories = 0f;
+        dailytotaldistances = 0f;
+        runmodetotaldistances = 0f;
         //getDay format
         Date date = java.util.Calendar.getInstance().getTime();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -320,6 +317,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Navigation Bar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Home");
         setSupportActionBar(toolbar);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View headView = navigationView.getHeaderView(0);
@@ -468,8 +466,8 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     case R.id.item5:
-                                intent = new Intent(MainActivity.this, StepCountDaily.class);
-                                startActivity(intent);
+                        intent = new Intent(MainActivity.this, StepCountDaily.class);
+                        startActivity(intent);
                         break;
                     case R.id.item6:
                         AuthUI.getInstance().signOut(MainActivity.this).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -573,13 +571,13 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("test",String.valueOf(totaldistancessum));
                 }
                 else {
-                    dailytotalsteps = 2f;
+                    dailytotalsteps = 0f;
                     tvStep.setText(String.valueOf(dailytotalsteps));
 
-                    dailytotalcalories = 2f;
+                    dailytotalcalories = 0f;
                     totalCaloriessum += dailytotalcalories;
 
-                    dailytotaldistances = 2f;
+                    dailytotaldistances = 0f;
                     totaldistancessum += dailytotaldistances;
                 }
             }
@@ -606,13 +604,13 @@ public class MainActivity extends AppCompatActivity {
                     tvQuangDuong.setText(String.valueOf(totaldistancessum));
                 }
                 else {
-                    runmodetotalsteps = 2f;
+                    runmodetotalsteps = 0f;
                     tvRun.setText(String.valueOf(runmodetotalsteps));
 
-                    runmodetotalcalories = 2f;
+                    runmodetotalcalories = 0f;
                     totalCaloriessum += runmodetotalcalories;
 
-                    runmodetotaldistances = 2f;
+                    runmodetotaldistances = 0f;
                     totaldistancessum += runmodetotaldistances;
                 }
             }

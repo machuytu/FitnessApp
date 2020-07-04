@@ -10,13 +10,9 @@ import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,7 +40,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.tu.fitness_app.Model.StepCalculate;
 import com.tu.fitness_app.R;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -88,6 +83,7 @@ public class RunMode extends AppCompatActivity implements SensorEventListener {
     private void createNavBar() {
         // Navigation Bar
         Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("Run mode");
         setSupportActionBar(toolbar);
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);

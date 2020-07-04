@@ -125,10 +125,10 @@ public class Food_MyRecycleAdapter extends RecyclerView.Adapter<Food_MyRecycleAd
 
             vAdd.setOnClickListener(v -> {
                 count++;
-                caloriesCount = caloriesCount + (Float.parseFloat(String.valueOf(fooditem.get("ical"))));
-                totalCarbs = totalCarbs + (Float.parseFloat(String.valueOf(fooditem.get("icarbs"))));
-                totalFat = totalFat + (Float.parseFloat(String.valueOf(fooditem.get("ifat"))));
-                totalProtein = totalProtein + (Float.parseFloat((String.valueOf(fooditem.get("iprotein")))));
+                LoginActivity.calRef = LoginActivity.calRef + (Float.parseFloat(String.valueOf(fooditem.get("ical"))));
+                LoginActivity.user_carbs = LoginActivity.user_carbs + (Float.parseFloat(String.valueOf(fooditem.get("icarbs"))));
+                LoginActivity.user_fat = LoginActivity.user_fat + (Float.parseFloat(String.valueOf(fooditem.get("ifat"))));
+                LoginActivity.user_protein =  LoginActivity.user_protein + (Float.parseFloat((String.valueOf(fooditem.get("iprotein")))));
                 Log.d("After Adding", String.valueOf(caloriesCount) + String.valueOf(caloriesCount) + String.valueOf(caloriesCount) + String.valueOf(caloriesCount));
 
 
@@ -138,14 +138,14 @@ public class Food_MyRecycleAdapter extends RecyclerView.Adapter<Food_MyRecycleAd
                 float fat = (Float.parseFloat(String.valueOf(fooditem.get("ifat"))));
                 float protein = (Float.parseFloat((String.valueOf(fooditem.get("iprotein")))));
 
-                getCaloriesRef("totalcalories").setValue(caloriesCount);
-                getCaloriesRef("totalfat").setValue(totalFat);
-                getCaloriesRef("totalcarbs").setValue(totalCarbs);
-                getCaloriesRef("totalprotein").setValue(totalProtein);
-                LoginActivity.calRef = caloriesCount;
-                LoginActivity.user_fat = totalFat;
-                LoginActivity.user_carbs = totalCarbs;
-                LoginActivity.user_protein = totalProtein;
+                getCaloriesRef("totalcalories").setValue(LoginActivity.calRef);
+                getCaloriesRef("totalfat").setValue(LoginActivity.user_fat);
+                getCaloriesRef("totalcarbs").setValue(LoginActivity.user_carbs);
+                getCaloriesRef("totalprotein").setValue(LoginActivity.user_protein);
+//                LoginActivity.calRef = caloriesCount;
+//                LoginActivity.user_fat = totalFat;
+//                LoginActivity.user_carbs = totalCarbs;
+//                LoginActivity.user_protein = totalProtein;
 
                 if(count == 1) {
                     String toast1 = count + "item added";

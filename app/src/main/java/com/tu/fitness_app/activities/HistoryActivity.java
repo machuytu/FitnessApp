@@ -3,7 +3,6 @@ package com.tu.fitness_app.activities;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -68,6 +67,11 @@ public class HistoryActivity extends AppCompatActivity {
 
         textView = findViewById(R.id.selectedDate);
 
+        sumOfCalories = LoginActivity.calRef;
+        sumOfFat = LoginActivity.user_fat;
+        sumOfCarbs = LoginActivity.user_carbs;
+        sumOfProtein = LoginActivity.user_protein;
+
         historyArrayList =new ArrayList<>();
         historyArrayList1 =new ArrayList<>();
         // Database
@@ -128,7 +132,7 @@ public class HistoryActivity extends AppCompatActivity {
                     +'-'+ (clickedDayCalendar.get(Calendar.MONTH) + 1)
                     +'-'+ clickedDayCalendar.get(Calendar.DATE);
             textView.setText(selectedDate);
-            Log.d("day:", selectedDate);
+
             alertDialog.dismiss();
 
             // Read from the database
@@ -144,8 +148,10 @@ public class HistoryActivity extends AppCompatActivity {
         return mDatabase.child("Calories").child(userId).child(ref);
     }
 
-    public void readFromDatabase(final String date) {
+    public void readFromDatabase(String date) {
+
         final String date_today = today.getYear() + 1900 + "-" + (1 + today.getMonth()) + "-" + today.getDate();
+
         ref_history.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -156,7 +162,6 @@ public class HistoryActivity extends AppCompatActivity {
                     History history = historySnapShot.getValue(History.class);
                     historyArrayList1.add(history.getItem());
                     historyArrayList.add(history);
-                    Log.d("test:", String.valueOf(historyArrayList));
                 }
                 adapter1 = new ArrayAdapter<>(HistoryActivity.this, android.R.layout.simple_list_item_1,historyArrayList1);
 //                historyListView.setAdapter(adapter);
@@ -181,73 +186,24 @@ public class HistoryActivity extends AppCompatActivity {
 
                         Button delete_btn = dialogView.findViewById(R.id.dialog_delete);
                         delete_btn.setOnClickListener(v -> {
-                            getCaloriesRef(date).child("totalcalories").addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    if (dataSnapshot.exists()) {
-                                        sumOfCalories = Float.parseFloat(String.valueOf(dataSnapshot.getValue()));
-                                    } else {
-                                        sumOfCalories = 0f;
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
-                                }
-                            });
-
-                            getCaloriesRef(date).child("totalfat").addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    if (dataSnapshot.exists()) {
-                                        sumOfFat = Float.parseFloat(String.valueOf(dataSnapshot.getValue()));
-                                    } else {
-                                        sumOfFat = 0f;
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
-                                }
-                            });
-
-                            getCaloriesRef(date).child("totalcarbs").addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    if (dataSnapshot.exists()) {
-                                        sumOfCarbs = Float.parseFloat(String.valueOf(dataSnapshot.getValue()));
-                                    } else {
-                                        sumOfCarbs = 0f;
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
-                                }
-                            });
-
-                            getCaloriesRef(date).child("totalprotein").addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    if (dataSnapshot.exists()) {
-                                        sumOfProtein = Float.parseFloat(String.valueOf(dataSnapshot.getValue()));
-                                    } else {
-                                        sumOfProtein = 0f;
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
-                                }
-                            });
-
-                            Log.d("tong calories truoc", String.valueOf(sumOfCalories));
+//
                             sumOfCalories = sumOfCalories - Float.parseFloat(history.getTotalCalories());
                             sumOfFat = sumOfFat - history.getTotalFat();
                             sumOfCarbs = sumOfCarbs - history.getTotalCarbs();
                             sumOfProtein = sumOfProtein - history.getTotalProtein();
 
-                            Log.d("tong calories sau", String.valueOf(sumOfCalories));
+                            if (sumOfCalories < 0.5) {
+                                sumOfCalories = 0;
+                            }
+                            if (sumOfFat < 0.5) {
+                                sumOfFat = 0;
+                            }
+                            if (sumOfCarbs < 0.5) {
+                                sumOfCarbs = 0;
+                            }
+                            if (sumOfProtein < 0.5) {
+                                sumOfProtein = 0;
+                            }
 
                             getCaloriesRef(date).child("totalcalories").setValue(sumOfCalories);
                             getCaloriesRef(date).child("totalfat").setValue(sumOfFat);

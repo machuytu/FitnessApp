@@ -155,6 +155,7 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
     private void createNavBar() {
         // Navigation Bar
         Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("Set Count Daily");
         setSupportActionBar(toolbar);
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);

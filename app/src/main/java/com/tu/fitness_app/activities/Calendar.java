@@ -1,6 +1,5 @@
 package com.tu.fitness_app.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,11 +30,9 @@ import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.tu.fitness_app.Custom.WorkoutDoneDecorator;
 import com.tu.fitness_app.Database.Fitness;
-import com.tu.fitness_app.Model.Setting;
 import com.tu.fitness_app.Model.WorkoutDays;
 import com.tu.fitness_app.R;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -73,6 +70,7 @@ public class Calendar extends AppCompatActivity {
         progressBar = (MaterialProgressBar)findViewById(R.id.progressBar);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("Calendar");
         setSupportActionBar(toolbar);
         NavigationView navigationView = findViewById(R.id.nav_view);
         //nav_header

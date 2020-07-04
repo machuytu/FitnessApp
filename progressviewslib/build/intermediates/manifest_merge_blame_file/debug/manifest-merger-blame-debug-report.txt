@@ -6,16 +6,16 @@
 6
 7    <uses-sdk
 8        android:minSdkVersion="22"
-8-->C:\Users\Thuy Trinh\AndroidStudioProjects\FitnessApp\progressviewslib\src\main\AndroidManifest.xml
+8-->C:\Users\ADMIN\Downloads\Android-Yoga-App-master\khoaluan\progressviewslib\src\main\AndroidManifest.xml
 9        android:targetSdkVersion="29" />
-9-->C:\Users\Thuy Trinh\AndroidStudioProjects\FitnessApp\progressviewslib\src\main\AndroidManifest.xml
+9-->C:\Users\ADMIN\Downloads\Android-Yoga-App-master\khoaluan\progressviewslib\src\main\AndroidManifest.xml
 10
 11    <application
-11-->C:\Users\Thuy Trinh\AndroidStudioProjects\FitnessApp\progressviewslib\src\main\AndroidManifest.xml:7:5-12:19
+11-->C:\Users\ADMIN\Downloads\Android-Yoga-App-master\khoaluan\progressviewslib\src\main\AndroidManifest.xml:7:5-12:19
 12        android:allowBackup="true"
-12-->C:\Users\Thuy Trinh\AndroidStudioProjects\FitnessApp\progressviewslib\src\main\AndroidManifest.xml:8:9-35
+12-->C:\Users\ADMIN\Downloads\Android-Yoga-App-master\khoaluan\progressviewslib\src\main\AndroidManifest.xml:8:9-35
 13        android:label="@string/app_name" >
-13-->C:\Users\Thuy Trinh\AndroidStudioProjects\FitnessApp\progressviewslib\src\main\AndroidManifest.xml:10:9-41
+13-->C:\Users\ADMIN\Downloads\Android-Yoga-App-master\khoaluan\progressviewslib\src\main\AndroidManifest.xml:10:9-41
 14    </application>
 15
 16</manifest>

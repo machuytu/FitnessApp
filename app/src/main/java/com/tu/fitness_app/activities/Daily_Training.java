@@ -76,6 +76,7 @@ public class Daily_Training extends AppCompatActivity {
 
         // Navigation Bar
         toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("Daily Training");
         setSupportActionBar(toolbar);
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
