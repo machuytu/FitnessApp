@@ -1,0 +1,342 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    >
+    <LinearLayout
+        android:paddingTop="78dp"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context=".MainActivityFragment"
+        android:layout_gravity="center_vertical"
+        android:orientation="vertical">
+
+        <LinearLayout
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvWelcome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/caveat_brush_regular"
+                android:gravity="left"
+                android:text="Hello!!!"
+                android:textSize="40dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/btnage"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_weight="2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_margin="10dp"
+                android:paddingLeft="10dp"
+                android:alpha="0.5"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/user" />
+
+            <EditText
+
+                android:id="@+id/nameInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/nameInputHint"
+                android:background="@android:color/transparent"
+                android:layout_marginLeft="5dp"
+                android:inputType="text"
+                android:paddingLeft="20dp"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/btnage"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_weight="2"
+            android:layout_marginTop="2dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:background="@drawable/phone"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:alpha="0.5"
+                android:layout_margin="10dp"
+                android:paddingLeft="10dp"/>
+            <EditText
+                android:id="@+id/phoneInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/phoneInputHint"
+                android:inputType="phone"
+                android:background="@android:color/transparent"
+                android:layout_marginLeft="5dp"
+                android:paddingLeft="20dp"
+                android:textSize="18sp"
+                />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/btnage"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_marginTop="2dp"
+            android:layout_weight="2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:background="@drawable/age"
+                android:layout_width="20dp"
+                android:alpha="0.5"
+                android:layout_height="20dp"
+                android:layout_margin="10dp"
+                android:paddingLeft="10dp"/>
+
+            <EditText
+                android:id="@+id/ageInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@android:color/transparent"
+                android:hint="@string/ageInputHint"
+                android:inputType="text"
+                android:paddingLeft="20dp"
+                android:textSize="18sp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/bgweight"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_weight="2"
+            android:layout_marginTop="2dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_margin="10dp"
+                android:alpha="0.5"
+                android:background="@drawable/weight"
+                android:paddingLeft="10dp" />
+            <EditText
+                android:id="@+id/weightInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:hint="@string/weightInputHint"
+                android:inputType="number"
+                android:background="@android:color/transparent"
+                android:layout_marginLeft="5dp"
+                android:paddingLeft="20dp"
+                android:textSize="18sp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/bgheight"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_weight="2"
+            android:layout_marginTop="2dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <ImageView
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:layout_margin="10dp"
+                android:alpha="0.5"
+                android:background="@drawable/height"
+                android:paddingLeft="10dp" />
+
+            <EditText
+                android:id="@+id/heightInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@android:color/transparent"
+                android:hint="@string/heightInputHint"
+                android:inputType="phone"
+                android:paddingLeft="20dp"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginBottom="2dp"
+
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_weight="2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <RadioGroup
+                android:id="@+id/genderGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/maleRadio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/basic3radio1"
+                    android:textColor="@color/greyXL" />
+
+                <RadioButton
+                    android:id="@+id/femaleRadio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/basic3radio2"
+                    android:textColor="@color/greyXL" />
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginBottom="5dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Choose your activity level"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imgHigh"
+                android:layout_width="wrap_content"
+                android:layout_height="76dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/high"  />
+
+            <ImageView
+                android:id="@+id/imgAvg"
+                android:layout_width="wrap_content"
+                android:layout_height="76dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/average" />
+
+            <ImageView
+                android:id="@+id/imgLow"
+                android:layout_width="wrap_content"
+                android:layout_height="76dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/low" />
+
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="horizontal"
+            android:weightSum="3"
+
+            >
+
+
+            <TextView
+                android:id="@+id/tvHigh"
+                android:layout_width="111dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="High" />
+
+            <TextView
+                android:id="@+id/tvAvg"
+                android:layout_width="104dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Average" />
+
+            <TextView
+                android:id="@+id/tvLow"
+                android:layout_width="96dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Low" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_weight="2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <Button
+                android:id="@+id/nextbutton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_button_next"
+                android:textStyle="bold"
+                android:text="Next"
+                android:textColor="@color/white"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:paddingLeft="50dp"
+                android:paddingTop="10dp"
+                android:paddingRight="50dp"
+                android:paddingBottom="10dp" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

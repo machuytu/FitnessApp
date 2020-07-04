@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/aldrich</item>
+        <item>@font/andika</item>
+        <item>@font/cagliostro</item>
+        <item>@font/chelsea_market_regular</item>
+        <item>@font/freckle_face</item>
+        <item>@font/galdeano</item>
+    </array>
+</resources>
