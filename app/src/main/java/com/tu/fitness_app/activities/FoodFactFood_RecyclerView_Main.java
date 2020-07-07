@@ -91,7 +91,7 @@ public class FoodFactFood_RecyclerView_Main extends Fragment {
         alphaApdater.setDuration(300);
         mRecyclerView.setAdapter(alphaApdater);
         // Voice
-        voice = (FloatingActionButton) rootView.findViewById(R.id.vsfb);
+//        voice = (FloatingActionButton) rootView.findViewById(R.id.vsfb);
         voice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
