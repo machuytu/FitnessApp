@@ -23,6 +23,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.tu.fitness_app.Model.History;
 import com.tu.fitness_app.Model.Nutriments;
 import com.tu.fitness_app.Model.Product;
 import com.tu.fitness_app.R;
@@ -56,6 +57,7 @@ public class DetailActivity extends AppCompatActivity  {
     public static float user_fat1 = 0f;
     public static float user_carbs1 = 0f;
     public static float user_protein1 = 0f;
+    public static String username = "";
 
     Date today = new Date();
 
@@ -94,11 +96,24 @@ public class DetailActivity extends AppCompatActivity  {
             user_carbs1 = user_carbs1 + Float.parseFloat(product.nutriments.getCarbohydrates());
             user_fat1 = user_fat1 + Float.parseFloat(product.nutriments.getFat());
             user_protein1 = user_protein1 + Float.parseFloat(product.nutriments.getProteins());
+            username = product.getProductName();
 
             getCaloriesRef("totalcalories").setValue(calRef1);
             getCaloriesRef("totalfat").setValue(user_carbs1);
             getCaloriesRef("totalcarbs").setValue(user_fat1);
             getCaloriesRef("totalprotein").setValue(user_protein1);
+
+            //DB
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            ref_history = database.getReference("history");
+            //VIEW
+            final String date = today.getYear()+1900 + "-" + (1+today.getMonth()) + "-" + today.getDate();
+
+            //set data
+            String id = ref_history.push().getKey();
+            String UserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            History history = new History(id, date, "EAT : " + username, String.valueOf(calRef1), user_fat1, user_fat1, user_protein1);
+            ref_history.child(UserId).child(date).child(id).setValue(history);
 
             Intent intent = new Intent(DetailActivity.this, OverviewActivity.class);
             startActivity(intent);
