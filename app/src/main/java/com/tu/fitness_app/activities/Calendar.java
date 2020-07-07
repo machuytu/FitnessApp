@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,10 +21,7 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.tu.fitness_app.Custom.WorkoutDoneDecorator;
@@ -50,14 +46,12 @@ public class Calendar extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private WorkoutDays workoutDays;
     private DatabaseReference ref_LisDay;
-    private DatabaseReference mDatabase;
-    private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
-        mAuth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+
         fitness = new Fitness(this);
         workoutDays = new WorkoutDays();
 
@@ -70,21 +64,8 @@ public class Calendar extends AppCompatActivity {
         progressBar = (MaterialProgressBar)findViewById(R.id.progressBar);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("Calendar");
         setSupportActionBar(toolbar);
         NavigationView navigationView = findViewById(R.id.nav_view);
-        //nav_header
-        View headView = navigationView.getHeaderView(0);
-        TextView name = headView.findViewById(R.id.nameHeaderBar);
-        TextView email = headView.findViewById(R.id.headeremail);
-        // nav_header
-        FirebaseUser user = mAuth.getCurrentUser();
-        String userEmail = user.getEmail();
-        Log.d("user email", userEmail);
-        email.setText(userEmail);
-
-        String nameString = LoginActivity.USER_NAME;
-        name.setText(nameString);
 
         drawerLayout = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle actionBarDrawerToggle =
@@ -182,6 +163,7 @@ public class Calendar extends AppCompatActivity {
         HashSet<CalendarDay> convertedList = new HashSet<>();
         for (String value:workoutDay) {
             convertedList.add(CalendarDay.from(new Date(Long.parseLong(value))));
+            Log.d("convertedList", String.valueOf(convertedList));
         }
         materialCalendarView.addDecorator(new WorkoutDoneDecorator(convertedList));
     }

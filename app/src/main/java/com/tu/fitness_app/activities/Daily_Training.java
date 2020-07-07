@@ -304,8 +304,8 @@ public class Daily_Training extends AppCompatActivity {
         String day = ""+ Calendar.getInstance().getTimeInMillis();
         Log.d("day", day);
         List<String> listday = Arrays.asList(day);
+        LoginActivity.day.add(day);
         workoutDays = new WorkoutDays(listday);
-
         //save workout done to db
 //        fitness.saveDay(""+ Calendar.getInstance().getTimeInMillis());
         final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
