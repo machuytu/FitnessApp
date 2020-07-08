@@ -210,6 +210,11 @@ public class HistoryActivity extends AppCompatActivity {
                             getCaloriesRef(date).child("totalcarbs").setValue(sumOfCarbs);
                             getCaloriesRef(date).child("totalprotein").setValue(sumOfProtein);
 
+                            LoginActivity.calRef =  sumOfCalories;
+                            LoginActivity.user_protein =  sumOfProtein;
+                            LoginActivity.user_carbs =  sumOfCarbs;
+                            LoginActivity.user_fat =  sumOfFat;
+
                             ref_history.child(UserId).child(date).child(id).removeValue();
                             alertDialog.dismiss();
                         });
