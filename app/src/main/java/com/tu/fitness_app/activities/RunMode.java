@@ -282,8 +282,7 @@ public class RunMode extends AppCompatActivity implements SensorEventListener {
                         timeStart = 3600000;
                         break;
                 }
-                timeLeft = timeStart;
-                tvTimer.setText(getStringTime(timeLeft));
+                Restart();
             }
         });
 
