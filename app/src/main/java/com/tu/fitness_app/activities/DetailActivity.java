@@ -51,15 +51,19 @@ public class DetailActivity extends AppCompatActivity  {
     private ListView ingredientsList;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
-    private DatabaseReference ref_history;
     private DatabaseReference ref_calories;
-    public static float calRef1 = 0f;
-    public static float user_fat1 = 0f;
-    public static float user_carbs1 = 0f;
-    public static float user_protein1 = 0f;
-    public static String username = "";
+    public float calRef1 = 0f;
+    public float user_fat1 = 0f;
+    public float user_carbs1 = 0f;
+    public float user_protein1 = 0f;
+    public float barcode_cal = 0f;
+    public float barcode_carbs1= 0f;
+    public float barcode_fat1 = 0f;
+    public float barcode_protein1 = 0f;
+    public String username = "";
 
     Date today = new Date();
+    private DatabaseReference ref_history;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,8 +88,12 @@ public class DetailActivity extends AppCompatActivity  {
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
+        calRef1 = calRef1 + LoginActivity.calRef;
+        user_carbs1 = user_carbs1 + LoginActivity.user_carbs;
+        user_fat1 = user_fat1 + LoginActivity.user_fat;
+        user_protein1 = user_protein1 + LoginActivity.user_protein;
         // get data
-        GetDataFirebase();
+//        GetDataFirebase();
 
         // get product with barcode
         GetProduct();
@@ -96,7 +104,17 @@ public class DetailActivity extends AppCompatActivity  {
             user_carbs1 = user_carbs1 + Float.parseFloat(product.nutriments.getCarbohydrates());
             user_fat1 = user_fat1 + Float.parseFloat(product.nutriments.getFat());
             user_protein1 = user_protein1 + Float.parseFloat(product.nutriments.getProteins());
+            barcode_cal = Float.parseFloat(product.nutriments.getCalories());
+            barcode_carbs1 = Float.parseFloat(product.nutriments.getCarbohydrates());
+            barcode_fat1 = Float.parseFloat(product.nutriments.getFat());
+            barcode_protein1 = Float.parseFloat(product.nutriments.getProteins());
             username = product.getProductName();
+
+            LoginActivity.calRef =  calRef1;
+            LoginActivity.user_protein =  user_protein1;
+            LoginActivity.user_carbs =  user_carbs1;
+            LoginActivity.user_fat =  user_fat1;
+
 
             getCaloriesRef("totalcalories").setValue(calRef1);
             getCaloriesRef("totalfat").setValue(user_carbs1);
@@ -112,7 +130,7 @@ public class DetailActivity extends AppCompatActivity  {
             //set data
             String id = ref_history.push().getKey();
             String UserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-            History history = new History(id, date, "EAT : " + username, String.valueOf(calRef1), user_fat1, user_fat1, user_protein1);
+            History history = new History(id, date, "EAT : " + username, String.valueOf(barcode_cal), barcode_fat1, barcode_carbs1, barcode_protein1);
             ref_history.child(UserId).child(date).child(id).setValue(history);
 
             Intent intent = new Intent(DetailActivity.this, OverviewActivity.class);
