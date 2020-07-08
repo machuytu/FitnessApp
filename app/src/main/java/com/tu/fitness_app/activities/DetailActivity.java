@@ -84,8 +84,12 @@ public class DetailActivity extends AppCompatActivity  {
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
+        calRef1 = calRef1 + LoginActivity.calRef;
+        user_carbs1 = user_carbs1 + LoginActivity.user_carbs;
+        user_fat1 = user_fat1 + LoginActivity.user_fat;
+        user_protein1 = user_protein1 + LoginActivity.user_protein;
         // get data
-        GetDataFirebase();
+//        GetDataFirebase();
 
         // get product with barcode
         GetProduct();
