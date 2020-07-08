@@ -72,7 +72,6 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
     private int stepAtStart;
     private int stepInDB;
 
-
     private TextView tvPercentage;
     private TextView tvStep;
     private TextView tvRemaining;
@@ -97,8 +96,6 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
         tvPercentage = findViewById(R.id.textPercentage);
         tvRemaining = findViewById(R.id.textRemaining);
         tvStep = findViewById(R.id.textStep);
-
-
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         StepCalculate.mode = 0; //walk
@@ -278,7 +275,7 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
         seriesItem.addArcSeriesItemListener(new SeriesItem.SeriesItemListener() {
             @Override
             public void onSeriesItemAnimationProgress(float percentComplete, float currentPosition) {
-                tvStep.setText(String.format("%d Steps", (int) currentPosition));
+                tvStep.setText(String.format("%d", (int) currentPosition));
 
                 if (seriesItem.getMaxValue() > currentPosition){
                     tvRemaining.setText(String.format("%d Steps to goal", (int) (seriesItem.getMaxValue() - currentPosition)));
@@ -365,7 +362,7 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
             // Draw
             mDecoView.addEvent(new DecoEvent.Builder(evsteps)
                     .setIndex(mSeriesIndex)
-                    .setDuration(3250)
+                    .setDuration(1000)
                     .build());
         }
     }
