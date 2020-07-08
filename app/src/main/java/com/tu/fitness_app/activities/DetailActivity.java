@@ -52,15 +52,15 @@ public class DetailActivity extends AppCompatActivity  {
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private DatabaseReference ref_calories;
-    public static float calRef1 = 0f;
-    public static float user_fat1 = 0f;
-    public static float user_carbs1 = 0f;
-    public static float user_protein1 = 0f;
-    public static float barcode_cal = 0f;
-    public static float barcode_carbs1= 0f;
-    public static float barcode_fat1 = 0f;
-    public static float barcode_protein1 = 0f;
-    public static String username = "";
+    public float calRef1 = 0f;
+    public float user_fat1 = 0f;
+    public float user_carbs1 = 0f;
+    public float user_protein1 = 0f;
+    public float barcode_cal = 0f;
+    public float barcode_carbs1= 0f;
+    public float barcode_fat1 = 0f;
+    public float barcode_protein1 = 0f;
+    public String username = "";
 
     Date today = new Date();
     private DatabaseReference ref_history;
