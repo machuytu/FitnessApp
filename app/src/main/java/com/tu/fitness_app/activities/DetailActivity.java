@@ -102,6 +102,12 @@ public class DetailActivity extends AppCompatActivity  {
             user_protein1 = user_protein1 + Float.parseFloat(product.nutriments.getProteins());
             username = product.getProductName();
 
+            LoginActivity.calRef =  calRef1;
+            LoginActivity.user_protein =  user_protein1;
+            LoginActivity.user_carbs =  user_carbs1;
+            LoginActivity.user_fat =  user_fat1;
+
+
             getCaloriesRef("totalcalories").setValue(calRef1);
             getCaloriesRef("totalfat").setValue(user_carbs1);
             getCaloriesRef("totalcarbs").setValue(user_fat1);
