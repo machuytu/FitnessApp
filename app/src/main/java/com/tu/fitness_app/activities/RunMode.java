@@ -1,6 +1,8 @@
 package com.tu.fitness_app.activities;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -20,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -204,6 +207,12 @@ public class RunMode extends AppCompatActivity implements SensorEventListener {
         btnReset = findViewById(R.id.btn_restart);
         btnStop.setVisibility(View.INVISIBLE);
         btnReset.setVisibility(View.INVISIBLE);
+
+        if(ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_DENIED){
+            //ask for permission
+            requestPermissions(new String[]{Manifest.permission.ACTIVITY_RECOGNITION}, 0);
+        }
 
         mSensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
         StepCalculate.mode = 1; // run

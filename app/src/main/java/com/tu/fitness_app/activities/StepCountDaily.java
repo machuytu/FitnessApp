@@ -1,7 +1,9 @@
 package com.tu.fitness_app.activities;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -18,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -96,6 +99,12 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
         tvPercentage = findViewById(R.id.textPercentage);
         tvRemaining = findViewById(R.id.textRemaining);
         tvStep = findViewById(R.id.textStep);
+
+        if(ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_DENIED){
+            //ask for permission
+            requestPermissions(new String[]{Manifest.permission.ACTIVITY_RECOGNITION}, 0);
+        }
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         StepCalculate.mode = 0; //walk
@@ -335,10 +344,11 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
         Sensor sensorStepCounter = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
 
         if (sensorStepCounter != null) {
-            sensorManager.registerListener(this, sensorStepCounter, SensorManager.SENSOR_DELAY_UI);
+            Log.i(TAG, "Step count sensor available!");
+            sensorManager.registerListener(this, sensorStepCounter, SensorManager.SENSOR_DELAY_FASTEST);
         } else {
-            Toast.makeText(this, "Step count sensor not available!", Toast.LENGTH_LONG).show();
             Log.i(TAG, "Step count sensor not available!");
+            Toast.makeText(this, "Step count sensor not available!", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -354,10 +364,10 @@ public class StepCountDaily extends AppCompatActivity implements SensorEventList
     public void onSensorChanged(SensorEvent event) {
         if (event.sensor.getType() == Sensor.TYPE_STEP_COUNTER) {
             int stepInSensor = (int) event.values[0];
+            Log.d(TAG, "onSensorChanged: "+stepInSensor);
             if (stepAtStart == 0)
                 stepAtStart = stepInSensor;
             evsteps = stepInSensor - stepAtStart + stepInDB;
-            Log.i(TAG, "total steps = " + evsteps);
 
             // Draw
             mDecoView.addEvent(new DecoEvent.Builder(evsteps)
